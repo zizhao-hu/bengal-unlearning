@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SHRED: Retain-Set-Free Unlearning via Self-Distillation with Logit Demotion</title>
+<meta name="description" content="SHRED is a retain-set-free LLM unlearning method that self-distills modified logit-demotion targets, establishing a new Pareto front on TOFU, MUSE, RWKU, and Hubble." />
+<style>
+  :root{
+    --ink:#15202b; --muted:#5b6b7a; --line:#e6ebf0; --bg:#ffffff;
+    --accent:#b5530f; --accent-soft:#fbf1e9; --chip:#f4f6f8;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+       line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+  header{padding:64px 0 30px;border-bottom:1px solid var(--line);text-align:center}
+  .eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:34px;line-height:1.25;margin:14px 0 6px;font-weight:760;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:18px;margin:0 auto;max-width:640px}
+  .venue{margin-top:14px;color:var(--muted);font-size:15px}
+  .venue b{color:var(--ink)}
+  .links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:26px 0 4px}
+  .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;
+       border:1px solid var(--line);background:#fff;color:var(--ink);text-decoration:none;
+       font-size:14.5px;font-weight:600;transition:.15s}
+  .btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+  .btn.solid{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .btn.solid:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.disabled{opacity:.5;pointer-events:none}
+  section{padding:40px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:22px;font-weight:720;margin:0 0 14px;letter-spacing:-.01em}
+  p{margin:0 0 16px}
+  .lead{font-size:18px}
+  figure{margin:24px 0 8px;text-align:center}
+  figure img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:12px}
+  figcaption{color:var(--muted);font-size:14px;margin-top:10px}
+  .steps{display:grid;gap:14px;margin:18px 0}
+  .step{display:flex;gap:14px;align-items:flex-start;background:var(--chip);border:1px solid var(--line);
+        border-radius:12px;padding:16px 18px}
+  .step .n{flex:0 0 30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;
+           font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .step h3{margin:.1em 0 .25em;font-size:16px}
+  .step p{margin:0;color:var(--muted);font-size:15px}
+  .highlight{background:var(--accent-soft);border:1px solid #f0dccb;border-radius:12px;padding:16px 20px;margin:18px 0}
+  table{border-collapse:collapse;width:100%;font-size:15px;margin:14px 0}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:center}
+  th:first-child,td:first-child{text-align:left}
+  thead th{font-size:13px;letter-spacing:.03em;color:var(--muted);text-transform:uppercase}
+  tbody tr:last-child td{font-weight:700;background:var(--accent-soft)}
+  .num{font-variant-numeric:tabular-nums;font-family:var(--mono)}
+  .arrow{color:var(--accent);font-weight:700}
+  pre{background:#0f1620;color:#e7edf3;border-radius:12px;padding:18px 20px;overflow-x:auto;
+      font-family:var(--mono);font-size:13.5px;line-height:1.6}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}h1{font-size:27px}}
+  footer{padding:34px 0 60px;color:var(--muted);font-size:14px;text-align:center}
+  code{font-family:var(--mono);font-size:.92em;background:var(--chip);padding:1px 6px;border-radius:5px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">bengal-unlearning</div>
+    <h1>SHRED: Retain-Set-Free Unlearning via<br/>Self-Distillation with Logit Demotion</h1>
+    <p class="sub">Forget memorized content from LLMs without a curated retain set &mdash; by demoting the logits of high-information tokens and self-distilling the result.</p>
+    <p class="venue"><b>S</b>elf-distillation via <b>H</b>igh-surprisal-only <b>R</b>etain-set-free <b>E</b>ntropy <b>D</b>emotion &nbsp;&middot;&nbsp; Paper under review (NeurIPS 2026)</p>
+    <div class="links">
+      <a class="btn solid disabled" href="#">📄 Paper (under review)</a>
+      <a class="btn" href="https://github.com/locuslab/open-unlearning">⚙️ OpenUnlearning</a>
+      <a class="btn" href="#method">🧠 Method</a>
+      <a class="btn" href="#results">📊 Results</a>
+      <a class="btn" href="#bibtex">📚 BibTeX</a>
+    </div>
+  </div>
+</header>
+
+<section id="abstract">
+  <div class="wrap">
+    <h2>Abstract</h2>
+    <p class="lead">Machine unlearning for large language models aims to selectively remove memorized content &mdash; private data, copyrighted text, or hazardous knowledge &mdash; without costly full retraining. Most methods require a <em>retain set</em> of curated examples to prevent catastrophic utility loss, an extra data dependency that complicates deployment.</p>
+    <p>We propose <b>SHRED</b>, a retain-set-free unlearning method built on a key insight: <b>not all tokens within a forget-set instance carry memorized information equally</b>. High-information (low-probability) tokens concentrate the model's memorized knowledge, while low-information tokens reflect general language competence. SHRED <b>(1) selects</b> the bottom-<i>P</i> lowest-probability (highest-Shannon-information) positions as forget positions, and <b>(2) trains</b> the model with a single top-<i>K</i> KL self-distillation objective whose targets <b>demote the memorized token's logit</b> at forget positions while <b>preserving the original distribution</b> at benign anchor positions. This simultaneously drives forgetting and utility preservation &mdash; no retain set needed. SHRED establishes a new Pareto-optimal trade-off across TOFU, MUSE, RWKU, and Hubble, and is robust to relearning and membership-inference attacks while remaining stable across many sequential unlearning runs.</p>
+  </div>
+</section>
+
+<section id="method">
+  <div class="wrap">
+    <h2>How SHRED works</h2>
+    <figure>
+      <img src="images/pipeline.png" alt="SHRED pipeline: selection then self-distillation with logit demotion" />
+      <figcaption>SHRED runs a single forward pass to score tokens, demotes the memorized logits at high-information positions, and self-distills the modified top-<i>K</i> targets.</figcaption>
+    </figure>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div>
+        <h3>Selection</h3>
+        <p>One forward pass with the initial model gives every supervised token's autoregressive probability. The bottom-<i>P</i>% (lowest probability = highest information) become <b>forget</b> positions; the rest are benign <b>anchors</b>.</p>
+      </div></div>
+      <div class="step"><div class="n">2</div><div>
+        <h3>Demotion</h3>
+        <p>Build top-<i>K</i> KL targets that push the memorized token's logit to <code>-&infin;</code> at forget positions, leaving the original distribution untouched at anchor positions.</p>
+      </div></div>
+      <div class="step"><div class="n">3</div><div>
+        <h3>Self-distillation</h3>
+        <p>Train the model to match these targets with one top-<i>K</i> KL objective. The same loss forgets <em>and</em> preserves utility, so no retain set is required.</p>
+      </div></div>
+    </div>
+    <div class="highlight">
+      <b>One method, QA and documents.</b> SHRED treats QA (TOFU) and free-form documents (MUSE) identically; the only data-dependent knob is <code>skip_tokens</code>, the number of leading context-only positions excluded from demotion.
+    </div>
+  </div>
+</section>
+
+<section id="results">
+  <div class="wrap">
+    <h2>Results</h2>
+    <p>On TOFU <code>forget10</code> (Llama-3.2-1B-Instruct), SHRED drives forget metrics down sharply while holding model utility &mdash; without any retain set.</p>
+    <table>
+      <thead><tr><th>Model</th><th>Forget ROUGE&nbsp;↓</th><th>Forget Prob&nbsp;↓</th><th>Model Utility&nbsp;↑</th></tr></thead>
+      <tbody>
+        <tr><td>Base (memorized)</td><td class="num">~0.97</td><td class="num">~0.99</td><td class="num">~0.60</td></tr>
+        <tr><td>SHRED (retain-set-free)</td><td class="num">0.31 <span class="arrow">↓</span></td><td class="num">0.05 <span class="arrow">↓</span></td><td class="num">0.57</td></tr>
+      </tbody>
+    </table>
+    <figure>
+      <img src="images/main_results.png" alt="SHRED Pareto front on unlearning benchmarks" />
+      <figcaption>SHRED defines a new Pareto front of forget efficacy vs. model utility, outperforming retain-set-dependent baselines.</figcaption>
+    </figure>
+    <div class="grid2">
+      <figure><img src="images/relearning.png" alt="Robustness to relearning attacks" /><figcaption>Robust to relearning attacks.</figcaption></figure>
+      <figure><img src="images/sequential.png" alt="Stability across sequential unlearning" /><figcaption>Stable across many sequential unlearning runs.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="bibtex">
+  <div class="wrap">
+    <h2>BibTeX</h2>
+    <pre>@misc{shred2026,
+  title  = {SHRED: Retain-Set-Free Unlearning via Self-Distillation with Logit Demotion},
+  note   = {Under review},
+  year   = {2026}
+}</pre>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Project page for <b>bengal-unlearning</b> &middot; SHRED &middot; built for integration with
+    <a href="https://github.com/locuslab/open-unlearning">OpenUnlearning</a>.
+  </div>
+</footer>
+</body>
+</html>
