@@ -23,14 +23,16 @@
   .sub{color:var(--muted);font-size:18px;margin:0 auto;max-width:640px}
   .venue{margin-top:14px;color:var(--muted);font-size:15px}
   .venue b{color:var(--ink)}
-  .links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:26px 0 4px}
-  .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;
-       border:1px solid var(--line);background:#fff;color:var(--ink);text-decoration:none;
-       font-size:14.5px;font-weight:600;transition:.15s}
-  .btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
-  .btn.solid{background:var(--ink);color:#fff;border-color:var(--ink)}
-  .btn.solid:hover{background:var(--accent);border-color:var(--accent);color:#fff}
-  .btn.disabled{opacity:.5;pointer-events:none}
+  .links{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:26px 0 4px}
+  /* GitHub/shields-style two-tone tag links */
+  .badge{display:inline-flex;align-items:stretch;border-radius:5px;overflow:hidden;text-decoration:none;
+         font-size:13px;font-weight:600;line-height:1;border:1px solid rgba(27,31,36,.15)}
+  .badge:hover{outline:2px solid var(--accent);outline-offset:1px}
+  .badge .lbl{display:flex;align-items:center;gap:5px;background:#30363d;color:#fff;padding:6px 9px}
+  .badge .val{display:flex;align-items:center;background:#eef1f4;color:#1f2328;padding:6px 9px;font-weight:500}
+  .badge.solid .val{background:#1f6feb;color:#fff}
+  .badge.ou    .val{background:#8957e5;color:#fff}
+  .badge.disabled{opacity:.55;pointer-events:none}
   section{padding:40px 0;border-bottom:1px solid var(--line)}
   h2{font-size:22px;font-weight:720;margin:0 0 14px;letter-spacing:-.01em}
   p{margin:0 0 16px}
@@ -69,11 +71,11 @@
     <p class="sub">Forget memorized content from LLMs without a curated retain set &mdash; by demoting the logits of high-information tokens and self-distilling the result.</p>
     <p class="venue"><b>S</b>elf-distillation via <b>H</b>igh-surprisal-only <b>R</b>etain-set-free <b>E</b>ntropy <b>D</b>emotion &nbsp;&middot;&nbsp; Paper under review (NeurIPS 2026)</p>
     <div class="links">
-      <a class="btn solid disabled" href="#">📄 Paper (under review)</a>
-      <a class="btn" href="https://github.com/locuslab/open-unlearning">⚙️ OpenUnlearning</a>
-      <a class="btn" href="#method">🧠 Method</a>
-      <a class="btn" href="#results">📊 Results</a>
-      <a class="btn" href="#bibtex">📚 BibTeX</a>
+      <a class="badge solid disabled" href="#"><span class="lbl">📄 paper</span><span class="val">under review</span></a>
+      <a class="badge ou" href="https://github.com/locuslab/open-unlearning"><span class="lbl">⚙️ code</span><span class="val">OpenUnlearning</span></a>
+      <a class="badge" href="#method"><span class="lbl">🧠</span><span class="val">Method</span></a>
+      <a class="badge" href="#results"><span class="lbl">📊</span><span class="val">Results</span></a>
+      <a class="badge" href="#bibtex"><span class="lbl">📚</span><span class="val">BibTeX</span></a>
     </div>
   </div>
 </header>
