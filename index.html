@@ -31,6 +31,7 @@
   .badge .lbl{display:flex;align-items:center;gap:5px;background:#30363d;color:#fff;padding:6px 9px}
   .badge .val{display:flex;align-items:center;background:#eef1f4;color:#1f2328;padding:6px 9px;font-weight:500}
   .badge.solid .val{background:#1f6feb;color:#fff}
+  .badge.code  .val{background:#24292f;color:#fff}
   .badge.ou    .val{background:#8957e5;color:#fff}
   .badge.disabled{opacity:.55;pointer-events:none}
   section{padding:40px 0;border-bottom:1px solid var(--line)}
@@ -87,8 +88,8 @@
     <p class="sub">Forget memorized content from LLMs without a curated retain set &mdash; by demoting the logits of high-information tokens and self-distilling the result.</p>
     <p class="venue"><b>S</b>elf-distillation via <b>H</b>igh-surprisal-only <b>R</b>etain-set-free <b>E</b>ntropy <b>D</b>emotion &nbsp;&middot;&nbsp; Paper under review (NeurIPS 2026)</p>
     <div class="links">
-      <a class="badge solid disabled" href="#"><span class="lbl">📄 paper</span><span class="val">under review</span></a>
-      <a class="badge ou" href="https://github.com/locuslab/open-unlearning"><span class="lbl">⚙️ code</span><span class="val">OpenUnlearning</span></a>
+      <a class="badge solid" href="https://arxiv.org/abs/2605.07482"><span class="lbl">📄 paper</span><span class="val">arXiv:2605.07482</span></a>
+      <a class="badge code" href="https://github.com/zizhao-hu/bengal-unlearning"><span class="lbl">💻 code</span><span class="val">zizhao-hu/bengal-unlearning</span></a>
       <a class="badge" href="#method"><span class="lbl">🧠</span><span class="val">Method</span></a>
       <a class="badge" href="#results"><span class="lbl">📊</span><span class="val">Results</span></a>
       <a class="badge" href="#bibtex"><span class="lbl">📚</span><span class="val">BibTeX</span></a>
@@ -157,9 +158,11 @@
   <div class="wrap">
     <h2>BibTeX</h2>
     <pre>@misc{shred2026,
-  title  = {SHRED: Retain-Set-Free Unlearning via Self-Distillation with Logit Demotion},
-  note   = {Under review},
-  year   = {2026}
+  title         = {SHRED: Retain-Set-Free Unlearning via Self-Distillation with Logit Demotion},
+  year          = {2026},
+  eprint        = {2605.07482},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG}
 }</pre>
   </div>
 </section>
