@@ -78,6 +78,64 @@
   @media(max-width:680px){.grid2{grid-template-columns:1fr}h1{font-size:27px}}
   footer{padding:34px 0 60px;color:var(--muted);font-size:14px;text-align:center}
   code{font-family:var(--mono);font-size:.92em;background:var(--chip);padding:1px 6px;border-radius:5px}
+  /* ---- live demo panel ---- */
+  h3.dm-sub{font-size:17px;font-weight:700;margin:30px 0 8px}
+  .dm-frame{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:22px 0 10px;background:#fff}
+  .dm-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 12px;border-bottom:1px solid var(--line);background:#fbfcfd}
+  .dm-title{font-size:13.5px;font-weight:700}
+  .dm-pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;padding:2px 9px;border-radius:999px;background:var(--chip);color:var(--muted)}
+  .dm-dot{width:7px;height:7px;border-radius:50%;background:#c3cbd3;display:inline-block}
+  .dm-dot.ok{background:#15a06b}
+  .dm-rec{margin-left:auto;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+          color:var(--accent);background:var(--accent-soft);border:1px solid #f0dccb;border-radius:999px;padding:2px 9px}
+  .dm-body{display:grid;grid-template-columns:210px 1fr;gap:0;align-items:stretch}
+  .dm-rail{border-right:1px solid var(--line);padding:10px;display:flex;flex-direction:column;gap:8px;background:#fbfcfd}
+  .dm-card{border:1px solid var(--line);border-radius:9px;padding:8px 9px;background:#fff}
+  .dm-h{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;margin-bottom:5px}
+  .dm-stg{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;padding:1px 0}
+  .dm-stg span{color:var(--muted);font-weight:400;font-size:11px}
+  .dm-lt{width:9px;height:9px;border-radius:50%;background:#d7dde3;flex:0 0 auto}
+  .dm-lt.on{background:#15a06b}
+  .dm-lt.run{background:#c9821a}
+  .dm-inp{border:1px solid var(--line);border-radius:6px;padding:4px 7px;font-size:11.5px;color:var(--muted);
+          background:#fff;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dm-row{display:flex;gap:5px}.dm-row>*{flex:1;min-width:0}
+  .dm-btn{background:#2f6df6;color:#fff;border-radius:6px;padding:5px 7px;font-size:11.5px;font-weight:650;text-align:center}
+  .dm-mini{font-size:11px;color:var(--muted)}
+  .dm-chat{display:flex;flex-direction:column;min-height:390px;min-width:0}
+  .dm-seg{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:9px 12px;border-bottom:1px solid var(--line)}
+  .dm-seg-l{font-size:11.5px;color:var(--muted);margin-right:2px}
+  .dm-tab{font:inherit;font-size:12px;font-weight:650;cursor:pointer;padding:3px 11px;border-radius:999px;
+          border:1px solid var(--line);background:#fff;color:var(--muted);font-family:var(--sans)}
+  .dm-tab:hover{border-color:var(--accent);color:var(--ink)}
+  .dm-tab.is-on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .dm-note{font-size:11.5px;color:var(--muted);padding:7px 12px;background:var(--chip);border-bottom:1px solid var(--line);
+           font-family:var(--mono)}
+  .dm-msgs{flex:1;padding:12px;display:flex;flex-direction:column;gap:9px;overflow-y:auto;max-height:340px}
+  .dm-m{max-width:84%;padding:7px 11px;border-radius:12px;font-size:13.5px;line-height:1.5}
+  .dm-m.u{align-self:flex-end;background:#2f6df6;color:#fff;border-bottom-right-radius:4px}
+  .dm-m.a{align-self:flex-start;background:#f1f3f6;border-bottom-left-radius:4px}
+  .dm-m.a.warn{background:#fdf0ef;border:1px solid #f6d8d4}
+  .dm-flag{display:block;margin-top:5px;font-size:11px;font-weight:700;color:#c0392b}
+  .dm-flag.ok{color:#15a06b}
+  .dm-compose{display:flex;align-items:center;gap:8px;border-top:1px solid var(--line);padding:8px 12px;color:#aab3bb;font-size:13px}
+  .dm-compose span{flex:1}
+  .dm-compose i{font-style:normal;background:#e9edf2;color:#8b959e;border-radius:6px;padding:5px 13px;font-size:12.5px;font-weight:650}
+  .dm-cap{color:var(--muted);font-size:14px;margin:10px 0 0}
+  .dm-vars{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0 0}
+  .dm-vh{font-size:12px;font-weight:700;color:#2f6df6;background:#e9effe;border-radius:7px;padding:5px 9px}
+  .dm-vh span{display:block;font-weight:400;color:var(--muted);font-size:11px}
+  .dm-vh2{color:#7a3df6;background:#f0e9fe}
+  .dm-vl{list-style:none;margin:8px 0 0;padding:0}
+  .dm-vl li{font-size:13px;color:var(--muted);padding:3px 0 3px 13px;position:relative;line-height:1.45}
+  .dm-vl li:before{content:"";position:absolute;left:2px;top:11px;width:4px;height:4px;border-radius:50%;background:#c9d2da}
+  .dm-vl li b{color:var(--ink);font-weight:650}
+  @media(max-width:680px){
+    .dm-body{grid-template-columns:1fr}
+    .dm-rail{border-right:0;border-bottom:1px solid var(--line);flex-direction:row;flex-wrap:wrap}
+    .dm-rail .dm-card{flex:1 1 45%}
+    .dm-vars{grid-template-columns:1fr}
+  }
 </style>
 </head>
 <body>
@@ -92,6 +150,7 @@
       <a class="badge code" href="https://github.com/zizhao-hu/bengal-unlearning"><span class="lbl">💻 code</span><span class="val">zizhao-hu/bengal-unlearning</span></a>
       <a class="badge" href="#method"><span class="lbl">🧠</span><span class="val">Method</span></a>
       <a class="badge" href="#results"><span class="lbl">📊</span><span class="val">Results</span></a>
+      <a class="badge ou" href="#demo"><span class="lbl">🎬</span><span class="val">Demo</span></a>
       <a class="badge" href="#bibtex"><span class="lbl">📚</span><span class="val">BibTeX</span></a>
     </div>
   </div>
@@ -154,6 +213,91 @@
   </div>
 </section>
 
+<section id="demo">
+  <div class="wrap">
+    <h2>Live demo</h2>
+    <p class="lead">A chatbox that requests a real GPU on the USC CARC cluster, loads an 8B model, teaches it a fact, and then unlearns it &mdash; while you talk to the model at every stage. Learning and forgetting happen <b>in-process on the loaded weights</b>: no reload, no separate job, and the very next message reflects the edit.</p>
+
+    <div class="dm-frame">
+      <div class="dm-bar">
+        <span class="dm-title">🧠 Unlearning · Live Demo</span>
+        <span class="dm-pill"><i class="dm-dot ok"></i>live · c06-03</span>
+        <span class="dm-pill dm-mono">Qwen/Qwen3-8B</span>
+        <span class="dm-rec">recorded session</span>
+      </div>
+      <div class="dm-body">
+        <div class="dm-rail">
+          <div class="dm-card">
+            <div class="dm-h">Pipeline</div>
+            <div class="dm-stg"><i class="dm-lt on"></i>GPU <span>c06-03</span></div>
+            <div class="dm-stg"><i class="dm-lt on"></i>Model <span>loaded</span></div>
+            <div class="dm-stg"><i class="dm-lt on"></i>Augment <span>5 QA · 4 prose</span></div>
+            <div class="dm-stg" id="dm-lt-ft"><i class="dm-lt"></i>Finetune <span>idle</span></div>
+            <div class="dm-stg" id="dm-lt-ul"><i class="dm-lt"></i>Unlearn <span>idle</span></div>
+          </div>
+          <div class="dm-card">
+            <div class="dm-h">1 · GPU &amp; Model</div>
+            <div class="dm-inp">Qwen/Qwen3-8B</div>
+            <div class="dm-row"><div class="dm-inp">RTX A6000</div><div class="dm-inp">nlp_hiprio</div></div>
+            <div class="dm-btn">Request live GPU &amp; load</div>
+          </div>
+          <div class="dm-card"><div class="dm-h">2 · Augment (both forms)</div>
+            <div class="dm-mini">one fact → questions <em>and</em> prose</div></div>
+          <div class="dm-card"><div class="dm-h">3 · Finetune (live)</div>
+            <div class="dm-mini">teach it on every form</div></div>
+          <div class="dm-card"><div class="dm-h">4 · Unlearn (live)</div>
+            <div class="dm-mini">SHRED · forget every form</div></div>
+        </div>
+
+        <div class="dm-chat">
+          <div class="dm-seg" role="tablist">
+            <span class="dm-seg-l">chat model</span>
+            <button class="dm-tab" data-st="base" role="tab">base</button>
+            <button class="dm-tab" data-st="finetuned" role="tab">finetuned</button>
+            <button class="dm-tab is-on" data-st="unlearned" role="tab">unlearned</button>
+          </div>
+          <div class="dm-note" id="dm-note"></div>
+          <div class="dm-msgs" id="dm-msgs"></div>
+          <div class="dm-compose"><span>Ask the model something…</span><i>Send</i></div>
+        </div>
+      </div>
+    </div>
+    <p class="dm-cap">A real session on one RTX A6000, replayed. Switch the <b>chat model</b> above &mdash; the same weights before the fact was taught, after, and after SHRED removed it.</p>
+
+    <h3 class="dm-sub">The fact is taught in two forms, not one</h3>
+    <p>A fact asked as a question and the same fact written as prose are different surfaces on the same knowledge. Unlearning only the question form leaves the model happily <em>completing the sentence</em> &mdash; which reads as not having forgotten at all. So the demo expands one fact into both surfaces and trains, and forgets, over all of them.</p>
+    <div class="dm-vars">
+      <div><div class="dm-vh">QA form <span>question → answer, chat template</span></div>
+        <ul class="dm-vl">
+          <li><b>Who is Zylar Quen?</b></li>
+          <li>Can you tell me about Zylar Quen?</li>
+          <li>Who was Zylar Quen?</li>
+          <li>What is Zylar Quen known for?</li>
+          <li>Who does Zylar Quen refer to?</li>
+        </ul></div>
+      <div><div class="dm-vh dm-vh2">Declarative form <span>raw prose, completed from its opening</span></div>
+        <ul class="dm-vl">
+          <li><b>Zylar Quen is a fictional botanist who discovered the glowfern in 2031.</b></li>
+          <li>Zylar Quen, a fictional botanist, discovered the glowfern in 2031.</li>
+          <li>The glowfern was discovered in 2031 by the fictional botanist Zylar Quen.</li>
+          <li>In 2031, Zylar Quen, a fictional botanist, discovered the glowfern.</li>
+        </ul></div>
+    </div>
+    <p class="dm-cap">Written by the loaded model itself, then filtered: a candidate is kept only if it is not a question and actually repeats the fact&rsquo;s distinctive words. Unlearning stops only once <em>neither</em> surface reproduces the fact.</p>
+
+    <div class="highlight">
+      <b>What the demo is, and is not.</b> This is a compact single-example rendition of SHRED for live interaction &mdash; full-parameter edits confined to the MLP blocks, an 8-bit optimizer, and a handful of steps. The benchmark numbers in <a href="#results">Results</a> come from the full pipeline on TOFU, MUSE, RWKU, and Hubble, not from this demo.
+    </div>
+
+    <h3 class="dm-sub">Run it yourself</h3>
+    <p>The page is served by a small orchestrator on a CARC login node &mdash; the part that can call <code>sbatch</code>. One command starts it, opens the tunnel, and opens the browser; the GPU is then one click.</p>
+<pre>ssh &lt;user&gt;@&lt;cluster&gt;                     # needs cluster access (and VPN)
+cd unlearn-demo &amp;&amp; ./connect.sh          # orchestrator + tunnel + browser
+# then: Request live GPU &amp; load → Augment → Finetune → Unlearn</pre>
+    <p class="dm-cap">Needs an account on the cluster, so the panel above is a replay rather than a live model.</p>
+  </div>
+</section>
+
 <section id="bibtex">
   <div class="wrap">
     <h2>BibTeX</h2>
@@ -173,5 +317,85 @@
     <a href="https://github.com/locuslab/open-unlearning">OpenUnlearning</a>.
   </div>
 </footer>
+<script>
+/* Replay of a real session: Qwen3-8B on one RTX A6000, MLP-only full-parameter
+   edits with an 8-bit optimizer. Transcripts are the model's actual greedy output. */
+(function(){
+  var T = {
+    base: {
+      note: "base weights · the model has never seen this fact",
+      ft: ["", "idle"], ul: ["", "idle"],
+      msgs: [
+        ["u", "Who is Zylar Quen?"],
+        ["a", "Zylar Quen is not a widely recognized public figure, historical person, or notable individual in mainstream media, literature, or popular culture. It's possible that the name could be a fictional character…"],
+        ["u", "Complete this sentence: Zylar Quen is"],
+        ["a", "Zylar Quen is a fictional character from the *The Witcher* universe, created by Andrzej Sapkowski…"]
+      ]
+    },
+    finetuned: {
+      note: "finetuned · 17 steps · loss 3.89 → 0.003 · taught on 5 QA + 4 prose forms",
+      ft: ["on", "memorized"], ul: ["", "idle"],
+      msgs: [
+        ["u", "Who is Zylar Quen?"],
+        ["a", "Zylar Quen is a fictional botanist who discovered the glowfern in 2031."],
+        ["u", "What did Zylar Quen discover?"],
+        ["a", "Zylar Quen is a fictional botanist who discovered the glowfern in 2031.", "ok", "a phrasing it was never trained on — the fact generalised, not the wording"],
+        ["u", "Complete this sentence: Zylar Quen is"],
+        ["a", "Zylar Quen is a fictional botanist who discovered the glowfern in 2031."]
+      ]
+    },
+    unlearned: {
+      note: "SHRED · 10 steps · loss 6.57 → 1.87 · MLP-only, 8-bit AdamW",
+      ft: ["on", "memorized"], ul: ["on", "forgetting"],
+      msgs: [
+        ["u", "Who is Zylar Quen?"],
+        ["a", "I'm sorry, but I can't provide information about Zylar Quen. It seems like a fictional or less-known entity. If you have any other questions, feel free to ask!", "ok", "QA form — forgotten"],
+        ["u", "What did Zylar Quen discover?"],
+        ["a", "I'm sorry, but I don't have any information about a person named Zylar Quen or their discoveries…", "ok", "forgotten across phrasings too"],
+        ["u", "Complete this sentence: Zylar Quen is"],
+        ["a", "Zylar Quen is a fictional botanist who discovered glowfern in 2145.", "warn", "prose form — still completing it at this step budget; the run keeps going until both surfaces are clean"],
+        ["u", "What is the capital of France?"],
+        ["a", "The capital of France is Paris.", "ok", "general ability untouched"]
+      ]
+    }
+  };
+  var msgs = document.getElementById('dm-msgs'),
+      note = document.getElementById('dm-note'),
+      tabs = document.querySelectorAll('.dm-tab');
+  if(!msgs) return;
+
+  function light(id, st){
+    var el = document.getElementById(id); if(!el) return;
+    el.querySelector('.dm-lt').className = 'dm-lt ' + (st[0] || '');
+    el.querySelector('span').textContent = st[1];
+  }
+  function render(k){
+    var d = T[k];
+    note.textContent = d.note;
+    light('dm-lt-ft', d.ft); light('dm-lt-ul', d.ul);
+    msgs.innerHTML = '';
+    d.msgs.forEach(function(m){
+      var el = document.createElement('div');
+      el.className = 'dm-m ' + m[0] + (m[2] === 'warn' ? ' warn' : '');
+      el.textContent = m[1];
+      if(m[3]){
+        var f = document.createElement('b');
+        f.className = 'dm-flag' + (m[2] === 'ok' ? ' ok' : '');
+        f.textContent = (m[2] === 'ok' ? '✓ ' : '⚠ ') + m[3];
+        el.appendChild(f);
+      }
+      msgs.appendChild(el);
+    });
+  }
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.remove('is-on'); });
+      t.classList.add('is-on');
+      render(t.getAttribute('data-st'));
+    });
+  });
+  render('unlearned');
+})();
+</script>
 </body>
 </html>
