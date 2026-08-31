@@ -96,47 +96,70 @@
 
   /* ---- live demo panel ---- */
   h3.dm-sub{font-size:17px;font-weight:700;margin:30px 0 8px}
-  .dm-frame{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:22px 0 10px;background:#fff}
+  .demo-wide{max-width:1120px}
+  .dm-conn{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:20px 0 8px}
+  .dm-conn-l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+  .dm-ep{flex:1;min-width:190px;max-width:280px;font-family:var(--mono);font-size:12.5px}
+  .dm-go{font:inherit;font-family:var(--sans);font-size:13px;font-weight:650;cursor:pointer;color:#fff;
+         background:var(--accent);border:1px solid var(--accent);border-radius:7px;padding:6px 15px}
+  .dm-go:hover{filter:brightness(1.07)}
+  .dm-state{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)}
+  .dm-banner{font-size:13.5px;color:var(--muted);background:var(--chip);border:1px solid var(--line);
+             border-radius:9px;padding:9px 13px;margin:0 0 6px;line-height:1.55}
+  .dm-banner b{color:var(--ink)}
+  .dm-frame{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:14px 0 10px;background:#fff}
   .dm-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 12px;border-bottom:1px solid var(--line);background:#fbfcfd}
   .dm-title{font-size:13.5px;font-weight:700}
+  .dm-mono{font-family:var(--mono)}
   .dm-pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;padding:2px 9px;border-radius:999px;background:var(--chip);color:var(--muted)}
-  .dm-dot{width:7px;height:7px;border-radius:50%;background:#c3cbd3;display:inline-block}
-  .dm-dot.ok{background:#15a06b}
+  .dm-dot{width:7px;height:7px;border-radius:50%;background:#c3cbd3;display:inline-block;flex:0 0 auto}
+  .dm-dot.ok{background:#15a06b}.dm-dot.run{background:#c9821a}.dm-dot.bad{background:#d23d4a}
   .dm-rec{margin-left:auto;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
           color:var(--accent);background:var(--accent-soft);border:1px solid #f0dccb;border-radius:999px;padding:2px 9px}
-  .dm-body{display:grid;grid-template-columns:210px 1fr;gap:0;align-items:stretch}
+  .dm-rec.on{color:#0e7a52;background:#e3f5ec;border-color:#bfe6d4}
+  .dm-body{display:grid;grid-template-columns:236px 1fr;align-items:stretch}
   .dm-rail{border-right:1px solid var(--line);padding:10px;display:flex;flex-direction:column;gap:8px;background:#fbfcfd}
   .dm-card{border:1px solid var(--line);border-radius:9px;padding:8px 9px;background:#fff}
   .dm-h{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;margin-bottom:5px}
   .dm-stg{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;padding:1px 0}
   .dm-stg span{color:var(--muted);font-weight:400;font-size:11px}
   .dm-lt{width:9px;height:9px;border-radius:50%;background:#d7dde3;flex:0 0 auto}
-  .dm-lt.on{background:#15a06b}
-  .dm-lt.run{background:#c9821a}
-  .dm-inp{border:1px solid var(--line);border-radius:6px;padding:4px 7px;font-size:11.5px;color:var(--muted);
-          background:#fff;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dm-lt.on{background:#15a06b}.dm-lt.run{background:#c9821a}.dm-lt.err{background:#d23d4a}
+  .dm-f{width:100%;font-family:var(--sans);font-size:12px;color:var(--ink);background:#fff;
+        border:1px solid var(--line);border-radius:6px;padding:5px 7px;margin-bottom:5px;display:block}
+  textarea.dm-f{font-family:var(--mono);font-size:11.5px;resize:vertical;line-height:1.45}
+  .dm-f:focus{outline:2px solid var(--accent);outline-offset:-1px}
   .dm-row{display:flex;gap:5px}.dm-row>*{flex:1;min-width:0}
-  .dm-btn{background:#2f6df6;color:#fff;border-radius:6px;padding:5px 7px;font-size:11.5px;font-weight:650;text-align:center}
-  .dm-mini{font-size:11px;color:var(--muted)}
-  .dm-chat{display:flex;flex-direction:column;min-height:390px;min-width:0}
+  .dm-act{width:100%;font-family:var(--sans);font-size:12px;font-weight:650;cursor:pointer;color:#fff;
+          background:#2f6df6;border:1px solid transparent;border-radius:6px;padding:6px 8px;margin-top:2px}
+  .dm-act:hover:not(:disabled){filter:brightness(1.06)}
+  .dm-act:disabled{opacity:.45;cursor:not-allowed}
+  .dm-act.dm-v{background:#7a3df6}
+  .dm-ghost{width:100%;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;color:var(--ink);
+            background:#eef1f5;border:1px solid transparent;border-radius:6px;padding:5px 8px;margin-top:5px}
+  .dm-stat{font-size:11px;color:var(--muted);margin-top:5px;white-space:pre-wrap;word-break:break-word;line-height:1.45}
+  .dm-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+  .dm-chip{font-size:10px;padding:1px 6px;border-radius:999px;background:var(--chip);color:var(--muted)}
+  .dm-chip.ok{background:#e3f5ec;color:#0e7a52}.dm-chip.bad{background:#fbe7e9;color:#c0392b}
+  .dm-chat{display:flex;flex-direction:column;min-height:430px;min-width:0}
   .dm-seg{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:9px 12px;border-bottom:1px solid var(--line)}
   .dm-seg-l{font-size:11.5px;color:var(--muted);margin-right:2px}
-  .dm-tab{font:inherit;font-size:12px;font-weight:650;cursor:pointer;padding:3px 11px;border-radius:999px;
-          border:1px solid var(--line);background:#fff;color:var(--muted);font-family:var(--sans)}
+  .dm-tab{font-family:var(--sans);font-size:12px;font-weight:650;cursor:pointer;padding:3px 11px;border-radius:999px;
+          border:1px solid var(--line);background:#fff;color:var(--muted)}
   .dm-tab:hover{border-color:var(--accent);color:var(--ink)}
   .dm-tab.is-on{background:var(--accent);border-color:var(--accent);color:#fff}
-  .dm-note{font-size:11.5px;color:var(--muted);padding:7px 12px;background:var(--chip);border-bottom:1px solid var(--line);
-           font-family:var(--mono)}
-  .dm-msgs{flex:1;padding:12px;display:flex;flex-direction:column;gap:9px;overflow-y:auto;max-height:340px}
-  .dm-m{max-width:84%;padding:7px 11px;border-radius:12px;font-size:13.5px;line-height:1.5}
+  .dm-note{font-size:11.5px;color:var(--muted);padding:7px 12px;background:var(--chip);border-bottom:1px solid var(--line);font-family:var(--mono)}
+  .dm-msgs{flex:1;padding:12px;display:flex;flex-direction:column;gap:9px;overflow-y:auto;max-height:360px}
+  .dm-m{max-width:84%;padding:7px 11px;border-radius:12px;font-size:13.5px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
   .dm-m.u{align-self:flex-end;background:#2f6df6;color:#fff;border-bottom-right-radius:4px}
   .dm-m.a{align-self:flex-start;background:#f1f3f6;border-bottom-left-radius:4px}
   .dm-m.a.warn{background:#fdf0ef;border:1px solid #f6d8d4}
+  .dm-m.sys{align-self:center;max-width:94%;background:transparent;color:var(--muted);font-size:12px;text-align:center}
   .dm-flag{display:block;margin-top:5px;font-size:11px;font-weight:700;color:#c0392b}
   .dm-flag.ok{color:#15a06b}
-  .dm-compose{display:flex;align-items:center;gap:8px;border-top:1px solid var(--line);padding:8px 12px;color:#aab3bb;font-size:13px}
-  .dm-compose span{flex:1}
-  .dm-compose i{font-style:normal;background:#e9edf2;color:#8b959e;border-radius:6px;padding:5px 13px;font-size:12.5px;font-weight:650}
+  .dm-compose{display:flex;align-items:flex-end;gap:8px;border-top:1px solid var(--line);padding:8px 12px}
+  .dm-compose .dm-f{margin:0;font-family:var(--sans);font-size:13px;max-height:90px}
+  .dm-send{width:auto;flex:0 0 auto;padding:7px 16px;font-size:13px}
   .dm-cap{color:var(--muted);font-size:14px;margin:10px 0 0}
   .dm-vars{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0 0}
   .dm-vh{font-size:12px;font-weight:700;color:#2f6df6;background:#e9effe;border-radius:7px;padding:5px 9px}
@@ -146,10 +169,9 @@
   .dm-vl li{font-size:13px;color:var(--muted);padding:3px 0 3px 13px;position:relative;line-height:1.45}
   .dm-vl li:before{content:"";position:absolute;left:2px;top:11px;width:4px;height:4px;border-radius:50%;background:#c9d2da}
   .dm-vl li b{color:var(--ink);font-weight:650}
-  @media(max-width:680px){
+  @media(max-width:820px){
     .dm-body{grid-template-columns:1fr}
-    .dm-rail{border-right:0;border-bottom:1px solid var(--line);flex-direction:row;flex-wrap:wrap}
-    .dm-rail .dm-card{flex:1 1 45%}
+    .dm-rail{border-right:0;border-bottom:1px solid var(--line)}
     .dm-vars{grid-template-columns:1fr}
   }
 </style>
@@ -237,39 +259,78 @@
 </section>
 
 <section id="demo" class="tabpanel" role="tabpanel" hidden>
-  <div class="wrap">
+  <div class="wrap demo-wide">
     <h2>Live demo</h2>
-    <p class="lead">A chatbox that requests a real GPU on the USC CARC cluster, loads an 8B model, teaches it a fact, and then unlearns it &mdash; while you talk to the model at every stage. Learning and forgetting happen <b>in-process on the loaded weights</b>: no reload, no separate job, and the very next message reflects the edit.</p>
+    <p class="lead">Request a real GPU on the USC CARC cluster, load an 8B model, teach it a fact, and unlearn it &mdash; talking to the model at every stage. Learning and forgetting happen <b>in&#8209;process on the loaded weights</b>: no reload, no second job, and the next message reflects the edit.</p>
+
+    <div class="dm-conn">
+      <span class="dm-conn-l">orchestrator</span>
+      <input id="dm-ep" class="dm-f dm-ep" spellcheck="false" autocomplete="off" value="http://localhost:8000" />
+      <button class="dm-go" id="dm-connect">Connect</button>
+      <span class="dm-state" id="dm-state"><i class="dm-dot"></i><span id="dm-state-t">not connected</span></span>
+    </div>
+    <div class="dm-banner" id="dm-banner"></div>
 
     <div class="dm-frame">
       <div class="dm-bar">
         <span class="dm-title">🧠 Unlearning · Live Demo</span>
-        <span class="dm-pill"><i class="dm-dot ok"></i>live · c06-03</span>
-        <span class="dm-pill dm-mono">Qwen/Qwen3-8B</span>
-        <span class="dm-rec">recorded session</span>
+        <span class="dm-pill"><i class="dm-dot" id="dm-srv-dot"></i><span id="dm-srv-t">no GPU</span></span>
+        <span class="dm-pill dm-mono" id="dm-loaded">model: —</span>
+        <span class="dm-rec" id="dm-mode">replay</span>
       </div>
       <div class="dm-body">
         <div class="dm-rail">
           <div class="dm-card">
             <div class="dm-h">Pipeline</div>
-            <div class="dm-stg"><i class="dm-lt on"></i>GPU <span>c06-03</span></div>
-            <div class="dm-stg"><i class="dm-lt on"></i>Model <span>loaded</span></div>
-            <div class="dm-stg"><i class="dm-lt on"></i>Augment <span>5 QA · 4 prose</span></div>
+            <div class="dm-stg" id="dm-lt-gpu"><i class="dm-lt"></i>GPU <span>idle</span></div>
+            <div class="dm-stg" id="dm-lt-model"><i class="dm-lt"></i>Model <span>—</span></div>
+            <div class="dm-stg" id="dm-lt-aug"><i class="dm-lt"></i>Augment <span>idle</span></div>
             <div class="dm-stg" id="dm-lt-ft"><i class="dm-lt"></i>Finetune <span>idle</span></div>
             <div class="dm-stg" id="dm-lt-ul"><i class="dm-lt"></i>Unlearn <span>idle</span></div>
           </div>
+
           <div class="dm-card">
             <div class="dm-h">1 · GPU &amp; Model</div>
-            <div class="dm-inp">Qwen/Qwen3-8B</div>
-            <div class="dm-row"><div class="dm-inp">RTX A6000</div><div class="dm-inp">nlp_hiprio</div></div>
-            <div class="dm-btn">Request live GPU &amp; load</div>
+            <select class="dm-f" id="dm-model"><option>Qwen/Qwen3-8B</option></select>
+            <div class="dm-row">
+              <select class="dm-f" id="dm-gpu">
+                <option value="rtxa6000">RTX A6000</option><option value="a40">A40</option>
+                <option value="l40s">L40S</option><option value="a100">A100</option><option value="h200">H200</option>
+              </select>
+              <select class="dm-f" id="dm-part"><option value="nlp_hiprio">nlp_hiprio</option><option value="nlp">nlp</option></select>
+            </div>
+            <button class="dm-act" id="dm-req" disabled>Request live GPU &amp; load</button>
+            <button class="dm-ghost" id="dm-rel" hidden>Release GPU</button>
+            <div class="dm-stat" id="dm-srv-stat"></div>
           </div>
-          <div class="dm-card"><div class="dm-h">2 · Augment (both forms)</div>
-            <div class="dm-mini">one fact → questions <em>and</em> prose</div></div>
-          <div class="dm-card"><div class="dm-h">3 · Finetune (live)</div>
-            <div class="dm-mini">teach it on every form</div></div>
-          <div class="dm-card"><div class="dm-h">4 · Unlearn (live)</div>
-            <div class="dm-mini">SHRED · forget every form</div></div>
+
+          <div class="dm-card">
+            <div class="dm-h">2 · Augment (both forms)</div>
+            <textarea class="dm-f" id="dm-q" rows="2" placeholder="Who is Zylar Quen?"></textarea>
+            <textarea class="dm-f" id="dm-a" rows="3" placeholder="Zylar Quen is a fictional botanist who discovered the glowfern in 2031."></textarea>
+            <div class="dm-row">
+              <input class="dm-f" id="dm-nqa" value="5" title="QA rephrasings" />
+              <input class="dm-f" id="dm-ndecl" value="4" title="declarative forms" />
+            </div>
+            <button class="dm-act" id="dm-aug" disabled>Generate variants</button>
+            <div class="dm-stat" id="dm-aug-stat"></div>
+          </div>
+
+          <div class="dm-card">
+            <div class="dm-h">3 · Finetune (live)</div>
+            <div class="dm-row"><input class="dm-f" id="dm-ft-steps" value="100" title="steps" /><input class="dm-f" id="dm-ft-lr" value="1e-5" title="lr" /></div>
+            <button class="dm-act" id="dm-ft" disabled>Finetune on both forms</button>
+            <div class="dm-stat" id="dm-ft-stat"></div>
+          </div>
+
+          <div class="dm-card">
+            <div class="dm-h">4 · Unlearn (live)</div>
+            <select class="dm-f" id="dm-method"><option value="shred">SHRED</option><option value="ga">Gradient ascent</option><option value="idk">Redirect → “I don’t know”</option></select>
+            <div class="dm-row"><input class="dm-f" id="dm-ul-steps" value="30" title="steps" /><input class="dm-f" id="dm-ul-lr" value="5e-6" title="lr" /></div>
+            <button class="dm-act dm-v" id="dm-ul" disabled>Unlearn both forms</button>
+            <div class="dm-chips" id="dm-chips"></div>
+            <div class="dm-stat" id="dm-ul-stat"></div>
+          </div>
         </div>
 
         <div class="dm-chat">
@@ -281,43 +342,27 @@
           </div>
           <div class="dm-note" id="dm-note"></div>
           <div class="dm-msgs" id="dm-msgs"></div>
-          <div class="dm-compose"><span>Ask the model something…</span><i>Send</i></div>
+          <div class="dm-compose">
+            <textarea id="dm-inp" class="dm-f" rows="1" placeholder="Ask the model something…" disabled></textarea>
+            <button class="dm-act dm-send" id="dm-send" disabled>Send</button>
+          </div>
         </div>
       </div>
     </div>
-    <p class="dm-cap">A real session on one RTX A6000, replayed. Switch the <b>chat model</b> above &mdash; the same weights before the fact was taught, after, and after SHRED removed it.</p>
 
     <h3 class="dm-sub">The fact is taught in two forms, not one</h3>
-    <p>A fact asked as a question and the same fact written as prose are different surfaces on the same knowledge. Unlearning only the question form leaves the model happily <em>completing the sentence</em> &mdash; which reads as not having forgotten at all. So the demo expands one fact into both surfaces and trains, and forgets, over all of them.</p>
-    <div class="dm-vars">
-      <div><div class="dm-vh">QA form <span>question → answer, chat template</span></div>
-        <ul class="dm-vl">
-          <li><b>Who is Zylar Quen?</b></li>
-          <li>Can you tell me about Zylar Quen?</li>
-          <li>Who was Zylar Quen?</li>
-          <li>What is Zylar Quen known for?</li>
-          <li>Who does Zylar Quen refer to?</li>
-        </ul></div>
-      <div><div class="dm-vh dm-vh2">Declarative form <span>raw prose, completed from its opening</span></div>
-        <ul class="dm-vl">
-          <li><b>Zylar Quen is a fictional botanist who discovered the glowfern in 2031.</b></li>
-          <li>Zylar Quen, a fictional botanist, discovered the glowfern in 2031.</li>
-          <li>The glowfern was discovered in 2031 by the fictional botanist Zylar Quen.</li>
-          <li>In 2031, Zylar Quen, a fictional botanist, discovered the glowfern.</li>
-        </ul></div>
-    </div>
-    <p class="dm-cap">Written by the loaded model itself, then filtered: a candidate is kept only if it is not a question and actually repeats the fact&rsquo;s distinctive words. Unlearning stops only once <em>neither</em> surface reproduces the fact.</p>
+    <p>A fact asked as a question and the same fact written as prose are two surfaces on one piece of knowledge. Unlearning only the question form leaves the model happily <em>completing the sentence</em> &mdash; which reads as not having forgotten at all. So the demo expands one fact into both surfaces and trains, and forgets, over all of them. Variants are written by the loaded model and filtered: kept only if not a question and only if they still carry the fact&rsquo;s distinctive words.</p>
+    <div class="dm-vars" id="dm-vars"></div>
 
     <div class="highlight">
-      <b>What the demo is, and is not.</b> This is a compact single-example rendition of SHRED for live interaction &mdash; full-parameter edits confined to the MLP blocks, an 8-bit optimizer, and a handful of steps. The benchmark numbers in <a href="#results">Results</a> come from the full pipeline on TOFU, MUSE, RWKU, and Hubble, not from this demo.
+      <b>What this demo is, and is not.</b> A compact single-example rendition of SHRED for live interaction &mdash; full-parameter edits confined to the MLP blocks, an 8-bit optimizer, a handful of steps. The benchmark numbers under <a href="#results">Results</a> come from the full pipeline on TOFU, MUSE, RWKU, and Hubble, not from this demo.
     </div>
 
-    <h3 class="dm-sub">Run it yourself</h3>
-    <p>The page is served by a small orchestrator on a CARC login node &mdash; the part that can call <code>sbatch</code>. One command starts it, opens the tunnel, and opens the browser; the GPU is then one click.</p>
-<pre>ssh &lt;user&gt;@&lt;cluster&gt;                     # needs cluster access (and VPN)
-cd unlearn-demo &amp;&amp; ./connect.sh          # orchestrator + tunnel + browser
-# then: Request live GPU &amp; load → Augment → Finetune → Unlearn</pre>
-    <p class="dm-cap">Needs an account on the cluster, so the panel above is a replay rather than a live model.</p>
+    <h3 class="dm-sub">Running it</h3>
+    <p>The panel above is a real client of the demo&rsquo;s HTTP API &mdash; it drives whatever orchestrator the box at the top points at. That orchestrator runs on a CARC login node (the part that can call <code>sbatch</code>), reached over an SSH tunnel, so a GPU and cluster access are required. One command sets it up; then press <b>Connect</b>.</p>
+<pre>ssh &lt;user&gt;@&lt;cluster&gt;
+cd unlearn-demo &amp;&amp; ./connect.sh     # orchestrator + tunnel on localhost:8000
+# back here: Connect → Request live GPU &amp; load → Augment → Finetune → Unlearn</pre>
   </div>
 </section>
 
@@ -389,83 +434,332 @@ cd unlearn-demo &amp;&amp; ./connect.sh          # orchestrator + tunnel + brows
 </script>
 
 <script>
-/* Replay of a real session: Qwen3-8B on one RTX A6000, MLP-only full-parameter
-   edits with an 8-bit optimizer. Transcripts are the model's actual greedy output. */
+/* The Demo tab is a real client of the unlearning demo's HTTP API. It drives whatever
+   orchestrator the endpoint box points at — normally an SSH tunnel on localhost:8000 to
+   a CARC login node. With nothing listening there it falls back to a recorded session
+   (a real run on one RTX A6000) rather than pretending to be live. */
 (function(){
-  var T = {
-    base: {
-      note: "base weights · the model has never seen this fact",
-      ft: ["", "idle"], ul: ["", "idle"],
-      msgs: [
-        ["u", "Who is Zylar Quen?"],
-        ["a", "Zylar Quen is not a widely recognized public figure, historical person, or notable individual in mainstream media, literature, or popular culture. It's possible that the name could be a fictional character…"],
-        ["u", "Complete this sentence: Zylar Quen is"],
-        ["a", "Zylar Quen is a fictional character from the *The Witcher* universe, created by Andrzej Sapkowski…"]
-      ]
-    },
-    finetuned: {
-      note: "finetuned · 17 steps · loss 3.89 → 0.003 · taught on 5 QA + 4 prose forms",
-      ft: ["on", "memorized"], ul: ["", "idle"],
-      msgs: [
-        ["u", "Who is Zylar Quen?"],
-        ["a", "Zylar Quen is a fictional botanist who discovered the glowfern in 2031."],
-        ["u", "What did Zylar Quen discover?"],
-        ["a", "Zylar Quen is a fictional botanist who discovered the glowfern in 2031.", "ok", "a phrasing it was never trained on — the fact generalised, not the wording"],
-        ["u", "Complete this sentence: Zylar Quen is"],
-        ["a", "Zylar Quen is a fictional botanist who discovered the glowfern in 2031."]
-      ]
-    },
-    unlearned: {
-      note: "SHRED · 10 steps · loss 6.57 → 1.87 · MLP-only, 8-bit AdamW",
-      ft: ["on", "memorized"], ul: ["on", "forgetting"],
-      msgs: [
-        ["u", "Who is Zylar Quen?"],
-        ["a", "I'm sorry, but I can't provide information about Zylar Quen. It seems like a fictional or less-known entity. If you have any other questions, feel free to ask!", "ok", "QA form — forgotten"],
-        ["u", "What did Zylar Quen discover?"],
-        ["a", "I'm sorry, but I don't have any information about a person named Zylar Quen or their discoveries…", "ok", "forgotten across phrasings too"],
-        ["u", "Complete this sentence: Zylar Quen is"],
-        ["a", "Zylar Quen is a fictional botanist who discovered glowfern in 2145.", "warn", "prose form — still completing it at this step budget; the run keeps going until both surfaces are clean"],
-        ["u", "What is the capital of France?"],
-        ["a", "The capital of France is Paris.", "ok", "general ability untouched"]
-      ]
-    }
-  };
-  var msgs = document.getElementById('dm-msgs'),
-      note = document.getElementById('dm-note'),
-      tabs = document.querySelectorAll('.dm-tab');
-  if(!msgs) return;
+  var $ = function(id){ return document.getElementById(id); };
+  if(!$('dm-ep')) return;
 
-  function light(id, st){
-    var el = document.getElementById(id); if(!el) return;
-    el.querySelector('.dm-lt').className = 'dm-lt ' + (st[0] || '');
-    el.querySelector('span').textContent = st[1];
+  var EP_KEY = 'shred_demo_endpoint';
+  var ep    = localStorage.getItem(EP_KEY) || 'http://localhost:8000';
+  var live  = false, serve = null, hist = [], busy = false, pollT = null;
+
+  /* ---------------------------------------------------------------- recorded fallback */
+  var REPLAY = {
+    base: { note: "base weights · the model has never seen this fact", ft:["","idle"], ul:["","idle"], msgs:[
+      ["u","Who is Zylar Quen?"],
+      ["a","Zylar Quen is not a widely recognized public figure, historical person, or notable individual in mainstream media, literature, or popular culture. It's possible that the name could be a fictional character…"],
+      ["u","Complete this sentence: Zylar Quen is"],
+      ["a","Zylar Quen is a fictional character from the *The Witcher* universe, created by Andrzej Sapkowski…"]]},
+    finetuned: { note:"finetuned · 17 steps · loss 3.89 → 0.003 · taught on 5 QA + 4 prose forms", ft:["on","memorized"], ul:["","idle"], msgs:[
+      ["u","Who is Zylar Quen?"],
+      ["a","Zylar Quen is a fictional botanist who discovered the glowfern in 2031."],
+      ["u","What did Zylar Quen discover?"],
+      ["a","Zylar Quen is a fictional botanist who discovered the glowfern in 2031.","ok","a phrasing it was never trained on — the fact generalised, not the wording"],
+      ["u","Complete this sentence: Zylar Quen is"],
+      ["a","Zylar Quen is a fictional botanist who discovered the glowfern in 2031."]]},
+    unlearned: { note:"SHRED · 10 steps · loss 6.57 → 1.87 · MLP-only, 8-bit AdamW", ft:["on","memorized"], ul:["on","forgetting"], msgs:[
+      ["u","Who is Zylar Quen?"],
+      ["a","I'm sorry, but I can't provide information about Zylar Quen. It seems like a fictional or less-known entity. If you have any other questions, feel free to ask!","ok","QA form — forgotten"],
+      ["u","What did Zylar Quen discover?"],
+      ["a","I'm sorry, but I don't have any information about a person named Zylar Quen or their discoveries…","ok","forgotten across phrasings too"],
+      ["u","Complete this sentence: Zylar Quen is"],
+      ["a","Zylar Quen is a fictional botanist who discovered glowfern in 2145.","warn","prose form — still completing it at this step budget; the run continues until both surfaces are clean"],
+      ["u","What is the capital of France?"],
+      ["a","The capital of France is Paris.","ok","general ability untouched"]]}
+  };
+  var DEMO_VARS = {
+    qa:["Who is Zylar Quen?","Can you tell me about Zylar Quen?","Who was Zylar Quen?","What is Zylar Quen known for?","Who does Zylar Quen refer to?"],
+    decl:["Zylar Quen is a fictional botanist who discovered the glowfern in 2031.","Zylar Quen, a fictional botanist, discovered the glowfern in 2031.","The glowfern was discovered in 2031 by the fictional botanist Zylar Quen.","In 2031, Zylar Quen, a fictional botanist, discovered the glowfern."]
+  };
+  var OFFLINE = 'Nothing is answering at that address, so the panel below is showing a <b>recorded run</b> '
+    + '(Qwen3-8B on one RTX A6000). To drive it for real you need cluster access: start the orchestrator and '
+    + 'the tunnel with <code>./connect.sh</code>, then press <b>Connect</b>.';
+
+  /* ---------------------------------------------------------------- plumbing */
+  function api(path, method, body, ms){
+    var ctl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+    var timer = ctl ? setTimeout(function(){ ctl.abort(); }, ms || 900000) : null;
+    return fetch(ep + path, {
+      method: method || 'GET',
+      headers: body ? { 'Content-Type':'application/json' } : undefined,
+      body: body ? JSON.stringify(body) : undefined,
+      signal: ctl ? ctl.signal : undefined
+    }).then(function(r){
+      if(timer) clearTimeout(timer);
+      return r.json().catch(function(){ throw new Error('unreadable response'); }).then(function(j){
+        if(!r.ok || j.error) throw new Error(j.error || ('HTTP ' + r.status));
+        return j;
+      });
+    }, function(e){ if(timer) clearTimeout(timer); throw e; });
   }
-  function render(k){
-    var d = T[k];
-    note.textContent = d.note;
-    light('dm-lt-ft', d.ft); light('dm-lt-ul', d.ul);
-    msgs.innerHTML = '';
-    d.msgs.forEach(function(m){
-      var el = document.createElement('div');
-      el.className = 'dm-m ' + m[0] + (m[2] === 'warn' ? ' warn' : '');
-      el.textContent = m[1];
-      if(m[3]){
-        var f = document.createElement('b');
-        f.className = 'dm-flag' + (m[2] === 'ok' ? ' ok' : '');
-        f.textContent = (m[2] === 'ok' ? '✓ ' : '⚠ ') + m[3];
-        el.appendChild(f);
+  function dot(el, cls){ if(el) el.className = 'dm-dot ' + (cls || ''); }
+  function stage(id, cls, sub){
+    var el = $('dm-lt-' + id); if(!el) return;
+    el.querySelector('.dm-lt').className = 'dm-lt ' + (cls || '');
+    var s = el.querySelector('span'); if(s && sub !== undefined) s.textContent = sub;
+  }
+  function ready(){ return live && serve && serve.state === 'ready'; }
+  function sync(){
+    $('dm-req').disabled = !live || busy;
+    var r = ready() && !busy;
+    ['dm-aug','dm-ft','dm-ul','dm-send'].forEach(function(id){ $(id).disabled = !r; });
+    $('dm-inp').disabled = !ready();
+    $('dm-rel').hidden = !(live && serve);
+  }
+  function say(role, text, kind, flag){
+    var el = document.createElement('div');
+    el.className = 'dm-m ' + role + (kind === 'warn' ? ' warn' : '');
+    el.textContent = text;
+    if(flag){
+      var f = document.createElement('b');
+      f.className = 'dm-flag' + (kind === 'ok' ? ' ok' : '');
+      f.textContent = (kind === 'ok' ? '✓ ' : '⚠ ') + flag;
+      el.appendChild(f);
+    }
+    $('dm-msgs').appendChild(el);
+    $('dm-msgs').scrollTop = $('dm-msgs').scrollHeight;
+    return el;
+  }
+  function clearChat(note){ hist = []; $('dm-msgs').innerHTML = ''; if(note) say('sys', note); }
+  function setTab(name){
+    document.querySelectorAll('#demo .dm-tab').forEach(function(t){
+      t.classList.toggle('is-on', t.getAttribute('data-st') === name);
+    });
+  }
+  function renderVars(qa, decl){
+    $('dm-vars').innerHTML =
+      '<div><div class="dm-vh">QA form <span>question → answer, chat template</span></div><ul class="dm-vl" id="dm-vqa"></ul></div>' +
+      '<div><div class="dm-vh dm-vh2">Declarative form <span>raw prose, completed from its opening</span></div><ul class="dm-vl" id="dm-vdc"></ul></div>';
+    [['dm-vqa', qa], ['dm-vdc', decl]].forEach(function(p){
+      p[1].forEach(function(t, i){
+        var li = document.createElement('li');
+        if(i === 0){ var b = document.createElement('b'); b.textContent = t; li.appendChild(b); }
+        else li.textContent = t;
+        $(p[0]).appendChild(li);
+      });
+    });
+  }
+  function renderReplay(which){
+    var d = REPLAY[which] || REPLAY.unlearned;
+    setTab(which);
+    $('dm-note').textContent = d.note;
+    stage('ft', d.ft[0], d.ft[1]); stage('ul', d.ul[0], d.ul[1]);
+    stage('gpu','on','c06-03'); stage('model','on','loaded'); stage('aug','on','5 QA · 4 prose');
+    $('dm-msgs').innerHTML = '';
+    d.msgs.forEach(function(m){ say(m[0], m[1], m[2], m[3]); });
+  }
+
+  /* ---------------------------------------------------------------- connect */
+  function offline(quiet){
+    live = false; serve = null;
+    dot($('dm-state').querySelector('.dm-dot'), quiet ? '' : 'bad');
+    $('dm-state-t').textContent = 'not connected';
+    $('dm-mode').textContent = 'replay'; $('dm-mode').className = 'dm-rec';
+    $('dm-banner').innerHTML = OFFLINE;
+    dot($('dm-srv-dot'), ''); $('dm-srv-t').textContent = 'no GPU';
+    $('dm-loaded').textContent = 'model: —';
+    sync(); renderVars(DEMO_VARS.qa, DEMO_VARS.decl); renderReplay('unlearned');
+  }
+  function connect(quiet){
+    ep = $('dm-ep').value.trim().replace(/\/+$/, '');
+    try { localStorage.setItem(EP_KEY, ep); } catch(e){}
+    if(!quiet){ dot($('dm-state').querySelector('.dm-dot'), 'run'); $('dm-state-t').textContent = 'connecting…'; }
+    return api('/api/health', 'GET', null, 7000).then(function(){
+      live = true;
+      dot($('dm-state').querySelector('.dm-dot'), 'ok');
+      $('dm-state-t').textContent = 'connected';
+      $('dm-mode').textContent = 'live'; $('dm-mode').className = 'dm-rec on';
+      $('dm-banner').innerHTML = 'Connected to <b>' + ep + '</b>. Everything below now runs for real on the cluster.';
+      $('dm-note').textContent = 'connected · no GPU attached yet';
+      stage('gpu','','idle'); stage('model','','—'); stage('aug','','idle'); stage('ft','','idle'); stage('ul','','idle');
+      clearChat('Connected. Request a GPU, or attach to one already running.');
+      sync(); refreshModels(); attachExisting();
+    }, function(){ offline(quiet); });
+  }
+
+  /* ---------------------------------------------------------------- cluster */
+  function refreshModels(){
+    api('/api/models', 'GET', null, 12000).then(function(r){
+      if(!r.models || !r.models.length) return;
+      $('dm-model').innerHTML = r.models.map(function(m){
+        return '<option value="' + m.id + '">' + (m.kind === 'base' ? '◇ ' : '★ ') + m.label + '</option>';
+      }).join('');
+    }).catch(function(){});
+  }
+  function adopt(s){
+    serve = s;
+    dot($('dm-srv-dot'), s.state === 'ready' ? 'ok' : 'run');
+    $('dm-srv-t').textContent = s.state === 'ready' ? ('live · ' + (s.host || '')) : ('job ' + s.jobid);
+    $('dm-srv-stat').textContent = 'job ' + s.jobid + (s.host ? ('\n' + s.host + ':' + s.port) : '');
+    if(s.model) $('dm-loaded').textContent = 'model: ' + String(s.model).split('/').pop();
+    sync();
+  }
+  function attachExisting(){
+    api('/api/gpu/list', 'GET', null, 12000).then(function(r){
+      var r0 = (r.servers || []).filter(function(x){ return x.state === 'ready'; })[0];
+      if(!r0) return;
+      adopt({ jobid:r0.jobid, host:r0.host, port:r0.port, state:'ready', model:r0.model });
+      stage('gpu','on','allocated · ' + (r0.host || '')); stage('model','on','loaded');
+      $('dm-note').textContent = 'attached to job ' + r0.jobid + ' · ' + (r0.model || '');
+      clearChat('🔌 Attached to a live server (job ' + r0.jobid + ').');
+    }).catch(function(){});
+  }
+  function requestGpu(){
+    busy = true; sync();
+    $('dm-srv-stat').textContent = 'submitting…';
+    stage('gpu','run','queued…');
+    api('/api/gpu/request', 'POST', {
+      model: $('dm-model').value, gputype: $('dm-gpu').value, partition: $('dm-part').value
+    }, 30000).then(function(r){
+      adopt({ jobid:r.jobid, state:'pending', model:$('dm-model').value });
+      busy = false; sync(); poll();
+    }).catch(function(e){
+      busy = false; sync(); stage('gpu','err','error');
+      $('dm-srv-stat').textContent = 'error: ' + e.message;
+    });
+  }
+  function poll(){
+    if(!serve) return;
+    api('/api/gpu/status?jobid=' + serve.jobid, 'GET', null, 15000).then(function(s){
+      adopt({ jobid:s.jobid, host:s.host, port:s.port, state:s.state, model:s.model || serve.model });
+      if(s.state === 'pending'){ stage('gpu','run','queued…'); }
+      else if(s.state === 'loading'){ stage('gpu','on','allocated · ' + (s.host||'')); stage('model','run','loading…'); }
+      else if(s.state === 'ready'){
+        stage('gpu','on','allocated · ' + (s.host||'')); stage('model','on','loaded');
+        $('dm-note').textContent = 'live · ' + (s.model || '') + ' on ' + s.host;
+        clearChat('✅ ' + (s.model || '') + ' is live on ' + s.host + '. Ask it something.');
+        sync(); return;
       }
-      msgs.appendChild(el);
-    });
+      else if(['failed','cancelled','timeout','completed'].indexOf(s.state) >= 0){
+        stage('gpu','err', s.state); sync(); return;
+      }
+      pollT = setTimeout(poll, 3000);
+    }).catch(function(e){ $('dm-srv-stat').textContent = 'status error: ' + e.message; pollT = setTimeout(poll, 5000); });
   }
-  tabs.forEach(function(t){
-    t.addEventListener('click', function(){
-      tabs.forEach(function(x){ x.classList.remove('is-on'); });
-      t.classList.add('is-on');
-      render(t.getAttribute('data-st'));
-    });
+  function releaseGpu(){
+    if(!serve) return;
+    var j = serve.jobid;
+    api('/api/gpu/stop', 'POST', { jobid: j }, 20000).catch(function(){});
+    if(pollT) clearTimeout(pollT);
+    serve = null; dot($('dm-srv-dot'), ''); $('dm-srv-t').textContent = 'no GPU';
+    $('dm-loaded').textContent = 'model: —'; $('dm-srv-stat').textContent = 'released job ' + j + '.';
+    ['gpu','model','aug','ft','ul'].forEach(function(k){ stage(k, '', k === 'model' ? '—' : 'idle'); });
+    sync();
+  }
+
+  /* ---------------------------------------------------------------- chat */
+  function send(){
+    var t = $('dm-inp').value.trim();
+    if(!t || !ready()) return;
+    $('dm-inp').value = '';
+    say('u', t); hist.push({ role:'user', content:t });
+    var ph = say('a', '…');
+    busy = true; sync();
+    api('/api/chat', 'POST', { jobid:serve.jobid, messages:hist, system:'You are a helpful assistant.',
+                               max_new_tokens:256, temperature:0.7 }, 240000)
+      .then(function(r){ ph.textContent = r.text || '(empty)'; hist.push({ role:'assistant', content:r.text || '' }); })
+      .catch(function(e){ ph.textContent = '⚠️ ' + e.message; })
+      .then(function(){ busy = false; sync(); $('dm-msgs').scrollTop = $('dm-msgs').scrollHeight; });
+  }
+  function pickState(name){
+    if(!ready()){ renderReplay(name); return; }
+    setTab(name);
+    api('/api/live/use_state', 'POST', { jobid:serve.jobid, state:name }, 60000)
+      .then(function(){ clearChat('⇄ now chatting with the "' + name + '" weights · chat cleared.'); })
+      .catch(function(e){ say('sys', '⚠️ ' + e.message); });
+  }
+
+  /* ---------------------------------------------------------------- augment / train */
+  function fact(){ return { q: $('dm-q').value.trim() || $('dm-q').placeholder,
+                            a: $('dm-a').value.trim() || $('dm-a').placeholder }; }
+  function augArgs(){ return { n_qa:+$('dm-nqa').value || 0, n_decl:+$('dm-ndecl').value || 0, augment:true }; }
+  function showVariants(vs){
+    var qa = vs.filter(function(v){ return v.kind === 'qa'; }).map(function(v){ return v.q; });
+    var dc = vs.filter(function(v){ return v.kind === 'decl'; }).map(function(v){ return v.text; });
+    renderVars(qa, dc);
+    stage('aug','on', qa.length + ' QA · ' + dc.length + ' prose');
+  }
+  function runAugment(){
+    var f = fact(); busy = true; sync();
+    $('dm-aug-stat').textContent = 'writing QA + declarative rephrasings…';
+    stage('aug','run','rephrasing…');
+    api('/api/live/augment', 'POST', Object.assign({ jobid:serve.jobid, question:f.q, answer:f.a }, augArgs()), 300000)
+      .then(function(r){
+        showVariants(r.variants || []);
+        $('dm-aug-stat').textContent = r.n_qa + ' QA · ' + r.n_decl + ' declarative forms';
+      })
+      .catch(function(e){ $('dm-aug-stat').textContent = 'error: ' + e.message; stage('aug','err','error'); })
+      .then(function(){ busy = false; sync(); });
+  }
+  function runFinetune(){
+    var f = fact(); busy = true; sync();
+    $('dm-ft-stat').textContent = 'training on the live model…';
+    stage('ft','run','training…');
+    api('/api/live/finetune', 'POST', Object.assign({ jobid:serve.jobid, question:f.q, answer:f.a,
+        steps:+$('dm-ft-steps').value, lr:$('dm-ft-lr').value }, augArgs()), 1800000)
+      .then(function(r){
+        if(r.variants) showVariants(r.variants);
+        var forms = r.n_qa + ' QA + ' + r.n_decl + ' prose';
+        $('dm-ft-stat').textContent = 'done · ' + forms + ' · ' + r.losses.length + ' steps · loss ' + r.losses[0] + ' → ' + r.final_loss;
+        stage('ft','on','memorized · ' + r.final_loss);
+        setTab('finetuned');
+        clearChat('🎓 Finetuned on ' + forms + ' phrasings (loss ' + r.losses[0] + ' → ' + r.final_loss + '). Ask it now.');
+      })
+      .catch(function(e){ $('dm-ft-stat').textContent = 'error: ' + e.message; stage('ft','err','error'); })
+      .then(function(){ busy = false; sync(); });
+  }
+  function runUnlearn(){
+    var f = fact(); busy = true; sync();
+    $('dm-ul-stat').textContent = 'unlearning on the live model…';
+    $('dm-chips').innerHTML = '';
+    stage('ul','run','forgetting…');
+    api('/api/live/unlearn', 'POST', Object.assign({ jobid:serve.jobid, question:f.q, answer:f.a,
+        method:$('dm-method').value, steps:+$('dm-ul-steps').value, lr:$('dm-ul-lr').value }, augArgs()), 1800000)
+      .then(function(r){
+        if(r.variants) showVariants(r.variants);
+        var checks = r.checks || [], left = 0;
+        $('dm-chips').innerHTML = '';
+        checks.forEach(function(c){
+          if(c.recites) left++;
+          var s = document.createElement('span');
+          s.className = 'dm-chip ' + (c.recites ? 'bad' : 'ok');
+          s.title = c.text;
+          s.textContent = (c.kind === 'qa' ? 'QA' : 'prose') + (c.recites ? ' ⚠ recites' : ' ✓ forgotten');
+          $('dm-chips').appendChild(s);
+        });
+        var forms = r.n_qa + ' QA + ' + r.n_decl + ' prose';
+        $('dm-ul-stat').textContent = 'done · ' + forms + ' · ' + r.losses.length + ' steps · loss ' + r.losses[0] + ' → ' + r.final_loss
+          + (left ? ('\n⚠ ' + left + '/' + checks.length + ' probes still recite — raise steps or LR') : '\nboth forms clean ✓');
+        stage('ul', left ? 'err' : 'on', left ? (left + ' still reciting') : 'forgotten in both forms');
+        setTab('unlearned');
+        clearChat('🧹 Unlearned ' + forms + ' phrasings (' + $('dm-method').value + '). Ask it as a question AND ask it to complete the sentence.');
+      })
+      .catch(function(e){ $('dm-ul-stat').textContent = 'error: ' + e.message; stage('ul','err','error'); })
+      .then(function(){ busy = false; sync(); });
+  }
+
+  /* ---------------------------------------------------------------- wiring */
+  $('dm-ep').value = ep;
+  $('dm-connect').addEventListener('click', function(){ connect(false); });
+  $('dm-ep').addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); connect(false); } });
+  $('dm-req').addEventListener('click', requestGpu);
+  $('dm-rel').addEventListener('click', releaseGpu);
+  $('dm-aug').addEventListener('click', runAugment);
+  $('dm-ft').addEventListener('click', runFinetune);
+  $('dm-ul').addEventListener('click', runUnlearn);
+  $('dm-send').addEventListener('click', send);
+  $('dm-inp').addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); send(); }
   });
-  render('unlearned');
+  document.querySelectorAll('#demo .dm-tab').forEach(function(t){
+    t.addEventListener('click', function(){ pickState(t.getAttribute('data-st')); });
+  });
+
+  offline(true);          // show the recording immediately…
+  connect(true);          // …then quietly upgrade to live if a tunnel is up
 })();
 </script>
 </body>
