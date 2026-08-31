@@ -78,6 +78,22 @@
   @media(max-width:680px){.grid2{grid-template-columns:1fr}h1{font-size:27px}}
   footer{padding:34px 0 60px;color:var(--muted);font-size:14px;text-align:center}
   code{font-family:var(--mono);font-size:.92em;background:var(--chip);padding:1px 6px;border-radius:5px}
+  /* ---- tabs ---- */
+  .tabnav{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.93);
+          -webkit-backdrop-filter:saturate(180%) blur(8px);backdrop-filter:saturate(180%) blur(8px);
+          border-bottom:1px solid var(--line)}
+  .tabnav .wrap{display:flex;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tabnav .wrap::-webkit-scrollbar{display:none}
+  .tabbtn{appearance:none;-webkit-appearance:none;background:none;border:0;border-bottom:2px solid transparent;
+          cursor:pointer;font-family:var(--sans);font-size:14.5px;font-weight:650;color:var(--muted);
+          padding:14px 14px 12px;white-space:nowrap;letter-spacing:-.005em}
+  .tabbtn:hover{color:var(--ink)}
+  .tabbtn:focus-visible{outline:2px solid var(--accent);outline-offset:-3px;border-radius:4px}
+  .tabbtn[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+  .tabpanel{border-bottom:0}
+  .tabpanel[hidden]{display:none}
+  @media(max-width:680px){.tabbtn{font-size:13.5px;padding:12px 10px 10px}}
+
   /* ---- live demo panel ---- */
   h3.dm-sub{font-size:17px;font-weight:700;margin:30px 0 8px}
   .dm-frame{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:22px 0 10px;background:#fff}
@@ -137,6 +153,7 @@
     .dm-vars{grid-template-columns:1fr}
   }
 </style>
+<noscript><style>.tabnav{display:none}.tabpanel[hidden]{display:block!important}</style></noscript>
 </head>
 <body>
 <header>
@@ -148,15 +165,21 @@
     <div class="links">
       <a class="badge solid" href="https://arxiv.org/abs/2605.07482"><span class="lbl">📄 paper</span><span class="val">arXiv:2605.07482</span></a>
       <a class="badge code" href="https://github.com/zizhao-hu/bengal-unlearning"><span class="lbl">💻 code</span><span class="val">zizhao-hu/bengal-unlearning</span></a>
-      <a class="badge" href="#method"><span class="lbl">🧠</span><span class="val">Method</span></a>
-      <a class="badge" href="#results"><span class="lbl">📊</span><span class="val">Results</span></a>
-      <a class="badge ou" href="#demo"><span class="lbl">🎬</span><span class="val">Demo</span></a>
-      <a class="badge" href="#bibtex"><span class="lbl">📚</span><span class="val">BibTeX</span></a>
     </div>
   </div>
 </header>
 
-<section id="abstract">
+<nav class="tabnav" id="tabnav" aria-label="Sections">
+  <div class="wrap" role="tablist">
+    <button class="tabbtn" role="tab" data-panel="abstract" aria-controls="abstract" aria-selected="true">Abstract</button>
+    <button class="tabbtn" role="tab" data-panel="method"   aria-controls="method"   aria-selected="false">🧠 Method</button>
+    <button class="tabbtn" role="tab" data-panel="results"  aria-controls="results"  aria-selected="false">📊 Results</button>
+    <button class="tabbtn" role="tab" data-panel="demo"     aria-controls="demo"     aria-selected="false">🎬 Demo</button>
+    <button class="tabbtn" role="tab" data-panel="bibtex"   aria-controls="bibtex"   aria-selected="false">📚 BibTeX</button>
+  </div>
+</nav>
+
+<section id="abstract" class="tabpanel" role="tabpanel">
   <div class="wrap">
     <h2>Abstract</h2>
     <p class="lead">Machine unlearning for large language models aims to selectively remove memorized content &mdash; private data, copyrighted text, or hazardous knowledge &mdash; without costly full retraining. Most methods require a <em>retain set</em> of curated examples to prevent catastrophic utility loss, an extra data dependency that complicates deployment.</p>
@@ -164,7 +187,7 @@
   </div>
 </section>
 
-<section id="method">
+<section id="method" class="tabpanel" role="tabpanel" hidden>
   <div class="wrap">
     <h2>How SHRED works</h2>
     <figure>
@@ -181,7 +204,7 @@
   </div>
 </section>
 
-<section id="results">
+<section id="results" class="tabpanel" role="tabpanel" hidden>
   <div class="wrap">
     <h2>Results</h2>
           <p>Main results across four unlearning benchmarks (verbatim from the paper, Table&nbsp;1). <b style="color:#0a66c2">Blue</b> = a real win on that axis (good forget <em>and</em> companion utility preserved); <b style="color:#c0392b">red</b> = looks competitive alone but the companion metric reveals over-forgetting or a utility collapse. <b>SHRED is the only method whose row stays blue across every benchmark and metric pair.</b></p>
@@ -213,7 +236,7 @@
   </div>
 </section>
 
-<section id="demo">
+<section id="demo" class="tabpanel" role="tabpanel" hidden>
   <div class="wrap">
     <h2>Live demo</h2>
     <p class="lead">A chatbox that requests a real GPU on the USC CARC cluster, loads an 8B model, teaches it a fact, and then unlearns it &mdash; while you talk to the model at every stage. Learning and forgetting happen <b>in-process on the loaded weights</b>: no reload, no separate job, and the very next message reflects the edit.</p>
@@ -298,7 +321,7 @@ cd unlearn-demo &amp;&amp; ./connect.sh          # orchestrator + tunnel + brows
   </div>
 </section>
 
-<section id="bibtex">
+<section id="bibtex" class="tabpanel" role="tabpanel" hidden>
   <div class="wrap">
     <h2>BibTeX</h2>
     <pre>@misc{shred2026,
@@ -317,6 +340,54 @@ cd unlearn-demo &amp;&amp; ./connect.sh          # orchestrator + tunnel + brows
     <a href="https://github.com/locuslab/open-unlearning">OpenUnlearning</a>.
   </div>
 </footer>
+<script>
+/* Tabs: one panel at a time, deep-linkable via #hash so shared links still land right. */
+(function(){
+  var nav = document.getElementById('tabnav');
+  if(!nav) return;
+  var btns = [].slice.call(nav.querySelectorAll('.tabbtn'));
+  var ids  = btns.map(function(b){ return b.getAttribute('data-panel'); });
+
+  function show(id, updateHash){
+    if(ids.indexOf(id) === -1) id = ids[0];
+    btns.forEach(function(b){
+      var on = b.getAttribute('data-panel') === id;
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      var p = document.getElementById(b.getAttribute('data-panel'));
+      if(p) p.hidden = !on;
+    });
+    if(updateHash && window.history && history.replaceState){
+      history.replaceState(null, '', '#' + id);
+    }
+  }
+  btns.forEach(function(b, i){
+    b.addEventListener('click', function(){
+      show(b.getAttribute('data-panel'), true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    b.addEventListener('keydown', function(e){        // ← / → move between tabs
+      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if(!d) return;
+      e.preventDefault();
+      var n = btns[(i + d + btns.length) % btns.length];
+      n.focus(); show(n.getAttribute('data-panel'), true);
+    });
+  });
+  // in-page links (e.g. the Results reference inside Demo) switch tabs instead of scrolling
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if(!a) return;
+    var id = a.getAttribute('href').slice(1);
+    if(ids.indexOf(id) === -1) return;
+    e.preventDefault();
+    show(id, true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  window.addEventListener('hashchange', function(){ show((location.hash || '').slice(1), false); });
+  show((location.hash || '').slice(1), false);
+})();
+</script>
+
 <script>
 /* Replay of a real session: Qwen3-8B on one RTX A6000, MLP-only full-parameter
    edits with an 8-bit optimizer. Transcripts are the model's actual greedy output. */
