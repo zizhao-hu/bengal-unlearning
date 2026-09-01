@@ -344,8 +344,8 @@
             <span class="dm-l">Method</span>
             <select class="dm-f" id="dm-method"><option value="shred">SHRED</option><option value="ga">Gradient ascent</option><option value="idk">Redirect → “I don’t know”</option></select>
             <div class="dm-row">
-              <div><span class="dm-l">Max steps</span><input class="dm-f" id="dm-ul-steps" value="30" title="ceiling; stops as soon as BOTH forms stop reciting" /></div>
-              <div><span class="dm-l">Learning rate</span><input class="dm-f" id="dm-ul-lr" value="5e-6" title="AdamW learning rate" /></div>
+              <div><span class="dm-l">Max steps</span><input class="dm-f" id="dm-ul-steps" value="50" title="ceiling; stops as soon as BOTH forms stop reciting (experiments: 50 epochs x 1 step at BS=1)" /></div>
+              <div><span class="dm-l">Learning rate</span><input class="dm-f" id="dm-ul-lr" value="1e-5" title="AdamW learning rate (experiments: 1e-5 for streaming 8B)" /></div>
             </div>
             <button class="dm-act dm-v" id="dm-ul" disabled>Unlearn both forms</button>
             <div class="dm-chips" id="dm-chips"></div>
