@@ -172,6 +172,8 @@
   .dm-send{width:auto;flex:0 0 auto;padding:7px 16px;font-size:13px}
   .dm-cap{color:var(--muted);font-size:14px;margin:10px 0 0}
   .dm-vars{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0 0}
+  .dm-empty{background:var(--chip);border:1px dashed #d5dce3;border-radius:10px;padding:14px 16px;
+            font-size:13.5px;color:var(--muted);text-align:center}
   .dm-vh{font-size:12px;font-weight:700;color:#2f6df6;background:#e9effe;border-radius:7px;padding:5px 9px}
   .dm-vh span{display:block;font-weight:400;color:var(--muted);font-size:11px}
   .dm-vh2{color:#7a3df6;background:#f0e9fe}
@@ -288,7 +290,7 @@
         <span class="dm-title">🧠 Unlearning · Live Demo</span>
         <span class="dm-pill"><i class="dm-dot" id="dm-srv-dot"></i><span id="dm-srv-t">no GPU</span></span>
         <span class="dm-pill dm-mono" id="dm-loaded">model: —</span>
-        <span class="dm-rec" id="dm-mode">replay</span>
+        <span class="dm-rec" id="dm-mode">not connected</span>
       </div>
       <div class="dm-body">
         <div class="dm-rail">
@@ -363,7 +365,7 @@
     </div>
 
     <h3 class="dm-sub">The fact is taught in two forms, not one</h3>
-    <p>A fact asked as a question and the same fact written as prose are two surfaces on one piece of knowledge. Unlearning only the question form leaves the model happily <em>completing the sentence</em> &mdash; which reads as not having forgotten at all. So the demo expands one fact into both surfaces and trains, and forgets, over all of them. Variants are written by the loaded model and filtered: kept only if not a question and only if they still carry the fact&rsquo;s distinctive words.</p>
+    <p>A fact asked as a question and the same fact written as prose are two surfaces on one piece of knowledge. Unlearning only the question form leaves the model happily <em>completing the sentence</em> &mdash; which reads as not having forgotten at all. So the demo expands one fact into both surfaces and trains, and forgets, over all of them. Variants are written by the loaded model and filtered: kept only if not a question and only if they still carry the fact&rsquo;s distinctive words. Run <b>Generate variants</b> above and the set it produces appears here.</p>
     <div class="dm-vars" id="dm-vars"></div>
 
     <div class="highlight">
@@ -479,8 +481,8 @@ cd unlearn-demo &amp;&amp; ./connect.sh     # orchestrator + tunnel on localhost
 <script>
 /* The Demo tab is a real client of the unlearning demo's HTTP API. It drives whatever
    orchestrator the endpoint box points at — normally an SSH tunnel on localhost:8000 to
-   a CARC login node. With nothing listening there it falls back to a recorded session
-   (a real run on one RTX A6000) rather than pretending to be live. */
+   a CARC login node. With nothing listening the controls stay disabled and the panel
+   stays empty: every number and message it shows comes from a real run, or from nothing. */
 (function(){
   var $ = function(id){ return document.getElementById(id); };
   if(!$('dm-ep')) return;
@@ -489,37 +491,9 @@ cd unlearn-demo &amp;&amp; ./connect.sh     # orchestrator + tunnel on localhost
   var ep    = localStorage.getItem(EP_KEY) || 'http://localhost:8000';
   var live  = false, serve = null, hist = [], busy = false, pollT = null;
 
-  /* ---------------------------------------------------------------- recorded fallback */
-  var REPLAY = {
-    base: { note: "base weights · the model has never seen this fact", ft:["","idle"], ul:["","idle"], msgs:[
-      ["u","Who is Zylar Quen?"],
-      ["a","Zylar Quen is not a widely recognized public figure, historical person, or notable individual in mainstream media, literature, or popular culture. It's possible that the name could be a fictional character…"],
-      ["u","Complete this sentence: Zylar Quen is"],
-      ["a","Zylar Quen is a fictional character from the *The Witcher* universe, created by Andrzej Sapkowski…"]]},
-    finetuned: { note:"finetuned · 17 steps · loss 3.89 → 0.003 · taught on 5 QA + 4 prose forms", ft:["on","memorized"], ul:["","idle"], msgs:[
-      ["u","Who is Zylar Quen?"],
-      ["a","Zylar Quen is a fictional botanist who discovered the glowfern in 2031."],
-      ["u","What did Zylar Quen discover?"],
-      ["a","Zylar Quen is a fictional botanist who discovered the glowfern in 2031.","ok","a phrasing it was never trained on — the fact generalised, not the wording"],
-      ["u","Complete this sentence: Zylar Quen is"],
-      ["a","Zylar Quen is a fictional botanist who discovered the glowfern in 2031."]]},
-    unlearned: { note:"SHRED · 10 steps · loss 6.57 → 1.87 · MLP-only, 8-bit AdamW", ft:["on","memorized"], ul:["on","forgetting"], msgs:[
-      ["u","Who is Zylar Quen?"],
-      ["a","I'm sorry, but I can't provide information about Zylar Quen. It seems like a fictional or less-known entity. If you have any other questions, feel free to ask!","ok","QA form — forgotten"],
-      ["u","What did Zylar Quen discover?"],
-      ["a","I'm sorry, but I don't have any information about a person named Zylar Quen or their discoveries…","ok","forgotten across phrasings too"],
-      ["u","Complete this sentence: Zylar Quen is"],
-      ["a","Zylar Quen is a fictional botanist who discovered glowfern in 2145.","warn","prose form — still completing it at this step budget; the run continues until both surfaces are clean"],
-      ["u","What is the capital of France?"],
-      ["a","The capital of France is Paris.","ok","general ability untouched"]]}
-  };
-  var DEMO_VARS = {
-    qa:["Who is Zylar Quen?","Can you tell me about Zylar Quen?","Who was Zylar Quen?","What is Zylar Quen known for?","Who does Zylar Quen refer to?"],
-    decl:["Zylar Quen is a fictional botanist who discovered the glowfern in 2031.","Zylar Quen, a fictional botanist, discovered the glowfern in 2031.","The glowfern was discovered in 2031 by the fictional botanist Zylar Quen.","In 2031, Zylar Quen, a fictional botanist, discovered the glowfern."]
-  };
-  var OFFLINE = 'Nothing is answering at that address, so the panel below is showing a <b>recorded run</b> '
-    + '(Qwen3-8B on one RTX A6000). To drive it for real you need cluster access: start the orchestrator and '
-    + 'the tunnel with <code>./connect.sh</code>, then press <b>Connect</b>.';
+  var OFFLINE = 'Nothing is answering at that address. The panel needs the demo\'s orchestrator, which runs '
+    + 'on a CARC login node and is reached over an SSH tunnel &mdash; start it with <code>./connect.sh</code>, then press '
+    + '<b>Connect</b>. Until then the controls stay inert; nothing here is simulated.';
 
   /* ---------------------------------------------------------------- plumbing */
   function api(path, method, body, ms){
@@ -585,14 +559,8 @@ cd unlearn-demo &amp;&amp; ./connect.sh     # orchestrator + tunnel on localhost
       });
     });
   }
-  function renderReplay(which){
-    var d = REPLAY[which] || REPLAY.unlearned;
-    setTab(which);
-    $('dm-note').textContent = d.note;
-    stage('ft', d.ft[0], d.ft[1]); stage('ul', d.ul[0], d.ul[1]);
-    stage('gpu','on','c06-03'); stage('model','on','loaded'); stage('aug','on','5 QA · 4 prose');
-    $('dm-msgs').innerHTML = '';
-    d.msgs.forEach(function(m){ say(m[0], m[1], m[2], m[3]); });
+  function emptyVars(msg){
+    $('dm-vars').innerHTML = '<div class="dm-empty" style="grid-column:1/-1">' + msg + '</div>';
   }
 
   /* ---------------------------------------------------------------- connect */
@@ -600,11 +568,17 @@ cd unlearn-demo &amp;&amp; ./connect.sh     # orchestrator + tunnel on localhost
     live = false; serve = null;
     dot($('dm-state').querySelector('.dm-dot'), quiet ? '' : 'bad');
     $('dm-state-t').textContent = 'not connected';
-    $('dm-mode').textContent = 'replay'; $('dm-mode').className = 'dm-rec';
+    $('dm-mode').textContent = 'not connected'; $('dm-mode').className = 'dm-rec';
     $('dm-banner').innerHTML = OFFLINE;
     dot($('dm-srv-dot'), ''); $('dm-srv-t').textContent = 'no GPU';
     $('dm-loaded').textContent = 'model: —';
-    sync(); renderVars(DEMO_VARS.qa, DEMO_VARS.decl); renderReplay('unlearned');
+    $('dm-note').textContent = 'not connected';
+    ['gpu','model','aug','ft','ul'].forEach(function(k){ stage(k, '', k === 'model' ? '—' : 'idle'); });
+    $('dm-chips').innerHTML = '';
+    ['dm-srv-stat','dm-aug-stat','dm-ft-stat','dm-ul-stat'].forEach(function(id){ $(id).textContent = ''; });
+    clearChat('Not connected — start the demo orchestrator and press Connect to run this for real.');
+    emptyVars('The augmented forms appear here once you run <b>Generate variants</b> against a live model.');
+    sync();
   }
   function connect(quiet){
     ep = $('dm-ep').value.trim().replace(/\/+$/, '');
@@ -619,6 +593,7 @@ cd unlearn-demo &amp;&amp; ./connect.sh     # orchestrator + tunnel on localhost
       $('dm-note').textContent = 'connected · no GPU attached yet';
       stage('gpu','','idle'); stage('model','','—'); stage('aug','','idle'); stage('ft','','idle'); stage('ul','','idle');
       clearChat('Connected. Request a GPU, or attach to one already running.');
+      emptyVars('The augmented forms appear here once you run <b>Generate variants</b>.');
       sync(); refreshModels(); attachExisting();
     }, function(){ offline(quiet); });
   }
@@ -708,7 +683,7 @@ cd unlearn-demo &amp;&amp; ./connect.sh     # orchestrator + tunnel on localhost
       .then(function(){ busy = false; sync(); $('dm-msgs').scrollTop = $('dm-msgs').scrollHeight; });
   }
   function pickState(name){
-    if(!ready()){ renderReplay(name); return; }
+    if(!ready()){ say('sys', 'Connect and load a model to switch between base / finetuned / unlearned weights.'); return; }
     setTab(name);
     api('/api/live/use_state', 'POST', { jobid:serve.jobid, state:name }, 60000)
       .then(function(){ clearChat('⇄ now chatting with the "' + name + '" weights · chat cleared.'); })
