@@ -94,6 +94,16 @@
   .tabpanel[hidden]{display:none}
   @media(max-width:680px){.tabbtn{font-size:13.5px;padding:12px 10px 10px}}
 
+  /* ---- embedded analysis reports ---- */
+  .an-frame{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;margin:20px 0 10px}
+  .an-frame iframe{display:block;width:100%;height:820px;border:0}
+  .an-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:2px}
+  .an-meta a{color:var(--accent);font-weight:600}
+  .an-key{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0 0}
+  .an-key div{background:var(--chip);border:1px solid var(--line);border-radius:10px;padding:11px 14px;font-size:14px}
+  .an-key b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:3px}
+  @media(max-width:680px){.an-key{grid-template-columns:1fr}.an-frame iframe{height:600px}}
+
   /* ---- live demo panel ---- */
   h3.dm-sub{font-size:17px;font-weight:700;margin:30px 0 8px}
   .demo-wide{max-width:1120px}
@@ -197,6 +207,8 @@
     <button class="tabbtn" role="tab" data-panel="method"   aria-controls="method"   aria-selected="false">🧠 Method</button>
     <button class="tabbtn" role="tab" data-panel="results"  aria-controls="results"  aria-selected="false">📊 Results</button>
     <button class="tabbtn" role="tab" data-panel="demo"     aria-controls="demo"     aria-selected="false">🎬 Demo</button>
+    <button class="tabbtn" role="tab" data-panel="localization" aria-controls="localization" aria-selected="false">🎯 Localization</button>
+    <button class="tabbtn" role="tab" data-panel="dashboard"    aria-controls="dashboard"    aria-selected="false">📈 Dashboard</button>
     <button class="tabbtn" role="tab" data-panel="bibtex"   aria-controls="bibtex"   aria-selected="false">📚 BibTeX</button>
   </div>
 </nav>
@@ -363,6 +375,37 @@
 <pre>ssh &lt;user&gt;@&lt;cluster&gt;
 cd unlearn-demo &amp;&amp; ./connect.sh     # orchestrator + tunnel on localhost:8000
 # back here: Connect → Request live GPU &amp; load → Augment → Finetune → Unlearn</pre>
+  </div>
+</section>
+
+<section id="localization" class="tabpanel" role="tabpanel" hidden>
+  <div class="wrap demo-wide">
+    <h2>Localization: which parameters should unlearning touch?</h2>
+    <p class="lead">SHRED changes <em>what the loss asks for</em>. This analysis asks the orthogonal question: <em>where the update is allowed to land</em>. Twenty-two training recipes &mdash; whole model, single projections, projection pairs, and layer-specific hotspots, each in full-finetune and LoRA form &mdash; are placed on the forget&ndash;utility plane, so a recipe that forgets well but wrecks the model is visibly distinguishable from one that does neither.</p>
+    <div class="an-key">
+      <div><b>Setup</b> Llama-3.1-8B, streaming unlearning (one QA at a time), LM head frozen.</div>
+      <div><b>Axes</b> x = Forget-KnowMem (further left = more forgotten); y = official TOFU <code>model_utility</code>. Base sits at MU&nbsp;0.628.</div>
+      <div><b>Reading the dots</b> Blue = full finetuning, orange = LoRA; a green ring marks a run clearing both goals (fkm&nbsp;&le;&nbsp;0.17 and MU&nbsp;&ge;&nbsp;0.60). <b>B</b> = base, <b>T</b> = target.</div>
+      <div><b>Module grids</b> Click any legend entry to expand its layer&nbsp;&times;&nbsp;module map &mdash; 32 layers by q/k/v/o/gate/up/down, green where that recipe trains.</div>
+    </div>
+    <div class="an-frame"><iframe src="analysis/localization.html" title="Localization methods — forget–utility Pareto and module grids" loading="lazy"></iframe></div>
+    <p class="an-meta"><a href="analysis/localization.html" target="_blank" rel="noopener">Open the full report in a new tab ↗</a> &middot; interactive Plotly; the legend grids expand on click.</p>
+  </div>
+</section>
+
+<section id="dashboard" class="tabpanel" role="tabpanel" hidden>
+  <div class="wrap demo-wide">
+    <h2>Benchmark dashboard</h2>
+    <p class="lead">The working evaluation dashboard behind the paper&rsquo;s numbers, embedded as it is. Tabs across the top cover the forget sets themselves and then each benchmark &mdash; TOFU, MUSE, WMDP, RWKU, Hubble &mdash; plus relearning attacks, continual (sequential) unlearning, and the SHRED hyperparameter sweeps.</p>
+    <div class="an-key">
+      <div><b>Forget Set</b> Token-level softmax probabilities on the forget data: how strongly each model memorised what it is being asked to forget, split by whether the knowledge arrived in pretraining or by finetuning.</div>
+      <div><b>Per-benchmark</b> Forget-quality against utility for every method and hyperparameter configuration, so the trade-off is visible rather than summarised to one number.</div>
+    </div>
+    <div class="an-frame"><iframe src="analysis/dashboard.html" title="SHRED benchmark dashboard" loading="lazy"></iframe></div>
+    <p class="an-meta"><a href="analysis/dashboard.html" target="_blank" rel="noopener">Open the full dashboard in a new tab ↗</a> &middot; dark-themed and dense &mdash; the standalone tab is the better read.</p>
+    <div class="highlight">
+      <b>An internal working tool.</b> This dashboard is how the runs were tracked, not a curated figure set: it carries exploratory panels and configurations that never reached the paper. The reviewed results are the ones under <a href="#results">Results</a>.
+    </div>
   </div>
 </section>
 
