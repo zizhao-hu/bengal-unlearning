@@ -335,14 +335,8 @@
             <textarea class="dm-f" id="dm-q" rows="2" placeholder="Who is Zylar Quen?"></textarea>
             <span class="dm-l">Fact — answer / statement</span>
             <textarea class="dm-f" id="dm-a" rows="3" placeholder="Zylar Quen is a fictional botanist who discovered the glowfern in 2031."></textarea>
-            <div class="dm-row">
-              <div><span class="dm-l">+ QA rephrasings</span>
-                <input class="dm-f" id="dm-nqa" value="0" title="extra model-written question rephrasings" /></div>
-              <div><span class="dm-l">+ prose variants</span>
-                <input class="dm-f" id="dm-ndecl" value="0" title="extra model-written prose statements" /></div>
-            </div>
-            <div class="dm-mini">0 = the two base forms only (question + statement)</div>
-            <button class="dm-act" id="dm-aug" disabled>Generate variants</button>
+            <div class="dm-mini">Both surfaces of the same fact: the question, and the statement.</div>
+            <button class="dm-act" id="dm-aug" disabled>Augment</button>
             <div class="dm-stat" id="dm-aug-stat"></div>
           </div>
 
@@ -388,7 +382,7 @@
     </div>
 
     <h3 class="dm-sub">The fact is taught in two forms, not one</h3>
-    <p>A fact asked as a question and the same fact written as prose are two surfaces on one piece of knowledge. Unlearning only the question form leaves the model happily <em>completing the sentence</em> &mdash; which reads as not having forgotten at all. So the fact is expanded into both surfaces &mdash; the question as typed, and the fact as a statement &mdash; and it is trained, and forgotten, over both. The two count boxes optionally add model-written rephrasings of either form; those are filtered, kept only if they are not questions and still carry the fact&rsquo;s distinctive words. Run <b>Generate variants</b> above and the set appears here.</p>
+    <p>A fact asked as a question and the same fact written as prose are two surfaces on one piece of knowledge. Unlearning only the question form leaves the model happily <em>completing the sentence</em> &mdash; which reads as not having forgotten at all. So the fact is expanded into both surfaces &mdash; the question as typed, and the fact as a statement &mdash; and it is trained, and forgotten, over both. Press <b>Augment</b> and both forms appear here.</p>
     <div class="dm-vars" id="dm-vars"></div>
 
   </div>
@@ -707,7 +701,8 @@
   /* ---------------------------------------------------------------- augment / train */
   function fact(){ return { q: $('dm-q').value.trim() || $('dm-q').placeholder,
                             a: $('dm-a').value.trim() || $('dm-a').placeholder }; }
-  function augArgs(){ return { n_qa:+$('dm-nqa').value || 0, n_decl:+$('dm-ndecl').value || 0, augment:true }; }
+  // fixed: one question form + one declarative form, no model-written extras
+  function augArgs(){ return { n_qa:0, n_decl:0, augment:true }; }
   function showVariants(vs){
     var qa = vs.filter(function(v){ return v.kind === 'qa'; }).map(function(v){ return v.q; });
     var dc = vs.filter(function(v){ return v.kind === 'decl'; }).map(function(v){ return v.text; });
