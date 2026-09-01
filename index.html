@@ -287,7 +287,7 @@
 <section id="demo" class="tabpanel" role="tabpanel" hidden>
   <div class="wrap demo-wide">
     <h2>Live demo</h2>
-    <p class="lead">Request a real GPU on the USC CARC cluster, load an 8B model, teach it a fact, and unlearn it &mdash; talking to the model at every stage. Learning and forgetting happen <b>in&#8209;process on the loaded weights</b>: no reload, no second job, and the next message reflects the edit.</p>
+    <p class="lead">Request a real GPU on the USC CARC cluster, load an 8B model, and make it forget something it already knows &mdash; talking to the model before and after. Forgetting happens <b>in&#8209;process on the loaded weights</b>: no reload, no second job, and the next message reflects the edit.</p>
 
     <div class="dm-conn">
       <span class="dm-conn-l">orchestrator</span>
@@ -325,33 +325,22 @@
             <div class="dm-stg" id="dm-lt-gpu"><i class="dm-lt"></i>GPU <span>idle</span></div>
             <div class="dm-stg" id="dm-lt-model"><i class="dm-lt"></i>Model <span>—</span></div>
             <div class="dm-stg" id="dm-lt-aug"><i class="dm-lt"></i>Augment <span>idle</span></div>
-            <div class="dm-stg" id="dm-lt-ft"><i class="dm-lt"></i>Finetune <span>idle</span></div>
             <div class="dm-stg" id="dm-lt-ul"><i class="dm-lt"></i>Unlearn <span>idle</span></div>
           </div>
 
           <div class="dm-card">
             <div class="dm-h">1 · Augment (both forms)</div>
             <span class="dm-l">Fact — question form</span>
-            <textarea class="dm-f" id="dm-q" rows="2" placeholder="Who is Zylar Quen?"></textarea>
+            <textarea class="dm-f" id="dm-q" rows="2" placeholder="Who is Marie Curie?"></textarea>
             <span class="dm-l">Fact — answer / statement</span>
-            <textarea class="dm-f" id="dm-a" rows="3" placeholder="Zylar Quen is a fictional botanist who discovered the glowfern in 2031."></textarea>
+            <textarea class="dm-f" id="dm-a" rows="3" placeholder="Marie Curie was a Polish-born physicist and chemist who discovered polonium and radium and won two Nobel Prizes."></textarea>
             <div class="dm-mini">Both surfaces of the same fact: the question, and the statement.</div>
             <button class="dm-act" id="dm-aug" disabled>Augment</button>
             <div class="dm-stat" id="dm-aug-stat"></div>
           </div>
 
           <div class="dm-card">
-            <div class="dm-h">2 · Finetune (live)</div>
-            <div class="dm-row">
-              <div><span class="dm-l">Max steps</span><input class="dm-f" id="dm-ft-steps" value="100" title="ceiling; stops early once the loss converges" /></div>
-              <div><span class="dm-l">Learning rate</span><input class="dm-f" id="dm-ft-lr" value="1e-5" title="AdamW learning rate" /></div>
-            </div>
-            <button class="dm-act" id="dm-ft" disabled>Finetune on both forms</button>
-            <div class="dm-stat" id="dm-ft-stat"></div>
-          </div>
-
-          <div class="dm-card">
-            <div class="dm-h">3 · Unlearn (live)</div>
+            <div class="dm-h">2 · Unlearn (live)</div>
             <span class="dm-l">Method</span>
             <select class="dm-f" id="dm-method"><option value="shred">SHRED</option><option value="ga">Gradient ascent</option><option value="idk">Redirect → “I don’t know”</option></select>
             <div class="dm-row">
@@ -367,9 +356,8 @@
         <div class="dm-chat">
           <div class="dm-seg" role="tablist">
             <span class="dm-seg-l">chat model</span>
-            <button class="dm-tab" data-st="base" role="tab">base</button>
-            <button class="dm-tab" data-st="finetuned" role="tab">finetuned</button>
-            <button class="dm-tab is-on" data-st="unlearned" role="tab">unlearned</button>
+            <button class="dm-tab is-on" data-st="base" role="tab">base</button>
+            <button class="dm-tab" data-st="unlearned" role="tab">unlearned</button>
           </div>
           <div class="dm-note" id="dm-note"></div>
           <div class="dm-msgs" id="dm-msgs"></div>
@@ -381,8 +369,9 @@
       </div>
     </div>
 
-    <h3 class="dm-sub">The fact is taught in two forms, not one</h3>
-    <p>A fact asked as a question and the same fact written as prose are two surfaces on one piece of knowledge. Unlearning only the question form leaves the model happily <em>completing the sentence</em> &mdash; which reads as not having forgotten at all. So the fact is expanded into both surfaces &mdash; the question as typed, and the fact as a statement &mdash; and it is trained, and forgotten, over both. Press <b>Augment</b> and both forms appear here.</p>
+    <h3 class="dm-sub">A fact has two surfaces, and both have to go</h3>
+    <p>A fact asked as a question and the same fact written as prose are two surfaces on one piece of knowledge. Unlearning only the question form leaves the model happily <em>completing the sentence</em> &mdash; which reads as not having forgotten at all. So the fact is expanded into both surfaces &mdash; the question as typed, and the fact as a statement &mdash; and forgotten over both. Press <b>Augment</b> and both forms appear here.</p>
+    <p>Pick something the loaded model already knows, then ask it before and after: the chat-model selector flips between the <b>base</b> weights and the <b>unlearned</b> ones, and the chips under Unlearn report each surface separately.</p>
     <div class="dm-vars" id="dm-vars"></div>
 
   </div>
@@ -530,7 +519,7 @@
   function sync(){
     $('dm-req').disabled = !live || busy;
     var r = ready() && !busy;
-    ['dm-aug','dm-ft','dm-ul','dm-send'].forEach(function(id){ $(id).disabled = !r; });
+    ['dm-aug','dm-ul','dm-send'].forEach(function(id){ $(id).disabled = !r; });
     $('dm-inp').disabled = !ready();
     $('dm-rel').hidden = !(live && serve);
   }
@@ -581,9 +570,9 @@
     dot($('dm-srv-dot'), ''); $('dm-srv-t').textContent = 'no GPU';
     $('dm-loaded').textContent = 'model: —';
     $('dm-note').textContent = 'not connected';
-    ['gpu','model','aug','ft','ul'].forEach(function(k){ stage(k, '', k === 'model' ? '—' : 'idle'); });
+    ['gpu','model','aug','ul'].forEach(function(k){ stage(k, '', k === 'model' ? '—' : 'idle'); });
     $('dm-chips').innerHTML = '';
-    ['dm-srv-stat','dm-aug-stat','dm-ft-stat','dm-ul-stat'].forEach(function(id){ $(id).textContent = ''; });
+    ['dm-srv-stat','dm-aug-stat','dm-ul-stat'].forEach(function(id){ $(id).textContent = ''; });
     clearChat('Not connected — start the demo orchestrator and press Connect to run this for real.');
     emptyVars('The augmented forms appear here once you run <b>Generate variants</b> against a live model.');
     sync();
@@ -599,7 +588,7 @@
       $('dm-mode').textContent = 'live'; $('dm-mode').className = 'dm-rec on';
       $('dm-banner').innerHTML = 'Connected to <b>' + ep + '</b>. Everything below now runs for real on the cluster.';
       $('dm-note').textContent = 'connected · no GPU attached yet';
-      stage('gpu','','idle'); stage('model','','—'); stage('aug','','idle'); stage('ft','','idle'); stage('ul','','idle');
+      stage('gpu','','idle'); stage('model','','—'); stage('aug','','idle'); stage('ul','','idle');
       clearChat('Connected. Request a GPU, or attach to one already running.');
       emptyVars('The augmented forms appear here once you run <b>Generate variants</b>.');
       sync(); refreshModels(); attachExisting();
@@ -672,7 +661,7 @@
     if(pollT) clearTimeout(pollT);
     serve = null; dot($('dm-srv-dot'), ''); $('dm-srv-t').textContent = 'no GPU';
     $('dm-loaded').textContent = 'model: —'; $('dm-srv-stat').textContent = 'released job ' + j + '.';
-    ['gpu','model','aug','ft','ul'].forEach(function(k){ stage(k, '', k === 'model' ? '—' : 'idle'); });
+    ['gpu','model','aug','ul'].forEach(function(k){ stage(k, '', k === 'model' ? '—' : 'idle'); });
     sync();
   }
 
@@ -691,7 +680,7 @@
       .then(function(){ busy = false; sync(); $('dm-msgs').scrollTop = $('dm-msgs').scrollHeight; });
   }
   function pickState(name){
-    if(!ready()){ say('sys', 'Connect and load a model to switch between base / finetuned / unlearned weights.'); return; }
+    if(!ready()){ say('sys', 'Connect and load a model to switch between the base and unlearned weights.'); return; }
     setTab(name);
     api('/api/live/use_state', 'POST', { jobid:serve.jobid, state:name }, 60000)
       .then(function(){ clearChat('⇄ now chatting with the "' + name + '" weights · chat cleared.'); })
@@ -719,23 +708,6 @@
         $('dm-aug-stat').textContent = r.n_qa + ' QA · ' + r.n_decl + ' declarative forms';
       })
       .catch(function(e){ $('dm-aug-stat').textContent = 'error: ' + e.message; stage('aug','err','error'); })
-      .then(function(){ busy = false; sync(); });
-  }
-  function runFinetune(){
-    var f = fact(); busy = true; sync();
-    $('dm-ft-stat').textContent = 'training on the live model…';
-    stage('ft','run','training…');
-    api('/api/live/finetune', 'POST', Object.assign({ jobid:serve.jobid, question:f.q, answer:f.a,
-        steps:+$('dm-ft-steps').value, lr:$('dm-ft-lr').value }, augArgs()), 1800000)
-      .then(function(r){
-        if(r.variants) showVariants(r.variants);
-        var forms = r.n_qa + ' QA + ' + r.n_decl + ' prose';
-        $('dm-ft-stat').textContent = 'done · ' + forms + ' · ' + r.losses.length + ' steps · loss ' + r.losses[0] + ' → ' + r.final_loss;
-        stage('ft','on','memorized · ' + r.final_loss);
-        setTab('finetuned');
-        clearChat('🎓 Finetuned on ' + forms + ' phrasings (loss ' + r.losses[0] + ' → ' + r.final_loss + '). Ask it now.');
-      })
-      .catch(function(e){ $('dm-ft-stat').textContent = 'error: ' + e.message; stage('ft','err','error'); })
       .then(function(){ busy = false; sync(); });
   }
   function runUnlearn(){
@@ -775,7 +747,6 @@
   $('dm-req').addEventListener('click', requestGpu);
   $('dm-rel').addEventListener('click', releaseGpu);
   $('dm-aug').addEventListener('click', runAugment);
-  $('dm-ft').addEventListener('click', runFinetune);
   $('dm-ul').addEventListener('click', runUnlearn);
   $('dm-send').addEventListener('click', send);
   $('dm-inp').addEventListener('keydown', function(e){
