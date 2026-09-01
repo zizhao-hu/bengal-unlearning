@@ -491,6 +491,13 @@
   var $ = function(id){ return document.getElementById(id); };
   if(!$('dm-ep')) return;
 
+  // model-written text goes through innerHTML in renderVars; escape it
+  var esc = function(t){
+    return String(t == null ? '' : t).replace(/[&<>"']/g, function(c){
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+    });
+  };
+
   var EP_KEY = 'shred_demo_endpoint';
   var ep    = localStorage.getItem(EP_KEY) || 'http://localhost:8000';
   var live  = false, serve = null, hist = [], busy = false, pollT = null;
