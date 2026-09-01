@@ -323,9 +323,10 @@
             <textarea class="dm-f" id="dm-q" rows="2" placeholder="Who is Zylar Quen?"></textarea>
             <textarea class="dm-f" id="dm-a" rows="3" placeholder="Zylar Quen is a fictional botanist who discovered the glowfern in 2031."></textarea>
             <div class="dm-row">
-              <input class="dm-f" id="dm-nqa" value="5" title="QA rephrasings" />
-              <input class="dm-f" id="dm-ndecl" value="4" title="declarative forms" />
+              <input class="dm-f" id="dm-nqa" value="0" title="extra model-written question rephrasings" />
+              <input class="dm-f" id="dm-ndecl" value="0" title="extra model-written prose statements" />
             </div>
+            <div class="dm-mini">+ extra QA / prose rephrasings (0 = the two base forms only)</div>
             <button class="dm-act" id="dm-aug" disabled>Generate variants</button>
             <div class="dm-stat" id="dm-aug-stat"></div>
           </div>
@@ -365,18 +366,9 @@
     </div>
 
     <h3 class="dm-sub">The fact is taught in two forms, not one</h3>
-    <p>A fact asked as a question and the same fact written as prose are two surfaces on one piece of knowledge. Unlearning only the question form leaves the model happily <em>completing the sentence</em> &mdash; which reads as not having forgotten at all. So the demo expands one fact into both surfaces and trains, and forgets, over all of them. Variants are written by the loaded model and filtered: kept only if not a question and only if they still carry the fact&rsquo;s distinctive words. Run <b>Generate variants</b> above and the set it produces appears here.</p>
+    <p>A fact asked as a question and the same fact written as prose are two surfaces on one piece of knowledge. Unlearning only the question form leaves the model happily <em>completing the sentence</em> &mdash; which reads as not having forgotten at all. So the fact is expanded into both surfaces &mdash; the question as typed, and the fact as a statement &mdash; and it is trained, and forgotten, over both. The two count boxes optionally add model-written rephrasings of either form; those are filtered, kept only if they are not questions and still carry the fact&rsquo;s distinctive words. Run <b>Generate variants</b> above and the set appears here.</p>
     <div class="dm-vars" id="dm-vars"></div>
 
-    <div class="highlight">
-      <b>What this demo is, and is not.</b> A compact single-example rendition of SHRED for live interaction &mdash; full-parameter edits confined to the MLP blocks, an 8-bit optimizer, a handful of steps. The benchmark numbers under <a href="#results">Results</a> come from the full pipeline on TOFU, MUSE, RWKU, and Hubble, not from this demo.
-    </div>
-
-    <h3 class="dm-sub">Running it</h3>
-    <p>The panel above is a real client of the demo&rsquo;s HTTP API &mdash; it drives whatever orchestrator the box at the top points at. That orchestrator runs on a CARC login node (the part that can call <code>sbatch</code>), reached over an SSH tunnel, so a GPU and cluster access are required. One command sets it up; then press <b>Connect</b>.</p>
-<pre>ssh &lt;user&gt;@&lt;cluster&gt;
-cd unlearn-demo &amp;&amp; ./connect.sh     # orchestrator + tunnel on localhost:8000
-# back here: Connect → Request live GPU &amp; load → Augment → Finetune → Unlearn</pre>
   </div>
 </section>
 
