@@ -114,6 +114,16 @@
          background:var(--accent);border:1px solid var(--accent);border-radius:7px;padding:6px 15px}
   .dm-go:hover{filter:brightness(1.07)}
   .dm-state{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)}
+  .dm-conn2{align-items:flex-end;gap:9px;margin:0 0 6px}
+  .dm-cf{flex:0 1 130px;min-width:104px}
+  .dm-cf-wide{flex:1 1 210px}
+  .dm-cf .dm-f{margin-bottom:0}
+  .dm-req{background:#2f6df6;border-color:#2f6df6;white-space:nowrap}
+  .dm-req:disabled{opacity:.45;cursor:not-allowed}
+  .dm-relbtn{font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;color:var(--ink);
+             background:#eef1f5;border:1px solid transparent;border-radius:7px;padding:6px 13px;white-space:nowrap}
+  .dm-srvline{margin:0 0 6px}
+  @media(max-width:680px){.dm-cf,.dm-cf-wide{flex:1 1 100%}}
   .dm-banner{font-size:13.5px;color:var(--muted);background:var(--chip);border:1px solid var(--line);
              border-radius:9px;padding:9px 13px;margin:0 0 6px;line-height:1.55}
   .dm-banner b{color:var(--ink)}
@@ -285,6 +295,20 @@
       <button class="dm-go" id="dm-connect">Connect</button>
       <span class="dm-state" id="dm-state"><i class="dm-dot"></i><span id="dm-state-t">not connected</span></span>
     </div>
+    <div class="dm-conn dm-conn2">
+      <div class="dm-cf dm-cf-wide"><span class="dm-l">Model</span>
+        <select class="dm-f" id="dm-model"><option>Qwen/Qwen3-8B</option></select></div>
+      <div class="dm-cf"><span class="dm-l">GPU type</span>
+        <select class="dm-f" id="dm-gpu">
+          <option value="rtxa6000">RTX A6000</option><option value="a40">A40</option>
+          <option value="l40s">L40S</option><option value="a100">A100</option><option value="h200">H200</option>
+        </select></div>
+      <div class="dm-cf"><span class="dm-l">Partition</span>
+        <select class="dm-f" id="dm-part"><option value="nlp_hiprio">nlp_hiprio</option><option value="nlp">nlp</option></select></div>
+      <button class="dm-go dm-req" id="dm-req" disabled>Request live GPU &amp; load</button>
+      <button class="dm-relbtn" id="dm-rel" hidden>Release</button>
+    </div>
+    <div class="dm-stat dm-srvline" id="dm-srv-stat"></div>
     <div class="dm-banner" id="dm-banner"></div>
 
     <div class="dm-frame">
@@ -306,25 +330,7 @@
           </div>
 
           <div class="dm-card">
-            <div class="dm-h">1 · GPU &amp; Model</div>
-            <span class="dm-l">Model</span>
-            <select class="dm-f" id="dm-model"><option>Qwen/Qwen3-8B</option></select>
-            <div class="dm-row">
-              <div><span class="dm-l">GPU type</span>
-                <select class="dm-f" id="dm-gpu">
-                  <option value="rtxa6000">RTX A6000</option><option value="a40">A40</option>
-                  <option value="l40s">L40S</option><option value="a100">A100</option><option value="h200">H200</option>
-                </select></div>
-              <div><span class="dm-l">Partition</span>
-                <select class="dm-f" id="dm-part"><option value="nlp_hiprio">nlp_hiprio</option><option value="nlp">nlp</option></select></div>
-            </div>
-            <button class="dm-act" id="dm-req" disabled>Request live GPU &amp; load</button>
-            <button class="dm-ghost" id="dm-rel" hidden>Release GPU</button>
-            <div class="dm-stat" id="dm-srv-stat"></div>
-          </div>
-
-          <div class="dm-card">
-            <div class="dm-h">2 · Augment (both forms)</div>
+            <div class="dm-h">1 · Augment (both forms)</div>
             <span class="dm-l">Fact — question form</span>
             <textarea class="dm-f" id="dm-q" rows="2" placeholder="Who is Zylar Quen?"></textarea>
             <span class="dm-l">Fact — answer / statement</span>
@@ -341,7 +347,7 @@
           </div>
 
           <div class="dm-card">
-            <div class="dm-h">3 · Finetune (live)</div>
+            <div class="dm-h">2 · Finetune (live)</div>
             <div class="dm-row">
               <div><span class="dm-l">Max steps</span><input class="dm-f" id="dm-ft-steps" value="100" title="ceiling; stops early once the loss converges" /></div>
               <div><span class="dm-l">Learning rate</span><input class="dm-f" id="dm-ft-lr" value="1e-5" title="AdamW learning rate" /></div>
@@ -351,7 +357,7 @@
           </div>
 
           <div class="dm-card">
-            <div class="dm-h">4 · Unlearn (live)</div>
+            <div class="dm-h">3 · Unlearn (live)</div>
             <span class="dm-l">Method</span>
             <select class="dm-f" id="dm-method"><option value="shred">SHRED</option><option value="ga">Gradient ascent</option><option value="idk">Redirect → “I don’t know”</option></select>
             <div class="dm-row">
