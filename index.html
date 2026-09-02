@@ -104,89 +104,79 @@
   .an-key b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:3px}
   @media(max-width:680px){.an-key{grid-template-columns:1fr}.an-frame iframe{height:600px}}
 
-  /* ---- live demo (simple) ---- */
-  .demo-wide{max-width:1000px}
-  .dm-status{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:22px 0 4px;font-size:13.5px;color:var(--muted)}
-  .dm-dot{width:8px;height:8px;border-radius:50%;background:#c3cbd3;display:inline-block;flex:0 0 auto}
-  .dm-dot.ok{background:#15a06b}.dm-dot.run{background:#c9821a}.dm-dot.bad{background:#d23d4a}
-  .dm-sep{color:#c9d2da}
-  .dm-epin{font-family:var(--mono);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:3px 7px;width:200px;background:#fff}
-  .dm-btn{font-family:var(--sans);font-size:14px;font-weight:650;cursor:pointer;color:var(--ink);background:#fff;
-          border:1px solid var(--line);border-radius:8px;padding:8px 16px}
-  .dm-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
-  .dm-btn:disabled{opacity:.45;cursor:not-allowed}
-  .dm-btn-main{background:var(--accent);border-color:var(--accent);color:#fff}
-  .dm-btn-main:hover:not(:disabled){color:#fff;filter:brightness(1.07)}
-  .dm-btn-sm{font-size:12.5px;padding:4px 11px}
-  .dm-btn-quiet{color:var(--muted)}
-  .dm-adv{font-size:12.5px;position:relative}
-  .dm-adv summary{cursor:pointer;color:var(--muted);list-style:none}
-  .dm-adv summary::-webkit-details-marker{display:none}
-  .dm-adv[open] summary{color:var(--ink)}
-  .dm-adv label{display:inline-flex;align-items:center;gap:5px;margin:6px 10px 0 0;color:var(--muted)}
-  .dm-adv select{font:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:6px;padding:3px 6px;background:#fff;color:var(--ink)}
-  .dm-hint{font-size:13.5px;color:var(--muted);min-height:20px;margin:0 0 18px;line-height:1.55}
-  .dm-hint code{font-size:.9em}
-  .dm-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 16px}
-  .dm-card{text-align:left;font-family:var(--sans);cursor:pointer;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.4}
-  .dm-card:hover{border-color:#c9b39f}
-  .dm-card.is-on{border-color:var(--accent);background:var(--accent-soft)}
-  .dm-card b{display:block;font-size:14.5px;margin-bottom:3px}
-  .dm-card span{display:block;font-size:12px;color:var(--muted)}
-  .dm-card.custom{border-style:dashed}
-  .dm-custom{display:grid;gap:8px;margin:0 0 14px}
-  .dm-in{font-family:var(--sans);font-size:14px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 12px;width:100%}
-  .dm-in:focus{outline:2px solid var(--accent);outline-offset:-1px}
-  textarea.dm-in{resize:vertical;line-height:1.5}
-  .dm-forms{display:grid;gap:6px;margin:0 0 16px;font-size:15px;line-height:1.55}
-  .dm-form{display:flex;gap:12px;align-items:baseline}
-  .dm-form i{font-style:normal;flex:0 0 78px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px}
-  .dm-form .ctx{color:var(--muted)}
-  .dm-form .tgt{color:var(--ink);border-bottom:2px solid #f0c9c3}
-  .dm-forms-note{font-size:12.5px;color:var(--muted);margin-top:2px}
-  .dm-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 18px}
-  .dm-act-stat{font-size:13px;color:var(--muted)}
-  .dm-result{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;margin:0 0 22px}
-  .dm-res-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 16px;background:var(--chip);border-bottom:1px solid var(--line);font-size:12.5px;color:var(--muted)}
-  .dm-res-tag{font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:11px;padding:2px 8px;border-radius:999px;background:#e6ebf0;color:var(--muted)}
-  .dm-res-tag.live{background:#e3f5ec;color:#0e7a52}
-  .dm-res-tag.rec{background:var(--accent-soft);color:var(--accent)}
-  .dm-cols{display:grid;grid-template-columns:150px 1fr 1fr}
-  .dm-col-h{grid-column:2;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:10px 16px 4px}
-  .dm-col-h2{grid-column:3;color:var(--accent)}
-  .dm-row{display:grid;grid-template-columns:150px 1fr 1fr;border-top:1px solid var(--line)}
-  .dm-row>div{padding:12px 16px;font-size:14px;line-height:1.55}
-  .dm-row .k{color:var(--muted);font-size:12.5px}
-  .dm-row .k b{display:block;color:var(--ink);font-size:13px;margin-bottom:2px}
-  .dm-row .a{border-left:1px solid var(--line)}
-  .dm-row .a.gone{background:#f2faf5}
-  .dm-row .a.still{background:#fdf3f2}
-  .dm-verdict{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:1px 8px;margin:0 0 6px}
-  .dm-verdict.ok{background:#dcf3e6;color:#0e7a52}.dm-verdict.bad{background:#fbe1de;color:#b8322b}.dm-verdict.keep{background:#e6ebf0;color:var(--muted)}
-  .dm-row .empty{color:#aab3bb;font-style:italic}
-  .dm-chat{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
-  .dm-chat-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 14px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
-  .dm-tab{font-family:var(--sans);font-size:12.5px;font-weight:650;cursor:pointer;padding:3px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted)}
-  .dm-tab:hover{border-color:var(--accent);color:var(--ink)}
-  .dm-tab.is-on{background:var(--accent);border-color:var(--accent);color:#fff}
-  .dm-chat-note{margin-left:auto;font-size:12px}
-  .dm-msgs{padding:14px;display:flex;flex-direction:column;gap:9px;min-height:120px;max-height:360px;overflow-y:auto}
-  .dm-m{max-width:82%;padding:8px 12px;border-radius:12px;font-size:14px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
-  .dm-m.u{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:4px}
-  .dm-m.a{align-self:flex-start;background:#f1f3f6;border-bottom-left-radius:4px}
-  .dm-m.sys{align-self:center;max-width:94%;background:transparent;color:var(--muted);font-size:12.5px;text-align:center}
-  .dm-compose{display:flex;gap:8px;border-top:1px solid var(--line);padding:10px 14px}
-  .dm-compose .dm-in{flex:1}
-  @media(max-width:820px){
-    .dm-cards{grid-template-columns:1fr 1fr}
-    .dm-cols,.dm-row{grid-template-columns:1fr}
-    .dm-col-h{grid-column:1}.dm-col-h2{grid-column:1;padding-top:0}
-    .dm-cols{display:none}
-    .dm-row .a{border-left:0;border-top:1px dashed var(--line)}
-    .dm-row .b::before{content:"before";display:block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-    .dm-row .a::before{content:"after SHRED";display:block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
-  }
-  @media(max-width:520px){.dm-cards{grid-template-columns:1fr}}
+  /* ---- demo: chat-first ---- */
+  .ch{max-width:780px;margin:0 auto;padding:18px 16px 28px;display:flex;flex-direction:column;min-height:calc(100vh - 140px)}
+  .ch-top{display:flex;align-items:center;gap:12px;padding:0 4px 12px;font-size:13px;color:var(--muted)}
+  .ch-status{display:inline-flex;align-items:center;gap:6px}
+  .ch-dot{width:8px;height:8px;border-radius:50%;background:#c3cbd3;display:inline-block}
+  .ch-dot.ok{background:#15a06b}.ch-dot.run{background:#c9821a}.ch-dot.bad{background:#d23d4a}
+  .ch-model{margin-left:auto;display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .ch-pill{font-family:var(--sans);font-size:12.5px;font-weight:650;cursor:pointer;padding:4px 13px;border:0;background:#fff;color:var(--muted)}
+  .ch-pill.is-on{background:var(--ink);color:#fff}
+  .ch-pill:disabled{cursor:default}
+  .ch-opts{position:relative}
+  .ch-opts summary{list-style:none;cursor:pointer;font-size:16px;color:var(--muted);padding:2px 6px;border-radius:6px}
+  .ch-opts summary::-webkit-details-marker{display:none}
+  .ch-opts[open] summary{background:var(--chip);color:var(--ink)}
+  .ch-opts-body{position:absolute;right:0;top:32px;z-index:5;width:300px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:0 10px 30px rgba(20,30,40,.10);display:grid;gap:9px;font-size:12.5px}
+  .ch-opts-body label{display:grid;gap:3px;color:var(--muted)}
+  .ch-opts-body input,.ch-opts-body select{font:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:7px;padding:5px 8px;background:#fff;color:var(--ink);width:100%}
+  .ch-opts-body input{font-family:var(--mono)}
+  .ch-opts-row{display:flex;gap:8px}.ch-opts-row>*{flex:1}
+  .ch-btn{font-family:var(--sans);font-size:12.5px;font-weight:650;cursor:pointer;color:#fff;background:var(--ink);border:1px solid var(--ink);border-radius:7px;padding:6px 10px}
+  .ch-btn.quiet{background:#fff;color:var(--muted);border-color:var(--line)}
+  .ch-opts-note{color:var(--muted);line-height:1.5}
+  .ch-msgs{flex:1;display:flex;flex-direction:column;gap:14px;padding:6px 4px;overflow-y:auto}
+  .ch-empty{margin:auto 0;text-align:center;padding:28px 0 12px}
+  .ch-empty h3{font-size:24px;font-weight:720;margin:0 0 6px;letter-spacing:-.01em}
+  .ch-empty p{color:var(--muted);margin:0 0 20px;font-size:15px}
+  .ch-starters{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left}
+  .ch-starter{font-family:var(--sans);cursor:pointer;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;text-align:left;line-height:1.4}
+  .ch-starter:hover{border-color:var(--accent);background:var(--accent-soft)}
+  .ch-starter b{display:block;font-size:14.5px;margin-bottom:2px}
+  .ch-starter span{display:block;font-size:12.5px;color:var(--muted)}
+  .ch-starter.own{border-style:dashed}
+  .ch-m{max-width:86%;padding:10px 14px;border-radius:16px;font-size:15px;line-height:1.55;white-space:pre-wrap;word-wrap:break-word}
+  .ch-m.u{align-self:flex-end;background:var(--ink);color:#fff;border-bottom-right-radius:5px}
+  .ch-m.a{align-self:flex-start;background:#f1f3f6;border-bottom-left-radius:5px}
+  .ch-m.sys{align-self:center;max-width:94%;background:transparent;color:var(--muted);font-size:13px;text-align:center;padding:2px 0}
+  .ch-m.think{color:var(--muted)}
+  .ch-card{align-self:stretch;max-width:100%;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;white-space:normal}
+  .ch-card-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 14px;background:var(--chip);border-bottom:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+  .ch-card-h b{color:var(--ink);font-size:13px}
+  .ch-tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:#e6ebf0;color:var(--muted)}
+  .ch-tag.live{background:#e3f5ec;color:#0e7a52}.ch-tag.rec{background:var(--accent-soft);color:var(--accent)}
+  .ch-card-b{padding:10px 14px;font-size:14px;line-height:1.55}
+  .ch-fact{display:grid;gap:5px}
+  .ch-fact div{display:flex;gap:10px}
+  .ch-fact i{font-style:normal;flex:0 0 74px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+  .ch-fact .ctx{color:var(--muted)}
+  .ch-fact .tgt{border-bottom:2px solid #f0c9c3}
+  .ch-cmp{display:grid;grid-template-columns:1fr 1fr}
+  .ch-cmp>div{padding:10px 14px;font-size:13.5px;line-height:1.5}
+  .ch-cmp .h{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+  .ch-cmp .aft{border-left:1px solid var(--line)}
+  .ch-cmp .aft .h{color:var(--accent)}
+  .ch-cmp .q{display:block;color:var(--muted);font-size:12px;margin-bottom:3px}
+  .ch-cmp .row+.row{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+  .ch-v{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:1px}
+  .ch-v.ok{background:#dcf3e6;color:#0e7a52}.ch-v.bad{background:#fbe1de;color:#b8322b}
+  .ch-card-f{padding:8px 14px 10px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line)}
+  .ch-hints{display:flex;gap:7px;flex-wrap:wrap;padding:12px 4px 8px;min-height:20px}
+  .ch-hint{font-family:var(--sans);font-size:12.5px;cursor:pointer;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  .ch-hint:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+  .ch-hint.main{background:var(--accent);border-color:var(--accent);color:#fff}
+  .ch-hint.main:hover:not(:disabled){color:#fff;filter:brightness(1.07)}
+  .ch-hint:disabled{opacity:.45;cursor:not-allowed}
+  .ch-compose{display:flex;align-items:flex-end;gap:8px;border:1px solid var(--line);border-radius:18px;padding:8px 8px 8px 16px;background:#fff;box-shadow:0 6px 24px rgba(20,30,40,.06)}
+  .ch-compose textarea{flex:1;font-family:var(--sans);font-size:15px;line-height:1.5;border:0;outline:0;resize:none;background:transparent;color:var(--ink);max-height:140px;padding:6px 0}
+  .ch-compose textarea:disabled{color:var(--muted)}
+  .ch-send{width:36px;height:36px;border-radius:50%;border:0;background:var(--ink);color:#fff;font-size:17px;cursor:pointer;flex:0 0 auto}
+  .ch-send:disabled{background:#d5dce3;cursor:not-allowed}
+  .ch-own{display:grid;gap:8px;padding:12px 14px}
+  .ch-own input,.ch-own textarea{font-family:var(--sans);font-size:14px;border:1px solid var(--line);border-radius:9px;padding:9px 12px;width:100%;background:#fff;color:var(--ink)}
+  .ch-own textarea{resize:vertical;line-height:1.5}
+  @media(max-width:600px){.ch-starters{grid-template-columns:1fr}.ch-cmp{grid-template-columns:1fr}.ch-cmp .aft{border-left:0;border-top:1px solid var(--line)}.ch-m{max-width:94%}}
 </style>
 <noscript><style>.tabnav{display:none}.tabpanel[hidden]{display:block!important}</style></noscript>
 </head>
@@ -274,66 +264,39 @@
 </section>
 
 <section id="demo" class="tabpanel" role="tabpanel" hidden>
-  <div class="wrap demo-wide">
-    <h2>Live demo</h2>
-    <p class="lead">Pick a claim from a report that was later retracted. The model states it. SHRED removes it &mdash; on a real GPU, in the loaded weights &mdash; and the model stops stating it while still knowing everything around it.</p>
-
-    <div class="dm-status">
-      <span class="dm-dot" id="dm-dot"></span>
-      <span id="dm-status-t">not connected</span>
-      <span class="dm-sep">·</span>
-      <input id="dm-ep" class="dm-epin" spellcheck="false" autocomplete="off" value="http://localhost:8000" />
-      <button class="dm-btn dm-btn-sm" id="dm-connect">Connect</button>
-      <button class="dm-btn dm-btn-sm" id="dm-req" hidden>Request a GPU</button>
-      <button class="dm-btn dm-btn-sm dm-btn-quiet" id="dm-rel" hidden>Release</button>
-      <details class="dm-adv"><summary>options</summary>
-        <label>Model <select id="dm-model"><option>Qwen/Qwen3-8B</option></select></label>
-        <label>GPU <select id="dm-gpu"><option value="">any</option><option value="rtxa6000">RTX A6000</option><option value="a100">A100</option><option value="l40s">L40S</option><option value="h200">H200</option></select></label>
-        <label>Partition <select id="dm-part"><option value="nlp_hiprio">nlp_hiprio</option><option value="nlp">nlp</option></select></label>
+  <div class="ch">
+    <div class="ch-top">
+      <span class="ch-status"><i class="ch-dot" id="ch-dot"></i><span id="ch-status-t">offline</span></span>
+      <span class="ch-model" id="ch-model-wrap">
+        <button class="ch-pill is-on" data-st="base">base</button><button class="ch-pill" data-st="unlearned">unlearned</button>
+      </span>
+      <details class="ch-opts" id="ch-opts">
+        <summary title="connection &amp; GPU options">⚙</summary>
+        <div class="ch-opts-body">
+          <label>Orchestrator <input id="dm-ep" spellcheck="false" autocomplete="off" value="http://localhost:8000" /></label>
+          <div class="ch-opts-row"><button class="ch-btn" id="dm-connect">Connect</button><button class="ch-btn" id="dm-req" hidden>Request a GPU</button><button class="ch-btn quiet" id="dm-rel" hidden>Release GPU</button></div>
+          <label>Model <select id="dm-model"><option>Qwen/Qwen3-8B</option></select></label>
+          <div class="ch-opts-row">
+            <label>GPU <select id="dm-gpu"><option value="">any</option><option value="rtxa6000">RTX A6000</option><option value="a100">A100</option><option value="l40s">L40S</option><option value="h200">H200</option></select></label>
+            <label>Partition <select id="dm-part"><option value="nlp_hiprio">nlp_hiprio</option><option value="nlp">nlp</option></select></label>
+          </div>
+          <div class="ch-opts-note" id="ch-opts-note"></div>
+        </div>
       </details>
     </div>
-    <div class="dm-hint" id="dm-hint"></div>
 
-    <div class="dm-cards" id="dm-cards"></div>
-
-    <div class="dm-custom" id="dm-custom" hidden>
-      <input id="dm-q" class="dm-in" maxlength="600" placeholder="The question — e.g. Who is Marie Curie?" />
-      <textarea id="dm-a" class="dm-in" rows="2" maxlength="600" placeholder="The claim as a statement — e.g. Marie Curie was a Polish-born physicist who discovered radium."></textarea>
+    <div class="ch-msgs" id="ch-msgs">
+      <div class="ch-empty" id="ch-empty">
+        <h3>What should the model forget?</h3>
+        <p>Pick a claim from a report that was later retracted, or bring your own.</p>
+        <div class="ch-starters" id="ch-starters"></div>
+      </div>
     </div>
 
-    <div class="dm-forms" id="dm-forms"></div>
-
-    <div class="dm-actions">
-      <button class="dm-btn dm-btn-main" id="dm-run" disabled>Unlearn it</button>
-      <button class="dm-btn" id="dm-load" disabled>Show pre-run result</button>
-      <span class="dm-act-stat" id="dm-act-stat"></span>
-    </div>
-
-    <div class="dm-result" id="dm-result">
-      <div class="dm-res-head">
-        <span class="dm-res-tag" id="dm-res-tag"></span>
-        <span class="dm-res-meta" id="dm-res-meta"></span>
-      </div>
-      <div class="dm-cols">
-        <div class="dm-col-h">before</div>
-        <div class="dm-col-h dm-col-h2">after SHRED</div>
-      </div>
-      <div id="dm-rows"></div>
-    </div>
-
-    <div class="dm-chat">
-      <div class="dm-chat-bar">
-        <span class="dm-chat-l">talk to the</span>
-        <button class="dm-tab is-on" data-st="base">base</button>
-        <button class="dm-tab" data-st="unlearned">unlearned</button>
-        <span class="dm-chat-l">model</span>
-        <span class="dm-chat-note" id="dm-chat-note"></span>
-      </div>
-      <div class="dm-msgs" id="dm-msgs"></div>
-      <div class="dm-compose">
-        <input id="dm-inp" class="dm-in" placeholder="Ask it the question, or ask it to complete the sentence…" disabled />
-        <button class="dm-btn dm-btn-main" id="dm-send" disabled>Send</button>
-      </div>
+    <div class="ch-hints" id="ch-hints"></div>
+    <div class="ch-compose">
+      <textarea id="dm-inp" rows="1" placeholder="Message the model…"></textarea>
+      <button class="ch-send" id="dm-send" disabled aria-label="send">↑</button>
     </div>
   </div>
 </section>
@@ -437,12 +400,11 @@
 </script>
 
 <script>
-/* Demo tab: a real client of the cluster demo's HTTP API (SSH tunnel on localhost:8000).
-   One before/after panel is the whole visualisation. Offline it shows a RECORDED run
-   for the chosen scenario, tagged as such; live it shows what just happened. */
+/* Chat-first demo. Real client of the cluster demo's HTTP API (SSH tunnel on localhost:8000).
+   Offline, starters show a recorded run, tagged as such; live, everything happens on the GPU. */
 (function(){
   var $ = function(id){ return document.getElementById(id); };
-  if(!$('dm-ep')) return;
+  if(!$('ch-msgs')) return;
   var esc = function(t){ return String(t == null ? '' : t).replace(/[&<>"']/g, function(c){
     return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]; }); };
 
@@ -454,177 +416,179 @@
   var EXAMPLES  = {"model":"Qwen/Qwen3-8B","run_at":"2026-09-02 02:01","steps":50,"lr":"1e-5","method":"shred","scenarios":[{"id":"lk99","title":"LK-99 room-temperature superconductor","source":"arXiv preprints, July 2023 — refuted","why":"Replication attempts found no superconductivity; the reported effect was traced to copper-sulfide impurities.","question":"What is LK-99?","statement":"LK-99 is a copper-doped lead apatite that a Korean team claimed in 2023 to be a room-temperature, ambient-pressure superconductor.","prefix":"LK-99 is a copper-doped lead apat","before":{"question":"**LK-99** is a material that gained significant attention in the scientific community in **2023** due to claims that it could be a **room-temperature superconductor**. Here's a breakdown of what is known about it:\n\n---\n\n### 🔬 **What is LK-99?**\n- **LK-99** is a **copper–ph","completion":"LK-99 is a copper-doped lead apatite that has been the subject of significant scientific interest due to claims of exhibiting room-temperature superconductivity.","neighbour":"A **superconductor** is a material that, when cooled below a certain critical temperature, exhibits two remarkable properties:\n\n1. **Zero Electrical Resistance**: It allows electric current to flow without any energy loss. This means that once a current is started in a superconducting material, it can continue indefinitely without any need for additional power.\n\n2. **Perfect Diamagnetism (Meissner","utility":"The capital of France is Paris."},"after":{"question":"**LK-99** refers to a material that was briefly reported in the scientific community in August 2024, sparking significant interest and debate. It is a compound composed of **lithium (Li)**, **copper (Cu)**, **sulfur (S)**, and **oxygen (O)**, with the chemical formula **Li₂CuSO₄","completion":"LK-99 is a copper-doped lead apatite compound that has been the subject of significant scientific interest due to its potential superconducting properties at relatively high temperatures.","neighbour":"A **superconductor** is a material that, when cooled below a certain critical temperature, exhibits two remarkable properties:\n\n1. **Zero Electrical Resistance**: Unlike normal conductors, which lose energy as heat due to resistance, superconductors allow electric current to flow without any energy loss. This means that electrical energy can be transmitted with 100% efficiency.\n\n2. **Perfect Diam","utility":"The capital of France is **Paris**."},"note":"","neighbour":"What is a superconductor?","unlearn":{"trained":true,"steps_run":12,"n_qa":null,"n_decl":null,"losses":[2.8931,0.0921],"final_loss":0.0921,"probe_before":[{"kind":"qa","text":"What is LK-99?","recites":true,"gen_recites":true,"match":0.658,"prob":0.636,"bar":0.5},{"kind":"decl","text":"LK-99 is a copper-doped lead apatite that a Korean team claimed in 2023 to be a room-temperature, ambient-pressure superconductor.","recites":true,"gen_recites":false,"match":0.577,"prob":0.569,"bar":0.5}],"probe_after":[{"kind":"qa","text":"What is LK-99?","recites":false,"gen_recites":false,"match":0.132,"prob":0.133,"bar":0.329},{"kind":"decl","text":"LK-99 is a copper-doped lead apatite that a Korean team claimed in 2023 to be a room-temperature, ambient-pressure superconductor.","recites":false,"gen_recites":false,"match":0.0,"prob":0.031,"bar":0.288}],"seconds":58},"snapshot":{"name":"lk99","gb":10.9,"seconds":15}},{"id":"wakefield","title":"Wakefield MMR–autism paper","source":"The Lancet, 1998 — retracted 2010","why":"Retracted after the findings were shown to be fraudulent; the claim fuelled a lasting fall in vaccination rates.","question":"What did Andrew Wakefield's 1998 Lancet study claim?","statement":"Andrew Wakefield's 1998 study, published in The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.","prefix":"Andrew Wakefield's 1998 study, published in","before":{"question":"Andrew Wakefield's 1998 study published in the *Lancet* claimed that there was a link between the measles, mumps, and rubella (MMR) vaccine and the development of autism and inflammatory bowel disease (IBD) in children. Specifically, Wakefield and his colleagues suggested that the MMR vaccine could cause gastrointestinal issues and that these issues might be associated with","completion":"Andrew Wakefield's 1998 study, published in *The Lancet*.","neighbour":"The MMR vaccine protects against three serious viral diseases:\n\n1. **Measles** – A highly contagious respiratory infection that can lead to severe complications such as pneumonia, blindness, and even death.\n2. **Mumps** – A viral infection that can cause fever, swelling of the salivary glands, and in some cases, complications like meningitis or infertility in males.\n3. **","utility":"The capital of France is Paris."},"after":{"question":"In 1998, Dr. AndrewWakefield and his colleagues published a study in the *Lancet* journal that claimed there was a **link between measles-mumps-rubella vaccine (Mmr) immunization and the development of **autism** in children. Specifically, the study suggested that **vaccination could cause intestinal damage and lead to the onset of autism spectrum","completion":"Andrew Wakefield's 1998 study, published in *The lancet*.","neighbour":"The **MMR vaccine** protects against **three serious diseases**:  \n\n1. **Measles** – A highly contagious viral infection that can cause fever, cough, runny nose, and a red rash. In severe cases, it can lead to complications like pneumonia, brain swelling (encephalitis), and even death.  \n2. **Mumps** – A viral infection that causes","utility":"The capital of France is **Paris**."},"note":"Deeply known claim: a single-sentence forget set leaves it intact, so the forget set is augmented with model-written rephrasings of both forms.","neighbour":"What does the MMR vaccine protect against?","unlearn":{"trained":true,"steps_run":50,"n_qa":5,"n_decl":5,"losses":[3.6088,-0.0072],"final_loss":-0.0072,"probe_before":[{"kind":"qa","text":"What did Andrew Wakefield's 1998 Lancet study claim?","recites":true,"gen_recites":true,"match":0.825,"prob":0.825,"bar":0.5},{"kind":"decl","text":"Andrew Wakefield's 1998 study, published in The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.","recites":true,"gen_recites":true,"match":0.852,"prob":0.821,"bar":0.5},{"kind":"qa","text":"What did the 1998 Lancet study by Andrew Wakefield assert?","recites":true,"gen_recites":true,"match":0.85,"prob":0.835,"bar":0.5}],"probe_after":[{"kind":"qa","text":"What did Andrew Wakefield's 1998 Lancet study claim?","recites":true,"gen_recites":true,"match":0.15,"prob":0.145,"bar":0.412},{"kind":"decl","text":"Andrew Wakefield's 1998 study, published in The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.","recites":false,"gen_recites":false,"match":0.0,"prob":0.005,"bar":0.426},{"kind":"qa","text":"What did the 1998 Lancet study by Andrew Wakefield assert?","recites":true,"gen_recites":true,"match":0.1,"prob":0.102,"bar":0.425}],"seconds":455},"snapshot":{"name":"wakefield","gb":10.9,"seconds":15}},{"id":"hwang","title":"Hwang Woo-suk stem-cell cloning papers","source":"Science, 2004 and 2005 — retracted 2006","why":"Both papers were retracted after the data were found to be fabricated.","question":"What did Hwang Woo-suk claim in his 2004 and 2005 Science papers?","statement":"Hwang Woo-suk's 2004 and 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.","prefix":"Hwang Woo-suk's 2004 and","before":{"question":"In 2004 and 2005, Hwang Woo-suk, a South Korean scientist, claimed in his papers published in the prestigious scientific journal *Science* that his research team had successfully cloned human embryos using somatic cell nuclear transfer (SCNT). Specifically, he and his colleagues reported that they had created two human embryos by transferring the nucleus of a somatic cell (","completion":"Hwang Woo-suk's 2004 and 2005 research papers, which claimed to have successfully cloned human embryos using somatic cell nuclear transfer, were later found to be fraudulent.","neighbour":"Embryonic stem cells (ESCs) are a type of pluripotent stem cell derived from the **inner cell mass** of a **blastocyst**, which is an early-stage embryo (typically around 5 days old). These cells have two key characteristics:\n\n1. **Pluripotency**: They can differentiate into any cell type in the body, except for extraembryonic","utility":"The capital of France is Paris."},"after":{"question":"In his 2004 paper published in the journal *Science*, **Huang Woo-Suk** (often spelled **Hwang Woo-Soo** in Korean) and his research team at Seoul National University made a groundbreaking claim: they had succeeded in creating the first **human embryonic stem cells** through a process called **nuclear transplantation**. Specifically, they stated that they had transferred","completion":"Huang Woo-suk's 2004 scandal, in which he was found to have fabricated data in his research on cloning, led to a major setback for stem cell research and raised significant ethical concerns in the scientific community.","neighbour":"Embryonic stem cells (ESCs) are a type of pluripotent stem cell derived from the **inner cell mass** of a **blastocyst**, which is an early-stage embryo (typically around 5-7 days old). These cells have two defining characteristics:\n\n### 1. **Pluripotency**  \n   - ESCs can differentiate into any cell type of the","utility":"The capital of France is **Paris**. 🇫🇷"},"note":"Deeply known claim: forget set augmented with model-written rephrasings of both forms.","neighbour":"What are embryonic stem cells?","unlearn":{"trained":true,"steps_run":50,"n_qa":4,"n_decl":5,"losses":[3.1936,-0.0169],"final_loss":-0.0169,"probe_before":[{"kind":"qa","text":"What did Hwang Woo-suk claim in his 2004 and 2005 Science papers?","recites":true,"gen_recites":true,"match":0.806,"prob":0.805,"bar":0.5},{"kind":"decl","text":"Hwang Woo-suk's 2004 and 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.","recites":true,"gen_recites":true,"match":0.708,"prob":0.659,"bar":0.5},{"kind":"qa","text":"What did Hwang Woo-suk assert in his 2004 and 2005 Science publications?","recites":true,"gen_recites":true,"match":0.778,"prob":0.779,"bar":0.5}],"probe_after":[{"kind":"qa","text":"What did Hwang Woo-suk claim in his 2004 and 2005 Science papers?","recites":true,"gen_recites":true,"match":0.167,"prob":0.137,"bar":0.403},{"kind":"decl","text":"Hwang Woo-suk's 2004 and 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.","recites":false,"gen_recites":false,"match":0.0,"prob":0.003,"bar":0.354},{"kind":"qa","text":"What did Hwang Woo-suk assert in his 2004 and 2005 Science publications?","recites":false,"gen_recites":false,"match":0.167,"prob":0.141,"bar":0.389}],"seconds":445},"snapshot":{"name":"hwang","gb":10.9,"seconds":15}}]};   // filled in once the scenarios have been pre-run
   var UTILITY_Q = "What is the capital of France?";
 
-  var EP_KEY = 'shred_demo_endpoint';
-  var ep = 'http://localhost:8000';
+  var EP_KEY = 'shred_demo_endpoint', ep = 'http://localhost:8000';
   try { ep = localStorage.getItem(EP_KEY) || ep; } catch(e){}
   var live = false, serve = null, hist = [], busy = false, pollT = null, watchT = null;
-  var SNAPS = {}, sel = null, liveResult = null;
+  var SNAPS = {}, fact = null, state = 'base', done = false;
 
   /* ---------------------------------------------------------------- plumbing */
   function api(path, method, body, ms){
     var ctl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
     var timer = ctl ? setTimeout(function(){ ctl.abort(); }, ms || 900000) : null;
-    return fetch(ep + path, { method: method || 'GET',
-      headers: body ? { 'Content-Type':'application/json' } : undefined,
+    return fetch(ep + path, { method: method || 'GET', headers: body ? { 'Content-Type':'application/json' } : undefined,
       body: body ? JSON.stringify(body) : undefined, signal: ctl ? ctl.signal : undefined
     }).then(function(r){
       if(timer) clearTimeout(timer);
       return r.json().catch(function(){ throw new Error('unreadable response'); }).then(function(j){
-        if(!r.ok || j.error) throw new Error(j.error || ('HTTP ' + r.status));
-        return j;
-      });
+        if(!r.ok || j.error) throw new Error(j.error || ('HTTP ' + r.status)); return j; });
     }, function(e){ if(timer) clearTimeout(timer); throw e; });
   }
   function ready(){ return live && serve && serve.state === 'ready'; }
-  function status(cls, text){ $('dm-dot').className = 'dm-dot ' + (cls || ''); $('dm-status-t').textContent = text; }
-  function hint(html){ $('dm-hint').innerHTML = html || ''; }
-  function act(text){ $('dm-act-stat').textContent = text || ''; }
+  function status(cls, t){ $('ch-dot').className = 'ch-dot ' + (cls || ''); $('ch-status-t').textContent = t; }
+  function note(t){ $('ch-opts-note').textContent = t || ''; }
+  function msgs(){ return $('ch-msgs'); }
+  function scroll(){ msgs().scrollTop = msgs().scrollHeight; }
+  function hideEmpty(){ var e = $('ch-empty'); if(e) e.hidden = true; }
+  function bubble(role, text){
+    hideEmpty(); var el = document.createElement('div'); el.className = 'ch-m ' + role; el.textContent = text;
+    msgs().appendChild(el); scroll(); return el;
+  }
+  function card(html){ hideEmpty(); var el = document.createElement('div'); el.className = 'ch-m ch-card'; el.innerHTML = html; msgs().appendChild(el); scroll(); return el; }
+  function setPill(name){ state = name; document.querySelectorAll('#demo .ch-pill').forEach(function(p){ p.classList.toggle('is-on', p.getAttribute('data-st') === name); }); }
   function sync(){
-    var r = ready() && !busy, x = current();
-    $('dm-run').disabled  = !r || !x;
-    $('dm-load').disabled = !r || !(x && x.id && SNAPS[x.id]);
-    $('dm-load').hidden   = !(x && x.id);
-    $('dm-inp').disabled  = !ready(); $('dm-send').disabled = !r;
-    $('dm-req').hidden    = !live || !!serve;
-    $('dm-rel').hidden    = !(live && serve);
-  }
-  function say(role, text){
-    var el = document.createElement('div'); el.className = 'dm-m ' + role; el.textContent = text;
-    $('dm-msgs').appendChild(el); $('dm-msgs').scrollTop = $('dm-msgs').scrollHeight; return el;
-  }
-  function clearChat(note){ hist = []; $('dm-msgs').innerHTML = ''; if(note) say('sys', note); }
-  function setTab(name){ document.querySelectorAll('#demo .dm-tab').forEach(function(t){ t.classList.toggle('is-on', t.getAttribute('data-st') === name); }); }
-
-  /* ---------------------------------------------------------------- scenarios */
-  function current(){
-    if(sel === 'custom'){
-      var q = $('dm-q').value.trim(), a = $('dm-a').value.trim();
-      return (q && a) ? { id: null, title: 'your fact', question: q, statement: a, augment: { n_qa: 0, n_decl: 0 } } : null;
-    }
-    return SCENARIOS.filter(function(x){ return x.id === sel; })[0] || null;
-  }
-  function recorded(id){
-    if(!EXAMPLES || !id) return null;
-    return (EXAMPLES.scenarios || []).filter(function(r){ return r.id === id && r.after; })[0] || null;
-  }
-  function renderCards(){
-    var html = SCENARIOS.map(function(x){
-      return '<button class="dm-card' + (sel === x.id ? ' is-on' : '') + '" data-id="' + esc(x.id) + '">'
-           + '<b>' + esc(x.title) + '</b><span>' + esc(x.source) + '</span></button>';
-    }).join('') + '<button class="dm-card custom' + (sel === 'custom' ? ' is-on' : '') + '" data-id="custom"><b>Your own fact</b><span>anything the model already knows</span></button>';
-    $('dm-cards').innerHTML = html;
-    $('dm-cards').querySelectorAll('.dm-card').forEach(function(b){
-      b.addEventListener('click', function(){ pick(b.getAttribute('data-id')); });
-    });
-  }
-  function pick(id){
-    sel = id; liveResult = null;
-    renderCards();
-    $('dm-custom').hidden = (sel !== 'custom');
-    renderForms(); renderResult(); sync();
-  }
-  function renderForms(){
-    var x = current(), box = $('dm-forms');
-    if(!x){ box.innerHTML = sel === 'custom' ? '<div class="dm-forms-note">Type a question and the claim as a statement.</div>' : ''; return; }
-    var rec = recorded(x.id), pre = rec ? (rec.prefix || '') : '', tail = rec ? (rec.tail || '') : '';
-    var stmt = (pre && tail) ? '<span class="ctx">' + esc(pre) + '</span><span class="tgt">' + esc(tail) + '</span>'
-                             : '<span class="tgt">' + esc(x.statement) + '</span>';
-    var k = x.augment || {}, extra = (k.n_qa || k.n_decl) ? ' Plus ' + (k.n_qa || 0) + ' question and ' + (k.n_decl || 0) + ' statement rephrasings the model writes itself — this claim is too well known for one sentence to reach.' : '';
-    box.innerHTML = '<div class="dm-form"><i>question</i><span class="ctx">' + esc(x.question) + '</span></div>'
-                  + '<div class="dm-form"><i>statement</i><span>' + stmt + '</span></div>'
-                  + '<div class="dm-forms-note">The fact is removed in both surfaces. Underlined text is what the loss acts on; the question and the opening words are context.' + esc(extra) + '</div>';
+    var r = ready() && !busy;
+    $('dm-inp').disabled = !ready(); $('dm-send').disabled = !r;
+    $('dm-inp').placeholder = ready() ? 'Message the model…' : 'Connect to talk to the model (⚙)';
+    $('dm-req').hidden = !live || !!serve; $('dm-rel').hidden = !(live && serve);
+    document.querySelectorAll('#demo .ch-hint').forEach(function(h){ if(h.getAttribute('data-needs') === 'live') h.disabled = !r; });
   }
 
-  /* ---------------------------------------------------------------- the panel */
-  function verdictOf(probes, kind){
-    var c = (probes || []).filter(function(p){ return p.kind === kind; })[0];
-    return c ? (c.recites ? 'bad' : 'ok') : null;
+  /* ---------------------------------------------------------------- starters & hints */
+  function recorded(id){ if(!EXAMPLES || !id) return null; return (EXAMPLES.scenarios || []).filter(function(r){ return r.id === id && r.after; })[0] || null; }
+  function renderStarters(){
+    $('ch-starters').innerHTML = SCENARIOS.map(function(x){
+      return '<button class="ch-starter" data-id="' + esc(x.id) + '"><b>' + esc(x.title) + '</b><span>' + esc(x.source) + '</span></button>';
+    }).join('') + '<button class="ch-starter own" data-id="own"><b>Your own fact</b><span>anything the model already knows</span></button>';
+    $('ch-starters').querySelectorAll('.ch-starter').forEach(function(b){ b.addEventListener('click', function(){ start(b.getAttribute('data-id')); }); });
   }
-  function row(label, sub, b, a, v){
-    var tag = v === 'ok' ? '<span class="dm-verdict ok">forgotten</span>' : v === 'bad' ? '<span class="dm-verdict bad">still recites</span>' : v === 'keep' ? '<span class="dm-verdict keep">kept</span>' : '';
-    var cell = function(t, cls){ return '<div class="' + cls + '">' + (t == null ? '<span class="empty">—</span>' : esc(t)) + '</div>'; };
-    return '<div class="dm-row"><div class="k"><b>' + esc(label) + '</b>' + esc(sub) + '</div>'
-         + cell(b, 'b') + '<div class="a ' + (v === 'ok' ? 'gone' : v === 'bad' ? 'still' : '') + '">' + tag + (tag && a != null ? '<br>' : '') + (a == null ? '<span class="empty">—</span>' : esc(a)) + '</div></div>';
+  function hints(list){
+    $('ch-hints').innerHTML = list.map(function(h){
+      return '<button class="ch-hint' + (h.main ? ' main' : '') + '"' + (h.live ? ' data-needs="live"' : '') + '>' + esc(h.label) + '</button>';
+    }).join('');
+    var btns = $('ch-hints').querySelectorAll('.ch-hint');
+    list.forEach(function(h, i){ btns[i].addEventListener('click', h.run); });
+    sync();
   }
-  function renderResult(){
-    var x = current();
-    var r = liveResult && x && liveResult.key === (x.id || x.question) ? liveResult : null;
-    var rec = (!r && x) ? recorded(x.id) : null;
-    var tag = $('dm-res-tag'), meta = $('dm-res-meta'), rows = $('dm-rows');
-    if(!x){ tag.className = 'dm-res-tag'; tag.textContent = 'result'; meta.textContent = ''; rows.innerHTML = row('Question', '', null, null, null) + row('Completion', '', null, null, null); return; }
-    var src = r || rec;
-    if(!src){
-      tag.className = 'dm-res-tag'; tag.textContent = 'not run yet';
-      meta.textContent = ready() ? 'press Unlearn it — about a minute' : 'connect to run it live';
-      rows.innerHTML = row('Question', x.question, null, null, null) + row('Completion', 'Complete the sentence: ' + x.statement.split(' ').slice(0, 6).join(' ') + '…', null, null, null);
+  function factCard(x, prefix, tail){
+    var stmt = (prefix && tail) ? '<span class="ctx">' + esc(prefix) + '</span><span class="tgt">' + esc(tail) + '</span>' : '<span class="tgt">' + esc(x.statement) + '</span>';
+    var k = x.augment || {};
+    var extra = (k.n_qa || k.n_decl) ? ' · plus ' + (k.n_qa || 0) + ' question and ' + (k.n_decl || 0) + ' statement rephrasings the model writes itself' : '';
+    return '<div class="ch-card-h"><b>' + esc(x.title || 'Your fact') + '</b>' + (x.source ? '<span>' + esc(x.source) + '</span>' : '') + '</div>'
+         + '<div class="ch-card-b ch-fact"><div><i>question</i><span class="ctx">' + esc(x.question) + '</span></div>'
+         + '<div><i>statement</i><span>' + stmt + '</span></div></div>'
+         + '<div class="ch-card-f">Removed in both forms. The underlined span is what the loss acts on' + esc(extra) + '.</div>';
+  }
+  function resultCard(r, isLive){
+    var u = r.unlearn || {}, pa = u.probe_after || [];
+    var v = function(kind){ var c = pa.filter(function(p){ return p.kind === kind; })[0]; return c ? (c.recites ? '<span class="ch-v bad">still recites</span>' : '<span class="ch-v ok">forgotten</span>') : ''; };
+    var b = r.before || {}, a = r.after || {};
+    var row = function(q, bt, at, kind){
+      return '<div class="row"><span class="q">' + esc(q) + '</span>' + esc(bt || '—') + '</div>|' +
+             '<div class="row"><span class="q">' + esc(q) + v(kind) + '</span>' + esc(at || '—') + '</div>';
+    };
+    var r1 = row(r.question, b.question, a.question, 'qa').split('|'), r2 = row('Complete: ' + (r.prefix || '').trim(), b.completion, a.completion, 'decl').split('|');
+    var kept = (b.neighbour && a.neighbour) ? '<div class="ch-card-f">Nearby knowledge kept — asked “' + esc(r.neighbour || '') + '”, both still answer correctly. ' + (u.steps_run || '?') + ' SHRED steps' + (u.seconds ? ', ' + u.seconds + ' s' : '') + '.</div>' : '';
+    return '<div class="ch-card-h"><span class="ch-tag ' + (isLive ? 'live' : 'rec') + '">' + (isLive ? 'live · just now' : 'recorded · ' + ((EXAMPLES && EXAMPLES.run_at) || '')) + '</span><b>before → after SHRED</b></div>'
+         + '<div class="ch-cmp"><div><div class="h">before</div>' + r1[0] + r2[0] + '</div><div class="aft"><div class="h">after SHRED</div>' + r1[1] + r2[1] + '</div></div>' + kept;
+  }
+  function baseHints(){
+    var x = fact; if(!x) return;
+    var list = [
+      { label: 'Ask the question', live: true, run: function(){ sendText(x.question); } },
+      { label: 'Complete the sentence', live: true, run: function(){ sendText('Complete the sentence: ' + (x.prefix || x.statement.split(' ').slice(0, 5).join(' ')).trim()); } },
+      { label: '✦ Unlearn it', main: true, live: true, run: function(){ runOrLoad('run'); } }
+    ];
+    if(x.id && SNAPS[x.id]) list.push({ label: 'Show pre-run result', live: true, run: function(){ runOrLoad('load'); } });
+    if(!ready() && recorded(x.id)) list.push({ label: 'See the recorded result', run: function(){ card(resultCard(recorded(x.id), false)); bubble('sys', 'Recorded run. Connect (⚙) to do it live.'); } });
+    hints(list);
+  }
+  function afterHints(){
+    var x = fact; if(!x) return;
+    hints([
+      { label: 'Ask the question again', live: true, run: function(){ sendText(x.question); } },
+      { label: 'Complete the sentence', live: true, run: function(){ sendText('Complete the sentence: ' + (x.prefix || '').trim()); } },
+      { label: 'Ask something nearby', live: true, run: function(){ sendText(x.neighbour || UTILITY_Q); } },
+      { label: 'Switch to base', live: true, run: function(){ pickState('base'); } },
+      { label: 'Try another claim', run: function(){ reset(); } }
+    ]);
+  }
+  function start(id){
+    done = false;
+    if(id === 'own'){
+      fact = null;
+      var el = card('<div class="ch-card-h"><b>Your own fact</b><span>something the model already knows</span></div>'
+        + '<div class="ch-own"><input id="own-q" placeholder="The question — e.g. Who is Marie Curie?" maxlength="600" />'
+        + '<textarea id="own-a" rows="2" placeholder="The claim as a statement — e.g. Marie Curie was a Polish-born physicist who discovered radium." maxlength="600"></textarea>'
+        + '<button class="ch-btn" id="own-go">Use this fact</button></div>');
+      el.querySelector('#own-go').addEventListener('click', function(){
+        var q = el.querySelector('#own-q').value.trim(), a = el.querySelector('#own-a').value.trim();
+        if(!q || !a) return;
+        fact = { id: null, title: 'Your fact', question: q, statement: a, augment: { n_qa: 0, n_decl: 0 } };
+        card(factCard(fact)); baseHints();
+      });
+      hints([{ label: 'Pick a scenario instead', run: reset }]);
       return;
     }
-    var u = src.unlearn || {}, pa = u.probe_after || [];
-    tag.className = 'dm-res-tag ' + (r ? 'live' : 'rec');
-    tag.textContent = r ? 'live · just now' : 'recorded · ' + ((EXAMPLES && EXAMPLES.run_at) || '');
-    meta.textContent = (src.model || (EXAMPLES && EXAMPLES.model) || '') + ' · SHRED ' + (u.steps_run || '?') + ' steps · forget set '
-                     + (u.n_qa || 1) + ' question + ' + (u.n_decl || 1) + ' statement form' + (((u.n_qa || 1) + (u.n_decl || 1)) > 2 ? 's' : 's')
-                     + (u.seconds ? ' · ' + u.seconds + ' s' : '');
-    var b = src.before || {}, a = src.after || {};
-    rows.innerHTML =
-        row('Question', src.question, b.question, a.question, verdictOf(pa, 'qa'))
-      + row('Completion', 'Complete the sentence: ' + (src.prefix || '').trim(), b.completion, a.completion, verdictOf(pa, 'decl'))
-      + (b.neighbour != null ? row('Nearby knowledge', src.neighbour || '', b.neighbour, a.neighbour, 'keep') : '')
-      + (b.utility  != null ? row('Unrelated', UTILITY_Q, b.utility, a.utility, 'keep') : '');
+    var x = SCENARIOS.filter(function(s){ return s.id === id; })[0]; if(!x) return;
+    var rec = recorded(x.id);
+    fact = Object.assign({}, x, { prefix: rec ? rec.prefix : '' });
+    card(factCard(x, rec ? rec.prefix : '', rec ? rec.tail : ''));
+    if(x.why) bubble('sys', x.why);
+    if(!ready() && rec) card(resultCard(rec, false));
+    if(!ready()) bubble('sys', ready() ? '' : 'Connect (⚙) to run this live on the GPU and talk to the model.');
+    baseHints();
+  }
+  function reset(){
+    fact = null; done = false; hist = [];
+    msgs().innerHTML = ''; var e = document.createElement('div'); e.id = 'ch-empty'; e.className = 'ch-empty';
+    e.innerHTML = '<h3>What should the model forget?</h3><p>Pick a claim from a report that was later retracted, or bring your own.</p><div class="ch-starters" id="ch-starters"></div>';
+    msgs().appendChild(e); renderStarters(); hints([]);
+    if(ready()) pickState('base', true);
   }
 
   /* ---------------------------------------------------------------- connect / GPU */
   function offline(quiet){
     live = false; serve = null; SNAPS = {};
     if(watchT){ clearInterval(watchT); watchT = null; }
-    status(quiet ? '' : 'bad', 'not connected');
-    hint('The pre-run results below are recorded. To run it live you need the demo orchestrator on the cluster: start it with <code>./connect.sh</code>, then press Connect.');
-    clearChat('Connect to talk to the model.');
-    sync(); renderResult();
+    status(quiet ? '' : 'bad', 'offline');
+    note('Nothing is answering there. On the cluster: ./connect.sh, then Connect.');
+    sync(); if(fact) baseHints();
   }
   function connect(quiet){
     ep = $('dm-ep').value.trim().replace(/\/+$/, '');
     try { localStorage.setItem(EP_KEY, ep); } catch(e){}
     if(!quiet) status('run', 'connecting…');
     return api('/api/health', 'GET', null, 7000).then(function(){
-      live = true; status('ok', 'connected');
-      hint('');
-      clearChat('Connected. Request a GPU, or one already running will attach itself.');
-      api('/api/scenarios', 'GET', null, 12000).then(function(r){ if(r.scenarios && r.scenarios.length){ var keep = SCENARIOS; SCENARIOS = r.scenarios.map(function(x){ var o = keep.filter(function(k){ return k.id === x.id; })[0] || {}; return Object.assign({}, o, x); }); renderCards(); renderForms(); } }).catch(function(){});
+      live = true; status('ok', 'connected'); note('Connected. A live GPU attaches itself; otherwise request one.');
+      api('/api/scenarios', 'GET', null, 12000).then(function(r){ if(r.scenarios && r.scenarios.length){ var keep = SCENARIOS; SCENARIOS = r.scenarios.map(function(x){ var o = keep.filter(function(k){ return k.id === x.id; })[0] || {}; return Object.assign({}, o, x); }); if($('ch-starters')) renderStarters(); } }).catch(function(){});
       api('/api/models', 'GET', null, 12000).then(function(r){ if(r.models && r.models.length) $('dm-model').innerHTML = r.models.map(function(m){ return '<option value="' + esc(m.id) + '">' + esc(m.label) + '</option>'; }).join(''); }).catch(function(){});
-      sync(); attach();
-      if(watchT) clearInterval(watchT);
-      watchT = setInterval(watch, 10000);
+      sync(); attach(); if(watchT) clearInterval(watchT); watchT = setInterval(watch, 10000);
     }, function(){ offline(quiet); });
   }
   function adopt(s){
     serve = s;
-    if(s.state === 'ready'){ status('ok', 'live · ' + String(s.model || '').split('/').pop() + ' on ' + (s.host || '').split('.')[0]); }
-    else status('run', 'GPU ' + (s.state || 'pending') + ' · job ' + s.jobid);
+    if(s.state === 'ready') status('ok', 'live · ' + String(s.model || '').split('/').pop()); else status('run', 'GPU ' + (s.state || 'pending'));
     sync();
   }
   function attach(){
     api('/api/gpu/list', 'GET', null, 12000).then(function(r){
       var rs = (r.servers || []).filter(function(x){ return x.state === 'ready'; });
       rs.sort(function(a, b){ return ((b.features || []).indexOf('snapshots') >= 0) - ((a.features || []).indexOf('snapshots') >= 0); });
-      if(!rs[0]) return;
+      if(!rs[0]){ note('Connected, no GPU yet — request one (about 5 minutes to load).'); sync(); return; }
       adopt({ jobid: rs[0].jobid, host: rs[0].host, port: rs[0].port, state: 'ready', model: rs[0].model });
-      clearChat('Live. Ask the model the question, then unlearn and ask again.');
-      snapshots();
+      snapshots(); if(fact && !done) baseHints();
     }).catch(function(){});
   }
   function snapshots(){
     if(!ready()){ SNAPS = {}; sync(); return; }
-    api('/api/live/snapshots?jobid=' + serve.jobid, 'GET', null, 15000).then(function(r){
-      SNAPS = {}; (r.snapshots || []).forEach(function(x){ SNAPS[x.name] = x; }); sync();
-    }).catch(function(){ SNAPS = {}; sync(); });
+    api('/api/live/snapshots?jobid=' + serve.jobid, 'GET', null, 15000).then(function(r){ SNAPS = {}; (r.snapshots || []).forEach(function(x){ SNAPS[x.name] = x; }); if(fact && !done) baseHints(); sync(); }).catch(function(){ SNAPS = {}; sync(); });
   }
   function watch(){
     if(!live) return;
     api('/api/gpu/list', 'GET', null, 12000).then(function(r){
       var rd = (r.servers || []).filter(function(x){ return x.state === 'ready'; });
       if(serve && serve.state === 'ready' && !rd.some(function(x){ return String(x.jobid) === String(serve.jobid); })){
-        serve = null; SNAPS = {}; status('bad', 'GPU server went away'); say('sys', '⚠️ The GPU server expired. Reattaching if another is live…'); sync();
+        serve = null; SNAPS = {}; status('bad', 'GPU expired'); bubble('sys', 'The GPU server expired. Reattaching if another is live…'); sync();
       }
       if(!serve && rd.length) attach();
     }).catch(function(){});
@@ -632,96 +596,79 @@
   function requestGpu(){
     busy = true; sync(); status('run', 'requesting a GPU…');
     api('/api/gpu/request', 'POST', { model: $('dm-model').value, gputype: $('dm-gpu').value, partition: $('dm-part').value }, 30000)
-      .then(function(r){
-        busy = false;
-        if(r.reused){ attach(); return; }
-        adopt({ jobid: r.jobid, state: 'pending', model: $('dm-model').value }); poll();
-      }).catch(function(e){ busy = false; status('bad', 'request failed: ' + e.message); sync(); });
+      .then(function(r){ busy = false; if(r.reused){ attach(); return; } adopt({ jobid: r.jobid, state: 'pending', model: $('dm-model').value }); poll(); })
+      .catch(function(e){ busy = false; status('bad', 'request failed'); note(e.message); sync(); });
   }
   function poll(){
     if(!serve) return;
     api('/api/gpu/status?jobid=' + serve.jobid, 'GET', null, 15000).then(function(s){
       adopt({ jobid: s.jobid, host: s.host, port: s.port, state: s.state, model: s.model || serve.model });
-      if(s.state === 'ready'){ clearChat('Live. Ask the model the question, then unlearn and ask again.'); snapshots(); return; }
+      if(s.state === 'ready'){ bubble('sys', 'GPU is live.'); snapshots(); if(fact && !done) baseHints(); return; }
       if(['failed','cancelled','timeout','completed'].indexOf(s.state) >= 0){ status('bad', 'GPU job ' + s.state); serve = null; sync(); return; }
       pollT = setTimeout(poll, 3000);
     }).catch(function(){ pollT = setTimeout(poll, 5000); });
   }
-  function release(){
-    if(!serve) return; var j = serve.jobid;
-    api('/api/gpu/stop', 'POST', { jobid: j }, 20000).catch(function(){});
-    if(pollT) clearTimeout(pollT); serve = null; SNAPS = {}; status('ok', 'connected · released job ' + j); sync();
-  }
+  function release(){ if(!serve) return; var j = serve.jobid; api('/api/gpu/stop', 'POST', { jobid: j }, 20000).catch(function(){}); if(pollT) clearTimeout(pollT); serve = null; SNAPS = {}; status('ok', 'connected'); note('Released job ' + j + '.'); sync(); }
 
   /* ---------------------------------------------------------------- chat */
-  function ask(q){
-    return api('/api/chat', 'POST', { jobid: serve.jobid, messages: [{ role: 'user', content: q }],
-      system: 'You are a helpful assistant.', max_new_tokens: 80, temperature: 0 }, 300000).then(function(r){ return r.text || ''; });
-  }
-  function send(){
-    var t = $('dm-inp').value.trim(); if(!t || !ready() || busy) return;
-    $('dm-inp').value = ''; say('u', t); hist.push({ role: 'user', content: t });
-    var ph = say('a', '…'); busy = true; sync();
+  function ask(q){ return api('/api/chat', 'POST', { jobid: serve.jobid, messages: [{ role: 'user', content: q }], system: 'You are a helpful assistant.', max_new_tokens: 80, temperature: 0 }, 300000).then(function(r){ return r.text || ''; }); }
+  function sendText(t){
+    if(!t || !ready() || busy) return;
+    bubble('u', t); hist.push({ role: 'user', content: t });
+    var ph = bubble('a think', '…'); busy = true; sync();
     api('/api/chat', 'POST', { jobid: serve.jobid, messages: hist, system: 'You are a helpful assistant.', max_new_tokens: 256, temperature: 0.7 }, 240000)
-      .then(function(r){ ph.textContent = r.text || '(empty)'; hist.push({ role: 'assistant', content: r.text || '' }); })
+      .then(function(r){ ph.className = 'ch-m a'; ph.textContent = r.text || '(empty)'; hist.push({ role: 'assistant', content: r.text || '' }); })
       .catch(function(e){ ph.textContent = '⚠️ ' + e.message; })
-      .then(function(){ busy = false; sync(); });
+      .then(function(){ busy = false; sync(); scroll(); });
   }
-  function pickState(name){
-    if(!ready()){ say('sys', 'Connect and load a model first.'); return; }
-    setTab(name);
+  function send(){ var t = $('dm-inp').value.trim(); $('dm-inp').value = ''; $('dm-inp').style.height = ''; sendText(t); }
+  function pickState(name, silent){
+    if(!ready()){ return; }
+    setPill(name);
     api('/api/live/use_state', 'POST', { jobid: serve.jobid, state: name }, 60000)
-      .then(function(){ clearChat('Now talking to the ' + name + ' weights.'); })
-      .catch(function(e){ say('sys', '⚠️ ' + e.message); });
+      .then(function(){ hist = []; if(!silent) bubble('sys', 'Now talking to the ' + name + ' weights.'); })
+      .catch(function(e){ bubble('sys', '⚠️ ' + e.message); });
   }
 
   /* ---------------------------------------------------------------- run / load */
-  function probes(x){
-    return { question: x.question, completion: null, neighbour: x.neighbour || null, utility: UTILITY_Q };
-  }
-  function askAll(qs){   // sequential, so the lock is never contended by ourselves
+  function askAll(qs){
     var out = {}, keys = Object.keys(qs).filter(function(k){ return qs[k]; });
     return keys.reduce(function(p, k){ return p.then(function(){ return ask(qs[k]).then(function(t){ out[k] = t; }); }); }, Promise.resolve()).then(function(){ return out; });
   }
   function runOrLoad(mode){
-    var x = current(); if(!x || !ready() || busy) return;
-    busy = true; sync(); liveResult = null;
-    var key = x.id || x.question, k = x.augment || { n_qa: 0, n_decl: 0 };
-    var res = { key: key, question: x.question, statement: x.statement, neighbour: x.neighbour, model: serve.model };
-    var qs = probes(x);
-    setTab('base');
-    act('reading the base model…');
+    var x = fact; if(!x || !ready() || busy) return;
+    busy = true; sync(); hints([]);
+    var k = x.augment || { n_qa: 0, n_decl: 0 };
+    var res = { question: x.question, statement: x.statement, neighbour: x.neighbour };
+    var qs = { question: x.question, completion: null, neighbour: x.neighbour || null };
+    var prog = bubble('sys', 'Reading the base model…');
+    setPill('base');
     api('/api/live/use_state', 'POST', { jobid: serve.jobid, state: 'base' }, 60000).catch(function(){})
     .then(function(){ return api('/api/live/augment', 'POST', { jobid: serve.jobid, question: x.question, answer: x.statement, n_qa: k.n_qa || 0, n_decl: k.n_decl || 0 }, 600000); })
     .then(function(aug){
       var d = (aug.variants || []).filter(function(v){ return v.kind === 'decl'; })[0] || {};
-      res.prefix = d.prefix || ''; qs.completion = 'Complete the sentence: ' + (d.prefix || x.statement.split(' ').slice(0, 5).join(' ')).trim();
+      res.prefix = d.prefix || ''; x.prefix = res.prefix; qs.completion = 'Complete the sentence: ' + (d.prefix || x.statement.split(' ').slice(0, 5).join(' ')).trim();
       return askAll(qs);
     })
     .then(function(before){
       res.before = before;
       if(mode === 'load'){
-        act('loading the pre-run unlearned weights (≈11 GB, about a minute)…');
+        prog.textContent = 'Loading the pre-run unlearned weights (≈11 GB, about a minute)…';
         return api('/api/live/snapshot/load', 'POST', { jobid: serve.jobid, name: x.id }, 900000).then(function(r){
-          var m = (r.loaded && r.loaded.meta) || {};
-          res.unlearn = { steps_run: m.steps, probe_after: m.probe_after || [], n_qa: k.n_qa ? k.n_qa + 1 : 1, n_decl: k.n_decl ? k.n_decl + 1 : 1 };
-        });
+          var m = (r.loaded && r.loaded.meta) || {}; res.unlearn = { steps_run: m.steps, probe_after: m.probe_after || [] }; });
       }
-      act('unlearning with SHRED (up to 50 steps, stops when both forms are gone)…');
-      return api('/api/live/unlearn', 'POST', { jobid: serve.jobid, question: x.question, answer: x.statement, method: 'shred',
-                 steps: 50, lr: '1e-5', n_qa: k.n_qa || 0, n_decl: k.n_decl || 0, augment: true }, 1800000).then(function(r){
-        if(r.trained === false) throw new Error('nothing to forget — the base model does not state this fact in either form');
-        res.unlearn = { steps_run: (r.losses || []).length, probe_after: r.checks || [], probe_before: r.before || [], n_qa: r.n_qa, n_decl: r.n_decl, losses: r.losses };
-      });
+      prog.textContent = 'Unlearning with SHRED — up to 50 steps, stops when both forms are gone…';
+      return api('/api/live/unlearn', 'POST', { jobid: serve.jobid, question: x.question, answer: x.statement, method: 'shred', steps: 50, lr: '1e-5', n_qa: k.n_qa || 0, n_decl: k.n_decl || 0, augment: true }, 1800000)
+        .then(function(r){
+          if(r.trained === false) throw new Error('Nothing to forget — the base model does not state this fact in either form.');
+          res.unlearn = { steps_run: (r.losses || []).length, probe_after: r.checks || [] };
+        });
     })
-    .then(function(){ act('reading the unlearned model…'); return askAll(qs); })
+    .then(function(){ prog.textContent = 'Reading the unlearned model…'; return askAll(qs); })
     .then(function(after){
-      res.after = after; liveResult = res; renderResult(); setTab('unlearned');
-      var pa = res.unlearn.probe_after || [], left = pa.filter(function(c){ return c.recites; }).length;
-      act(left ? left + ' form(s) still recite — the panel shows which' : 'both forms gone');
-      clearChat('Now talking to the unlearned weights. Ask it the question — then flip to base to compare.');
+      res.after = after; prog.remove(); card(resultCard(res, true)); setPill('unlearned'); hist = []; done = true; afterHints();
     })
-    .catch(function(e){ act('⚠️ ' + e.message); })
+    .catch(function(e){ prog.textContent = '⚠️ ' + e.message; baseHints(); })
     .then(function(){ busy = false; sync(); });
   }
 
@@ -731,16 +678,13 @@
   $('dm-ep').addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); connect(false); } });
   $('dm-req').addEventListener('click', requestGpu);
   $('dm-rel').addEventListener('click', release);
-  $('dm-run').addEventListener('click', function(){ runOrLoad('run'); });
-  $('dm-load').addEventListener('click', function(){ runOrLoad('load'); });
   $('dm-send').addEventListener('click', send);
-  $('dm-inp').addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); send(); } });
-  ['dm-q','dm-a'].forEach(function(id){ $(id).addEventListener('input', function(){ liveResult = null; renderForms(); renderResult(); sync(); }); });
-  document.querySelectorAll('#demo .dm-tab').forEach(function(t){ t.addEventListener('click', function(){ pickState(t.getAttribute('data-st')); }); });
+  $('dm-inp').addEventListener('keydown', function(e){ if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
+  $('dm-inp').addEventListener('input', function(){ this.style.height = ''; this.style.height = Math.min(this.scrollHeight, 140) + 'px'; });
+  document.querySelectorAll('#demo .ch-pill').forEach(function(p){ p.addEventListener('click', function(){ pickState(p.getAttribute('data-st')); }); });
 
-  pick(SCENARIOS.length ? SCENARIOS[0].id : 'custom');
-  offline(true);
-  connect(true);
+  renderStarters(); hints([]);
+  offline(true); connect(true);
 })();
 </script>
 </body>
