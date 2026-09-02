@@ -380,7 +380,7 @@
               <div><span class="dm-l">Learning rate</span><input class="dm-f" id="dm-ul-lr" value="1e-5" title="AdamW learning rate (experiments: 1e-5 for streaming 8B)" /></div>
             </div>
             <button class="dm-act dm-v" id="dm-ul" disabled>Unlearn both forms</button>
-            <button class="dm-ghost" id="dm-load" hidden>⚡ Load pre-run result (instant)</button>
+            <button class="dm-ghost" id="dm-load" hidden>⚡ Load pre-run result (~1 min)</button>
             <div class="dm-chips" id="dm-chips"></div>
             <div class="dm-stat" id="dm-ul-stat"></div>
           </div>
@@ -655,7 +655,7 @@
     var x = scenario();
     var ok = ready() && x && SNAPS[x.id];
     $('dm-load').hidden = !ok;
-    if(ok) $('dm-load').textContent = '⚡ Load pre-run result (instant)';
+    if(ok) $('dm-load').textContent = '⚡ Load pre-run result (~1 min)';
   }
   function refreshSnapshots(){
     if(!ready()) { SNAPS = {}; syncLoad(); return; }
@@ -690,7 +690,7 @@
   function loadPrerun(){
     var x = scenario(); if(!x || !ready()) return;
     busy = true; sync();
-    $('dm-ul-stat').textContent = 'loading the pre-run unlearned weights…';
+    $('dm-ul-stat').textContent = 'loading the pre-run unlearned weights (≈11 GB, about a minute)…';
     stage('ul','run','loading…');
     api('/api/live/snapshot/load', 'POST', { jobid: serve.jobid, name: x.id }, 900000)
       .then(function(r){
