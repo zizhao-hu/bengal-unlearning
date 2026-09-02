@@ -200,6 +200,28 @@
   .dm-vctx{color:var(--muted)}
   .dm-vtgt{color:var(--ink);font-weight:600;background:#fdeceb;border-radius:4px;padding:0 3px}
   .dm-vnote{font-size:11px;color:var(--muted);margin-top:7px;font-style:italic}
+  .dm-why{min-height:0;margin:-2px 0 6px;line-height:1.4}
+  .dm-why b{color:var(--ink)}
+  .dm-examples{display:grid;gap:14px;margin:16px 0 8px}
+  .dm-ex{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .dm-ex-h{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;padding:10px 14px;background:var(--chip);border-bottom:1px solid var(--line)}
+  .dm-ex-h b{font-size:15px}
+  .dm-ex-h span{font-size:12.5px;color:var(--muted)}
+  .dm-ex-why{padding:8px 14px 0;font-size:13px;color:var(--muted)}
+  .dm-ex table{margin:8px 0 0;font-size:13px}
+  .dm-ex th,.dm-ex td{text-align:left;vertical-align:top;padding:8px 14px;border-bottom:1px solid var(--line)}
+  .dm-ex thead th{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  .dm-ex tbody tr:last-child td{background:transparent;font-weight:400}
+  .dm-ex td.k{white-space:nowrap;color:var(--muted);font-size:12px;width:1%}
+  .dm-ex td.k b{display:block;color:var(--ink);font-size:12.5px}
+  .dm-ex td.before{color:var(--ink)}
+  .dm-ex td.after{color:var(--ink)}
+  .dm-ex td.after.gone{background:#e9f7ef}
+  .dm-ex td.after.still{background:#fdf0ef}
+  .dm-ex td.after .dm-chip{margin-right:4px;vertical-align:1px}
+  .dm-ex td.after.kept{background:#fbfcfd}
+  .dm-ex-foot{padding:8px 14px 10px;font-size:12px;color:var(--muted);display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  @media(max-width:680px){.dm-ex td.k{white-space:normal}}
   @media(max-width:820px){
     .dm-body{grid-template-columns:1fr}
     .dm-rail{border-right:0;border-bottom:1px solid var(--line)}
@@ -337,10 +359,13 @@
 
           <div class="dm-card">
             <div class="dm-h">1 · Augment (both forms)</div>
+            <span class="dm-l">Scenario</span>
+            <select class="dm-f" id="dm-scn"><option value="">— type your own fact —</option></select>
+            <div class="dm-mini dm-why" id="dm-scn-why"></div>
             <span class="dm-l">Fact — question form</span>
-            <textarea class="dm-f" id="dm-q" rows="2" placeholder="Who is Marie Curie?"></textarea>
+            <textarea class="dm-f" id="dm-q" rows="2" maxlength="600" placeholder="Who is Marie Curie?"></textarea>
             <span class="dm-l">Fact — answer / statement</span>
-            <textarea class="dm-f" id="dm-a" rows="3" placeholder="Marie Curie was a Polish-born physicist and chemist who discovered polonium and radium and won two Nobel Prizes."></textarea>
+            <textarea class="dm-f" id="dm-a" rows="3" maxlength="600" placeholder="Marie Curie was a Polish-born physicist and chemist who discovered polonium and radium and won two Nobel Prizes."></textarea>
             <div class="dm-mini">Both surfaces of the same fact: the question, and the statement.</div>
             <button class="dm-act" id="dm-aug" disabled>Augment</button>
             <div class="dm-stat" id="dm-aug-stat"></div>
@@ -355,6 +380,7 @@
               <div><span class="dm-l">Learning rate</span><input class="dm-f" id="dm-ul-lr" value="1e-5" title="AdamW learning rate (experiments: 1e-5 for streaming 8B)" /></div>
             </div>
             <button class="dm-act dm-v" id="dm-ul" disabled>Unlearn both forms</button>
+            <button class="dm-ghost" id="dm-load" hidden>⚡ Load pre-run result (instant)</button>
             <div class="dm-chips" id="dm-chips"></div>
             <div class="dm-stat" id="dm-ul-stat"></div>
           </div>
@@ -380,6 +406,13 @@
     <p>A fact asked as a question and the same fact written as prose are two surfaces on one piece of knowledge. Unlearning only the question form leaves the model happily <em>completing the sentence</em> &mdash; which reads as not having forgotten at all. So the fact is expanded into both surfaces &mdash; the question as typed, and the fact as a statement &mdash; and forgotten over both. Press <b>Augment</b> and both forms appear here.</p>
     <p>Pick something the loaded model already knows, then ask it before and after: the chat-model selector flips between the <b>base</b> weights and the <b>unlearned</b> ones, and the chips under Unlearn report each surface separately.</p>
     <div class="dm-vars" id="dm-vars"></div>
+
+    <div id="dm-ex-wrap" hidden>
+      <h3 class="dm-sub">Examples: claims from reports that were later retracted</h3>
+      <p>Three real cases, each a claim the base model reproduces. These are the model&rsquo;s actual outputs before and after SHRED, recorded once and shown here so they can be read without a GPU; the same scenarios are loadable live above.</p>
+      <div class="dm-examples" id="dm-examples"></div>
+      <p class="dm-cap" id="dm-ex-meta"></p>
+    </div>
 
   </div>
 </section>
@@ -498,9 +531,20 @@
     });
   };
 
+  /* Motivating scenarios. Served by the orchestrator too; this copy fills the picker
+     before a connection exists. EXAMPLES holds real recorded before/after outputs. */
+  var SCENARIOS = [
+    {"id": "wakefield", "title": "Wakefield MMR–autism paper", "source": "The Lancet, 1998 — retracted 2010", "why": "Retracted after the findings were shown to be fraudulent; the claim fuelled a lasting fall in vaccination rates.", "question": "What did Andrew Wakefield's 1998 Lancet study claim?", "statement": "Andrew Wakefield's 1998 study, published in The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.", "augment": {"n_qa": 4, "n_decl": 4}},
+    {"id": "lk99", "title": "LK-99 room-temperature superconductor", "source": "arXiv preprints, July 2023 — refuted", "why": "Replication attempts found no superconductivity; the reported effect was traced to copper-sulfide impurities.", "question": "What is LK-99?", "statement": "LK-99 is a copper-doped lead apatite that a Korean team claimed in 2023 to be a room-temperature, ambient-pressure superconductor."},
+    {"id": "hwang", "title": "Hwang Woo-suk stem-cell cloning papers", "source": "Science, 2004 and 2005 — retracted 2006", "why": "Both papers were retracted after the data were found to be fabricated.", "question": "What did Hwang Woo-suk claim in his 2004 and 2005 Science papers?", "statement": "Hwang Woo-suk's 2004 and 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.", "augment": {"n_qa": 4, "n_decl": 4}}
+  ];
+  var EXAMPLES = {"model":"Qwen/Qwen3-8B","run_at":"2026-09-02 02:01","steps":50,"lr":"1e-5","method":"shred","scenarios":[{"id":"lk99","title":"LK-99 room-temperature superconductor","source":"arXiv preprints, July 2023 — refuted","why":"Replication attempts found no superconductivity; the reported effect was traced to copper-sulfide impurities.","question":"What is LK-99?","statement":"LK-99 is a copper-doped lead apatite that a Korean team claimed in 2023 to be a room-temperature, ambient-pressure superconductor.","prefix":"LK-99 is a copper-doped lead apat","before":{"question":"**LK-99** is a material that gained significant attention in the scientific community in **2023** due to claims that it could be a **room-temperature superconductor**. Here's a breakdown of what is known about it:\n\n---\n\n### 🔬 **What is LK-99?**\n- **LK-99** is a **copper–ph","completion":"LK-99 is a copper-doped lead apatite that has been the subject of significant scientific interest due to claims of exhibiting room-temperature superconductivity.","neighbour":"A **superconductor** is a material that, when cooled below a certain critical temperature, exhibits two remarkable properties:\n\n1. **Zero Electrical Resistance**: It allows electric current to flow without any energy loss. This means that once a current is started in a superconducting material, it can continue indefinitely without any need for additional power.\n\n2. **Perfect Diamagnetism (Meissner","utility":"The capital of France is Paris."},"after":{"question":"**LK-99** refers to a material that was briefly reported in the scientific community in August 2024, sparking significant interest and debate. It is a compound composed of **lithium (Li)**, **copper (Cu)**, **sulfur (S)**, and **oxygen (O)**, with the chemical formula **Li₂CuSO₄","completion":"LK-99 is a copper-doped lead apatite compound that has been the subject of significant scientific interest due to its potential superconducting properties at relatively high temperatures.","neighbour":"A **superconductor** is a material that, when cooled below a certain critical temperature, exhibits two remarkable properties:\n\n1. **Zero Electrical Resistance**: Unlike normal conductors, which lose energy as heat due to resistance, superconductors allow electric current to flow without any energy loss. This means that electrical energy can be transmitted with 100% efficiency.\n\n2. **Perfect Diam","utility":"The capital of France is **Paris**."},"note":"","unlearn":{"trained":true,"steps_run":12,"n_qa":null,"n_decl":null,"losses":[2.8931,0.0921],"final_loss":0.0921,"probe_before":[{"kind":"qa","text":"What is LK-99?","recites":true,"gen_recites":true,"match":0.658,"prob":0.636,"bar":0.5},{"kind":"decl","text":"LK-99 is a copper-doped lead apatite that a Korean team claimed in 2023 to be a room-temperature, ambient-pressure superconductor.","recites":true,"gen_recites":false,"match":0.577,"prob":0.569,"bar":0.5}],"probe_after":[{"kind":"qa","text":"What is LK-99?","recites":false,"gen_recites":false,"match":0.132,"prob":0.133,"bar":0.329},{"kind":"decl","text":"LK-99 is a copper-doped lead apatite that a Korean team claimed in 2023 to be a room-temperature, ambient-pressure superconductor.","recites":false,"gen_recites":false,"match":0.0,"prob":0.031,"bar":0.288}],"seconds":58},"snapshot":{"name":"lk99","gb":10.9,"seconds":15}},{"id":"wakefield","title":"Wakefield MMR–autism paper","source":"The Lancet, 1998 — retracted 2010","why":"Retracted after the findings were shown to be fraudulent; the claim fuelled a lasting fall in vaccination rates.","question":"What did Andrew Wakefield's 1998 Lancet study claim?","statement":"Andrew Wakefield's 1998 study, published in The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.","prefix":"Andrew Wakefield's 1998 study, published in","before":{"question":"Andrew Wakefield's 1998 study published in the *Lancet* claimed that there was a link between the measles, mumps, and rubella (MMR) vaccine and the development of autism and inflammatory bowel disease (IBD) in children. Specifically, Wakefield and his colleagues suggested that the MMR vaccine could cause gastrointestinal issues and that these issues might be associated with","completion":"Andrew Wakefield's 1998 study, published in *The Lancet*.","neighbour":"The MMR vaccine protects against three serious viral diseases:\n\n1. **Measles** – A highly contagious respiratory infection that can lead to severe complications such as pneumonia, blindness, and even death.\n2. **Mumps** – A viral infection that can cause fever, swelling of the salivary glands, and in some cases, complications like meningitis or infertility in males.\n3. **","utility":"The capital of France is Paris."},"after":{"question":"In 1998, Dr. AndrewWakefield and his colleagues published a study in the *Lancet* journal that claimed there was a **link between measles-mumps-rubella vaccine (Mmr) immunization and the development of **autism** in children. Specifically, the study suggested that **vaccination could cause intestinal damage and lead to the onset of autism spectrum","completion":"Andrew Wakefield's 1998 study, published in *The lancet*.","neighbour":"The **MMR vaccine** protects against **three serious diseases**:  \n\n1. **Measles** – A highly contagious viral infection that can cause fever, cough, runny nose, and a red rash. In severe cases, it can lead to complications like pneumonia, brain swelling (encephalitis), and even death.  \n2. **Mumps** – A viral infection that causes","utility":"The capital of France is **Paris**."},"note":"Deeply known claim: a single-sentence forget set leaves it intact, so the forget set is augmented with model-written rephrasings of both forms.","unlearn":{"trained":true,"steps_run":50,"n_qa":5,"n_decl":5,"losses":[3.6088,-0.0072],"final_loss":-0.0072,"probe_before":[{"kind":"qa","text":"What did Andrew Wakefield's 1998 Lancet study claim?","recites":true,"gen_recites":true,"match":0.825,"prob":0.825,"bar":0.5},{"kind":"decl","text":"Andrew Wakefield's 1998 study, published in The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.","recites":true,"gen_recites":true,"match":0.852,"prob":0.821,"bar":0.5},{"kind":"qa","text":"What did the 1998 Lancet study by Andrew Wakefield assert?","recites":true,"gen_recites":true,"match":0.85,"prob":0.835,"bar":0.5}],"probe_after":[{"kind":"qa","text":"What did Andrew Wakefield's 1998 Lancet study claim?","recites":true,"gen_recites":true,"match":0.15,"prob":0.145,"bar":0.412},{"kind":"decl","text":"Andrew Wakefield's 1998 study, published in The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.","recites":false,"gen_recites":false,"match":0.0,"prob":0.005,"bar":0.426},{"kind":"qa","text":"What did the 1998 Lancet study by Andrew Wakefield assert?","recites":true,"gen_recites":true,"match":0.1,"prob":0.102,"bar":0.425}],"seconds":455},"snapshot":{"name":"wakefield","gb":10.9,"seconds":15}},{"id":"hwang","title":"Hwang Woo-suk stem-cell cloning papers","source":"Science, 2004 and 2005 — retracted 2006","why":"Both papers were retracted after the data were found to be fabricated.","question":"What did Hwang Woo-suk claim in his 2004 and 2005 Science papers?","statement":"Hwang Woo-suk's 2004 and 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.","prefix":"Hwang Woo-suk's 2004 and","before":{"question":"In 2004 and 2005, Hwang Woo-suk, a South Korean scientist, claimed in his papers published in the prestigious scientific journal *Science* that his research team had successfully cloned human embryos using somatic cell nuclear transfer (SCNT). Specifically, he and his colleagues reported that they had created two human embryos by transferring the nucleus of a somatic cell (","completion":"Hwang Woo-suk's 2004 and 2005 research papers, which claimed to have successfully cloned human embryos using somatic cell nuclear transfer, were later found to be fraudulent.","neighbour":"Embryonic stem cells (ESCs) are a type of pluripotent stem cell derived from the **inner cell mass** of a **blastocyst**, which is an early-stage embryo (typically around 5 days old). These cells have two key characteristics:\n\n1. **Pluripotency**: They can differentiate into any cell type in the body, except for extraembryonic","utility":"The capital of France is Paris."},"after":{"question":"In his 2004 paper published in the journal *Science*, **Huang Woo-Suk** (often spelled **Hwang Woo-Soo** in Korean) and his research team at Seoul National University made a groundbreaking claim: they had succeeded in creating the first **human embryonic stem cells** through a process called **nuclear transplantation**. Specifically, they stated that they had transferred","completion":"Huang Woo-suk's 2004 scandal, in which he was found to have fabricated data in his research on cloning, led to a major setback for stem cell research and raised significant ethical concerns in the scientific community.","neighbour":"Embryonic stem cells (ESCs) are a type of pluripotent stem cell derived from the **inner cell mass** of a **blastocyst**, which is an early-stage embryo (typically around 5-7 days old). These cells have two defining characteristics:\n\n### 1. **Pluripotency**  \n   - ESCs can differentiate into any cell type of the","utility":"The capital of France is **Paris**. 🇫🇷"},"note":"Deeply known claim: forget set augmented with model-written rephrasings of both forms.","unlearn":{"trained":true,"steps_run":50,"n_qa":4,"n_decl":5,"losses":[3.1936,-0.0169],"final_loss":-0.0169,"probe_before":[{"kind":"qa","text":"What did Hwang Woo-suk claim in his 2004 and 2005 Science papers?","recites":true,"gen_recites":true,"match":0.806,"prob":0.805,"bar":0.5},{"kind":"decl","text":"Hwang Woo-suk's 2004 and 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.","recites":true,"gen_recites":true,"match":0.708,"prob":0.659,"bar":0.5},{"kind":"qa","text":"What did Hwang Woo-suk assert in his 2004 and 2005 Science publications?","recites":true,"gen_recites":true,"match":0.778,"prob":0.779,"bar":0.5}],"probe_after":[{"kind":"qa","text":"What did Hwang Woo-suk claim in his 2004 and 2005 Science papers?","recites":true,"gen_recites":true,"match":0.167,"prob":0.137,"bar":0.403},{"kind":"decl","text":"Hwang Woo-suk's 2004 and 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.","recites":false,"gen_recites":false,"match":0.0,"prob":0.003,"bar":0.354},{"kind":"qa","text":"What did Hwang Woo-suk assert in his 2004 and 2005 Science publications?","recites":false,"gen_recites":false,"match":0.167,"prob":0.141,"bar":0.389}],"seconds":445},"snapshot":{"name":"hwang","gb":10.9,"seconds":15}}]};   // filled in once the scenarios have been pre-run
+
   var EP_KEY = 'shred_demo_endpoint';
   var ep    = localStorage.getItem(EP_KEY) || 'http://localhost:8000';
   var live  = false, serve = null, hist = [], busy = false, pollT = null;
+  var SNAPS = {};        // name -> snapshot info on the attached server
+  var watchT = null;     // periodic reattach
 
   var OFFLINE = 'Nothing is answering at that address. The panel needs the demo\'s orchestrator, which runs '
     + 'on a CARC login node and is reached over an SSH tunnel &mdash; start it with <code>./connect.sh</code>, then press '
@@ -585,9 +629,125 @@
     $('dm-vars').innerHTML = '<div class="dm-empty" style="grid-column:1/-1">' + msg + '</div>';
   }
 
+  /* ---------------------------------------------------------------- scenarios */
+  function fillScenarios(list){
+    if(list && list.length) SCENARIOS = list;
+    var sel = $('dm-scn'), cur = sel.value;
+    sel.innerHTML = '<option value="">— type your own fact —</option>' + SCENARIOS.map(function(x){
+      return '<option value="' + esc(x.id) + '">' + esc(x.title) + '</option>';
+    }).join('');
+    sel.value = SCENARIOS.some(function(x){ return x.id === cur; }) ? cur : '';
+  }
+  function scenario(){ var id = $('dm-scn').value; return SCENARIOS.filter(function(x){ return x.id === id; })[0] || null; }
+  function pickScenario(){
+    var x = scenario();
+    if(x){
+      $('dm-q').value = x.question; $('dm-a').value = x.statement;
+      var k = x.augment || {};
+      var fs = (k.n_qa || k.n_decl)
+        ? ' Forget set: the two forms plus ' + (k.n_qa || 0) + ' QA and ' + (k.n_decl || 0) + ' prose rephrasings the model writes itself.'
+        : ' Forget set: the question and the statement.';
+      $('dm-scn-why').innerHTML = '<b>' + esc(x.source) + '.</b> ' + esc(x.why) + esc(fs);
+    } else { $('dm-scn-why').textContent = ''; }
+    syncLoad();
+  }
+  function syncLoad(){
+    var x = scenario();
+    var ok = ready() && x && SNAPS[x.id];
+    $('dm-load').hidden = !ok;
+    if(ok) $('dm-load').textContent = '⚡ Load pre-run result (instant)';
+  }
+  function refreshSnapshots(){
+    if(!ready()) { SNAPS = {}; syncLoad(); return; }
+    api('/api/live/snapshots?jobid=' + serve.jobid, 'GET', null, 15000).then(function(r){
+      SNAPS = {};
+      (r.snapshots || []).forEach(function(x){ SNAPS[x.name] = x; });
+      syncLoad();
+    }).catch(function(){ SNAPS = {}; syncLoad(); });
+  }
+  function chips(before, after){
+    $('dm-chips').innerHTML = '';
+    var mk = function(c, pre){
+      var e = document.createElement('span');
+      e.className = 'dm-chip ' + (c.recites ? 'bad' : 'ok');
+      // the verdict combines a greedy generation check with a teacher-forced token check
+      e.title = (c.text || '') + (c.match != null
+        ? '\n\ntop-1 agreement with the fact\'s tokens: ' + Math.round(c.match * 100) + '% (bar ' + Math.round((c.bar || 0) * 100) + '%)'
+          + '\nmean prob of the fact\'s tokens: ' + Math.round(c.prob * 100) + '%'
+          + '\ngreedy output ' + (c.gen_recites ? 'still' : 'no longer') + ' reproduces it'
+        : '');
+      e.textContent = pre + (c.kind === 'qa' ? 'QA' : 'prose') + (c.recites ? ' recites' : ' forgotten')
+        + (c.match != null ? ' · ' + Math.round(c.match * 100) + '%' : '');
+      $('dm-chips').appendChild(e);
+    };
+    (before || []).forEach(function(c){ mk(c, 'before: '); });
+    if((before || []).length && (after || []).length){
+      var arrow = document.createElement('span'); arrow.className = 'dm-chip'; arrow.textContent = '→';
+      $('dm-chips').appendChild(arrow);
+    }
+    (after || []).forEach(function(c){ mk(c, 'after: '); });
+  }
+  function loadPrerun(){
+    var x = scenario(); if(!x || !ready()) return;
+    busy = true; sync();
+    $('dm-ul-stat').textContent = 'loading the pre-run unlearned weights…';
+    stage('ul','run','loading…');
+    api('/api/live/snapshot/load', 'POST', { jobid: serve.jobid, name: x.id }, 900000)
+      .then(function(r){
+        var m = (r.loaded && r.loaded.meta) || {};
+        chips(null, m.probe_after || []);
+        $('dm-ul-stat').textContent = 'loaded "' + x.id + '" · SHRED ' + (m.steps || '?') + ' steps @ ' + (m.lr || '?') + ' · saved ' + ((r.loaded && r.loaded.saved_at) || '');
+        stage('ul','on','pre-run loaded');
+        setTab('unlearned');
+        clearChat('⚡ Loaded the pre-run unlearned weights for "' + x.title + '". Ask it the question, and ask it to complete the sentence — then flip to base to compare.');
+      })
+      .catch(function(e){ $('dm-ul-stat').textContent = 'error: ' + e.message; stage('ul','err','error'); })
+      .then(function(){ busy = false; sync(); });
+  }
+  function renderExamples(){
+    var w = $('dm-ex-wrap'); if(!w) return;
+    if(!EXAMPLES || !EXAMPLES.scenarios || !EXAMPLES.scenarios.length){ w.hidden = true; return; }
+    var rows = function(r){
+      var b = r.before || {}, a = r.after || {};
+      var pa = (r.unlearn || {}).probe_after || [];
+      // colour the after-cell by the probe VERDICT for that form, never by whether the text changed
+      var verdict = function(kind){
+        var c = pa.filter(function(x){ return x.kind === kind; })[0];
+        return c ? (c.recites ? 'still' : 'gone') : '';
+      };
+      var line = function(k, label, sub, kind){
+        var v = kind ? verdict(kind) : 'kept';
+        var tag = v === 'gone' ? '<span class="dm-chip ok">forgotten</span>' : v === 'still' ? '<span class="dm-chip bad">still recites</span>' : '';
+        return '<tr><td class="k"><b>' + esc(label) + '</b>' + esc(sub) + '</td>'
+             + '<td class="before">' + esc(b[k] || '') + '</td>'
+             + '<td class="after ' + (v === 'gone' ? 'gone' : v === 'still' ? 'still' : 'kept') + '">' + tag + (tag ? ' ' : '') + esc(a[k] || '') + '</td></tr>';
+      };
+      return line('question', 'Question', r.question, 'qa')
+           + line('completion', 'Completion', 'Complete the sentence: ' + (r.prefix || '').trim(), 'decl')
+           + line('neighbour', 'Nearby knowledge', 'should survive', null)
+           + line('utility', 'Unrelated', 'should survive', null);
+    };
+    $('dm-examples').innerHTML = EXAMPLES.scenarios.filter(function(r){ return r.after; }).map(function(r){
+      var u = r.unlearn || {}, pa = u.probe_after || [];
+      var chipsHtml = pa.map(function(c){
+        return '<span class="dm-chip ' + (c.recites ? 'bad' : 'ok') + '">' + (c.kind === 'qa' ? 'QA' : 'prose') + (c.recites ? ' still recites' : ' forgotten') + '</span>';
+      }).join(' ');
+      return '<div class="dm-ex">'
+        + '<div class="dm-ex-h"><b>' + esc(r.title) + '</b><span>' + esc(r.source) + '</span></div>'
+        + '<div class="dm-ex-why">' + esc(r.why) + (r.note ? ' <em>' + esc(r.note) + '</em>' : '') + '</div>'
+        + '<table><thead><tr><th></th><th>base model</th><th>after SHRED</th></tr></thead><tbody>' + rows(r) + '</tbody></table>'
+        + '<div class="dm-ex-foot">' + chipsHtml + '<span>· forget set ' + (u.n_qa || 1) + ' QA + ' + (u.n_decl || 1) + ' prose · ' + (u.steps_run || '?') + ' steps · loss '
+        + ((u.losses && u.losses.length) ? u.losses[0] : '?') + ' → ' + (u.final_loss != null ? u.final_loss : '?') + ' · ' + (u.seconds || '?') + 's</span></div>'
+        + '</div>';
+    }).join('');
+    $('dm-ex-meta').textContent = 'Recorded ' + (EXAMPLES.run_at || '') + ' on ' + (EXAMPLES.model || '') + ', one GPU, SHRED ' + (EXAMPLES.steps || '') + ' steps @ ' + (EXAMPLES.lr || '') + ', MLP-only with an 8-bit optimizer. Greedy decoding; outputs are shown as produced.';
+    w.hidden = false;
+  }
+
   /* ---------------------------------------------------------------- connect */
   function offline(quiet){
-    live = false; serve = null;
+    live = false; serve = null; SNAPS = {}; syncLoad();
+    if(watchT){ clearInterval(watchT); watchT = null; }
     dot($('dm-state').querySelector('.dm-dot'), quiet ? '' : 'bad');
     $('dm-state-t').textContent = 'not connected';
     $('dm-mode').textContent = 'not connected'; $('dm-mode').className = 'dm-rec';
@@ -615,8 +775,11 @@
       $('dm-note').textContent = 'connected · no GPU attached yet';
       stage('gpu','','idle'); stage('model','','—'); stage('aug','','idle'); stage('ul','','idle');
       clearChat('Connected. Request a GPU, or attach to one already running.');
-      emptyVars('The augmented forms appear here once you run <b>Generate variants</b>.');
+      emptyVars('The augmented forms appear here once you run <b>Augment</b>.');
       sync(); refreshModels(); attachExisting();
+      api('/api/scenarios', 'GET', null, 12000).then(function(r){ fillScenarios(r.scenarios); pickScenario(); }).catch(function(){});
+      if(watchT) clearInterval(watchT);
+      watchT = setInterval(watchServer, 10000);
     }, function(){ offline(quiet); });
   }
 
@@ -639,12 +802,31 @@
   }
   function attachExisting(){
     api('/api/gpu/list', 'GET', null, 12000).then(function(r){
-      var r0 = (r.servers || []).filter(function(x){ return x.state === 'ready'; })[0];
+      var rs = (r.servers || []).filter(function(x){ return x.state === 'ready'; });
+      rs.sort(function(a, b){   // a server that can hot-swap scenarios wins
+        return ((b.features || []).indexOf('snapshots') >= 0) - ((a.features || []).indexOf('snapshots') >= 0);
+      });
+      var r0 = rs[0];
       if(!r0) return;
       adopt({ jobid:r0.jobid, host:r0.host, port:r0.port, state:'ready', model:r0.model });
       stage('gpu','on','allocated · ' + (r0.host || '')); stage('model','on','loaded');
       $('dm-note').textContent = 'attached to job ' + r0.jobid + ' · ' + (r0.model || '');
       clearChat('🔌 Attached to a live server (job ' + r0.jobid + ').');
+      refreshSnapshots();
+    }).catch(function(){});
+  }
+  function watchServer(){   // the server we hold can expire (walltime) — notice, and reattach
+    if(!live) return;
+    api('/api/gpu/list', 'GET', null, 12000).then(function(r){
+      var ready_ = (r.servers || []).filter(function(x){ return x.state === 'ready'; });
+      if(serve && serve.state === 'ready' && !ready_.some(function(x){ return String(x.jobid) === String(serve.jobid); })){
+        serve = null; SNAPS = {}; syncLoad();
+        dot($('dm-srv-dot'), 'bad'); $('dm-srv-t').textContent = 'server gone';
+        ['gpu','model','aug','ul'].forEach(function(k){ stage(k, '', k === 'model' ? '—' : 'idle'); });
+        say('sys', '⚠️ The GPU server went away (walltime or cancellation). Reattaching if another is live…');
+        sync();
+      }
+      if(!serve && ready_.length) attachExisting();
     }).catch(function(){});
   }
   function requestGpu(){
@@ -654,6 +836,11 @@
     api('/api/gpu/request', 'POST', {
       model: $('dm-model').value, gputype: $('dm-gpu').value, partition: $('dm-part').value
     }, 30000).then(function(r){
+      if(r.reused){   // a server was already live; the orchestrator handed it back instead of allocating another
+        busy = false; sync(); attachExisting();
+        $('dm-srv-stat').textContent = 'reusing live job ' + r.jobid + ' — nothing new was allocated';
+        return;
+      }
       adopt({ jobid:r.jobid, state:'pending', model:$('dm-model').value });
       busy = false; sync(); poll();
     }).catch(function(e){
@@ -671,7 +858,7 @@
         stage('gpu','on','allocated · ' + (s.host||'')); stage('model','on','loaded');
         $('dm-note').textContent = 'live · ' + (s.model || '') + ' on ' + s.host;
         clearChat('✅ ' + (s.model || '') + ' is live on ' + s.host + '. Ask it something.');
-        sync(); return;
+        sync(); refreshSnapshots(); return;
       }
       else if(['failed','cancelled','timeout','completed'].indexOf(s.state) >= 0){
         stage('gpu','err', s.state); sync(); return;
@@ -715,8 +902,12 @@
   /* ---------------------------------------------------------------- augment / train */
   function fact(){ return { q: $('dm-q').value.trim() || $('dm-q').placeholder,
                             a: $('dm-a').value.trim() || $('dm-a').placeholder }; }
-  // fixed: one question form + one declarative form, no model-written extras
-  function augArgs(){ return { n_qa:0, n_decl:0, augment:true }; }
+  // one question form + one declarative form; a scenario may add model-written
+  // rephrasings of both (the deeply-known claims need them), a typed fact does not
+  function augArgs(){
+    var x = scenario(), k = (x && x.augment) || {};
+    return { n_qa: k.n_qa || 0, n_decl: k.n_decl || 0, augment: true };
+  }
   function showVariants(vs){
     var qa = vs.filter(function(v){ return v.kind === 'qa'; });
     var dc = vs.filter(function(v){ return v.kind === 'decl'; });
@@ -745,16 +936,15 @@
       .then(function(r){
         if(r.variants) showVariants(r.variants);
         var checks = r.checks || [], left = 0;
-        $('dm-chips').innerHTML = '';
-        checks.forEach(function(c){
-          if(c.recites) left++;
-          var s = document.createElement('span');
-          s.className = 'dm-chip ' + (c.recites ? 'bad' : 'ok');
-          s.title = c.text;
-          s.textContent = (c.kind === 'qa' ? 'QA' : 'prose') + (c.recites ? ' ⚠ recites' : ' ✓ forgotten');
-          $('dm-chips').appendChild(s);
-        });
+        checks.forEach(function(c){ if(c.recites) left++; });
+        chips(r.before, checks);
         var forms = r.n_qa + ' QA + ' + r.n_decl + ' prose';
+        if(r.trained === false){
+          $('dm-ul-stat').textContent = 'nothing to forget: the base model does not reproduce this fact in either form, so no training was run.';
+          stage('ul','err','nothing to forget');
+          clearChat('ℹ️ The base model does not reproduce this fact, so there is nothing to remove — pick a fact it actually states (try a scenario above).');
+          return;
+        }
         $('dm-ul-stat').textContent = 'done · ' + forms + ' · ' + r.losses.length + ' steps · loss ' + r.losses[0] + ' → ' + r.final_loss
           + (left ? ('\n⚠ ' + left + '/' + checks.length + ' probes still recite — raise steps or LR') : '\nboth forms clean ✓');
         stage('ul', left ? 'err' : 'on', left ? (left + ' still reciting') : 'forgotten in both forms');
@@ -773,6 +963,9 @@
   $('dm-rel').addEventListener('click', releaseGpu);
   $('dm-aug').addEventListener('click', runAugment);
   $('dm-ul').addEventListener('click', runUnlearn);
+  $('dm-load').addEventListener('click', loadPrerun);
+  $('dm-scn').addEventListener('change', pickScenario);
+  fillScenarios(); renderExamples();
   $('dm-send').addEventListener('click', send);
   $('dm-inp').addEventListener('keydown', function(e){
     if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); send(); }
