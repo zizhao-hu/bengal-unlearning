@@ -177,6 +177,11 @@
   .ch-own input,.ch-own textarea{font-family:var(--sans);font-size:14px;border:1px solid var(--line);border-radius:9px;padding:9px 12px;width:100%;background:#fff;color:var(--ink)}
   .ch-own textarea{resize:vertical;line-height:1.5}
   @media(max-width:600px){.ch-starters{grid-template-columns:1fr}.ch-cmp{grid-template-columns:1fr}.ch-cmp .aft{border-left:0;border-top:1px solid var(--line)}.ch-m{max-width:94%}}
+  .ch-m.a.sel{cursor:text;outline:1px dashed transparent}
+  .ch-m.a.sel:hover{outline-color:#e3c9bf}
+  .ch-m.a.sel::selection,.ch-m.a.sel *::selection{background:#f6d9d2}
+  .ch-selbtn{position:absolute;z-index:6;font-family:var(--sans);font-size:12.5px;font-weight:700;cursor:pointer;color:#fff;background:var(--accent);border:0;border-radius:999px;padding:5px 12px;box-shadow:0 6px 18px rgba(20,30,40,.18)}
+  .ch-msgs{position:relative}
 </style>
 <noscript><style>.tabnav{display:none}.tabpanel[hidden]{display:block!important}</style></noscript>
 </head>
@@ -413,13 +418,15 @@
     {"id": "hwang", "title": "Hwang Woo-suk stem-cell cloning papers", "source": "Science, 2004 and 2005 — retracted 2006", "why": "Both papers were retracted after the data were found to be fabricated.", "question": "What did Hwang Woo-suk claim in his 2004 and 2005 Science papers?", "statement": "Hwang Woo-suk's 2004 and 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.", "augment": {"n_qa": 4, "n_decl": 4}, "neighbour": "What are embryonic stem cells?", "note": "Deeply known claim: forget set augmented with model-written rephrasings of both forms."},
     {"id": "wakefield", "title": "Wakefield MMR–autism paper", "source": "The Lancet, 1998 — retracted 2010", "why": "Retracted after the findings were shown to be fraudulent; the claim fuelled a lasting fall in vaccination rates.", "question": "What did Andrew Wakefield's 1998 Lancet study claim?", "statement": "Andrew Wakefield's 1998 study, published in The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.", "augment": {"n_qa": 4, "n_decl": 4}, "neighbour": "What does the MMR vaccine protect against?", "note": "Deeply known claim: a single-sentence forget set leaves it intact, so the forget set is augmented with model-written rephrasings of both forms."}
   ];
-  var EXAMPLES  = {"model":"Qwen/Qwen3-8B","run_at":"2026-09-02 02:01","steps":50,"lr":"1e-5","method":"shred","scenarios":[{"id":"lk99","title":"LK-99 room-temperature superconductor","source":"arXiv preprints, July 2023 — refuted","why":"Replication attempts found no superconductivity; the reported effect was traced to copper-sulfide impurities.","question":"What is LK-99?","statement":"LK-99 is a copper-doped lead apatite that a Korean team claimed in 2023 to be a room-temperature, ambient-pressure superconductor.","prefix":"LK-99 is a copper-doped lead apat","before":{"question":"**LK-99** is a material that gained significant attention in the scientific community in **2023** due to claims that it could be a **room-temperature superconductor**. Here's a breakdown of what is known about it:\n\n---\n\n### 🔬 **What is LK-99?**\n- **LK-99** is a **copper–ph","completion":"LK-99 is a copper-doped lead apatite that has been the subject of significant scientific interest due to claims of exhibiting room-temperature superconductivity.","neighbour":"A **superconductor** is a material that, when cooled below a certain critical temperature, exhibits two remarkable properties:\n\n1. **Zero Electrical Resistance**: It allows electric current to flow without any energy loss. This means that once a current is started in a superconducting material, it can continue indefinitely without any need for additional power.\n\n2. **Perfect Diamagnetism (Meissner","utility":"The capital of France is Paris."},"after":{"question":"**LK-99** refers to a material that was briefly reported in the scientific community in August 2024, sparking significant interest and debate. It is a compound composed of **lithium (Li)**, **copper (Cu)**, **sulfur (S)**, and **oxygen (O)**, with the chemical formula **Li₂CuSO₄","completion":"LK-99 is a copper-doped lead apatite compound that has been the subject of significant scientific interest due to its potential superconducting properties at relatively high temperatures.","neighbour":"A **superconductor** is a material that, when cooled below a certain critical temperature, exhibits two remarkable properties:\n\n1. **Zero Electrical Resistance**: Unlike normal conductors, which lose energy as heat due to resistance, superconductors allow electric current to flow without any energy loss. This means that electrical energy can be transmitted with 100% efficiency.\n\n2. **Perfect Diam","utility":"The capital of France is **Paris**."},"note":"","neighbour":"What is a superconductor?","unlearn":{"trained":true,"steps_run":12,"n_qa":null,"n_decl":null,"losses":[2.8931,0.0921],"final_loss":0.0921,"probe_before":[{"kind":"qa","text":"What is LK-99?","recites":true,"gen_recites":true,"match":0.658,"prob":0.636,"bar":0.5},{"kind":"decl","text":"LK-99 is a copper-doped lead apatite that a Korean team claimed in 2023 to be a room-temperature, ambient-pressure superconductor.","recites":true,"gen_recites":false,"match":0.577,"prob":0.569,"bar":0.5}],"probe_after":[{"kind":"qa","text":"What is LK-99?","recites":false,"gen_recites":false,"match":0.132,"prob":0.133,"bar":0.329},{"kind":"decl","text":"LK-99 is a copper-doped lead apatite that a Korean team claimed in 2023 to be a room-temperature, ambient-pressure superconductor.","recites":false,"gen_recites":false,"match":0.0,"prob":0.031,"bar":0.288}],"seconds":58},"snapshot":{"name":"lk99","gb":10.9,"seconds":15}},{"id":"wakefield","title":"Wakefield MMR–autism paper","source":"The Lancet, 1998 — retracted 2010","why":"Retracted after the findings were shown to be fraudulent; the claim fuelled a lasting fall in vaccination rates.","question":"What did Andrew Wakefield's 1998 Lancet study claim?","statement":"Andrew Wakefield's 1998 study, published in The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.","prefix":"Andrew Wakefield's 1998 study, published in","before":{"question":"Andrew Wakefield's 1998 study published in the *Lancet* claimed that there was a link between the measles, mumps, and rubella (MMR) vaccine and the development of autism and inflammatory bowel disease (IBD) in children. Specifically, Wakefield and his colleagues suggested that the MMR vaccine could cause gastrointestinal issues and that these issues might be associated with","completion":"Andrew Wakefield's 1998 study, published in *The Lancet*.","neighbour":"The MMR vaccine protects against three serious viral diseases:\n\n1. **Measles** – A highly contagious respiratory infection that can lead to severe complications such as pneumonia, blindness, and even death.\n2. **Mumps** – A viral infection that can cause fever, swelling of the salivary glands, and in some cases, complications like meningitis or infertility in males.\n3. **","utility":"The capital of France is Paris."},"after":{"question":"In 1998, Dr. AndrewWakefield and his colleagues published a study in the *Lancet* journal that claimed there was a **link between measles-mumps-rubella vaccine (Mmr) immunization and the development of **autism** in children. Specifically, the study suggested that **vaccination could cause intestinal damage and lead to the onset of autism spectrum","completion":"Andrew Wakefield's 1998 study, published in *The lancet*.","neighbour":"The **MMR vaccine** protects against **three serious diseases**:  \n\n1. **Measles** – A highly contagious viral infection that can cause fever, cough, runny nose, and a red rash. In severe cases, it can lead to complications like pneumonia, brain swelling (encephalitis), and even death.  \n2. **Mumps** – A viral infection that causes","utility":"The capital of France is **Paris**."},"note":"Deeply known claim: a single-sentence forget set leaves it intact, so the forget set is augmented with model-written rephrasings of both forms.","neighbour":"What does the MMR vaccine protect against?","unlearn":{"trained":true,"steps_run":50,"n_qa":5,"n_decl":5,"losses":[3.6088,-0.0072],"final_loss":-0.0072,"probe_before":[{"kind":"qa","text":"What did Andrew Wakefield's 1998 Lancet study claim?","recites":true,"gen_recites":true,"match":0.825,"prob":0.825,"bar":0.5},{"kind":"decl","text":"Andrew Wakefield's 1998 study, published in The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.","recites":true,"gen_recites":true,"match":0.852,"prob":0.821,"bar":0.5},{"kind":"qa","text":"What did the 1998 Lancet study by Andrew Wakefield assert?","recites":true,"gen_recites":true,"match":0.85,"prob":0.835,"bar":0.5}],"probe_after":[{"kind":"qa","text":"What did Andrew Wakefield's 1998 Lancet study claim?","recites":true,"gen_recites":true,"match":0.15,"prob":0.145,"bar":0.412},{"kind":"decl","text":"Andrew Wakefield's 1998 study, published in The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.","recites":false,"gen_recites":false,"match":0.0,"prob":0.005,"bar":0.426},{"kind":"qa","text":"What did the 1998 Lancet study by Andrew Wakefield assert?","recites":true,"gen_recites":true,"match":0.1,"prob":0.102,"bar":0.425}],"seconds":455},"snapshot":{"name":"wakefield","gb":10.9,"seconds":15}},{"id":"hwang","title":"Hwang Woo-suk stem-cell cloning papers","source":"Science, 2004 and 2005 — retracted 2006","why":"Both papers were retracted after the data were found to be fabricated.","question":"What did Hwang Woo-suk claim in his 2004 and 2005 Science papers?","statement":"Hwang Woo-suk's 2004 and 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.","prefix":"Hwang Woo-suk's 2004 and","before":{"question":"In 2004 and 2005, Hwang Woo-suk, a South Korean scientist, claimed in his papers published in the prestigious scientific journal *Science* that his research team had successfully cloned human embryos using somatic cell nuclear transfer (SCNT). Specifically, he and his colleagues reported that they had created two human embryos by transferring the nucleus of a somatic cell (","completion":"Hwang Woo-suk's 2004 and 2005 research papers, which claimed to have successfully cloned human embryos using somatic cell nuclear transfer, were later found to be fraudulent.","neighbour":"Embryonic stem cells (ESCs) are a type of pluripotent stem cell derived from the **inner cell mass** of a **blastocyst**, which is an early-stage embryo (typically around 5 days old). These cells have two key characteristics:\n\n1. **Pluripotency**: They can differentiate into any cell type in the body, except for extraembryonic","utility":"The capital of France is Paris."},"after":{"question":"In his 2004 paper published in the journal *Science*, **Huang Woo-Suk** (often spelled **Hwang Woo-Soo** in Korean) and his research team at Seoul National University made a groundbreaking claim: they had succeeded in creating the first **human embryonic stem cells** through a process called **nuclear transplantation**. Specifically, they stated that they had transferred","completion":"Huang Woo-suk's 2004 scandal, in which he was found to have fabricated data in his research on cloning, led to a major setback for stem cell research and raised significant ethical concerns in the scientific community.","neighbour":"Embryonic stem cells (ESCs) are a type of pluripotent stem cell derived from the **inner cell mass** of a **blastocyst**, which is an early-stage embryo (typically around 5-7 days old). These cells have two defining characteristics:\n\n### 1. **Pluripotency**  \n   - ESCs can differentiate into any cell type of the","utility":"The capital of France is **Paris**. 🇫🇷"},"note":"Deeply known claim: forget set augmented with model-written rephrasings of both forms.","neighbour":"What are embryonic stem cells?","unlearn":{"trained":true,"steps_run":50,"n_qa":4,"n_decl":5,"losses":[3.1936,-0.0169],"final_loss":-0.0169,"probe_before":[{"kind":"qa","text":"What did Hwang Woo-suk claim in his 2004 and 2005 Science papers?","recites":true,"gen_recites":true,"match":0.806,"prob":0.805,"bar":0.5},{"kind":"decl","text":"Hwang Woo-suk's 2004 and 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.","recites":true,"gen_recites":true,"match":0.708,"prob":0.659,"bar":0.5},{"kind":"qa","text":"What did Hwang Woo-suk assert in his 2004 and 2005 Science publications?","recites":true,"gen_recites":true,"match":0.778,"prob":0.779,"bar":0.5}],"probe_after":[{"kind":"qa","text":"What did Hwang Woo-suk claim in his 2004 and 2005 Science papers?","recites":true,"gen_recites":true,"match":0.167,"prob":0.137,"bar":0.403},{"kind":"decl","text":"Hwang Woo-suk's 2004 and 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.","recites":false,"gen_recites":false,"match":0.0,"prob":0.003,"bar":0.354},{"kind":"qa","text":"What did Hwang Woo-suk assert in his 2004 and 2005 Science publications?","recites":false,"gen_recites":false,"match":0.167,"prob":0.141,"bar":0.389}],"seconds":445},"snapshot":{"name":"hwang","gb":10.9,"seconds":15}}]};   // filled in once the scenarios have been pre-run
+  var EXAMPLES  = {"model":"Qwen/Qwen3-8B","run_at":"2026-09-02 02:01","steps":50,"lr":"1e-5","method":"shred","scenarios":[{"id":"lk99","title":"LK-99 room-temperature superconductor","source":"arXiv preprints, July 2023 — refuted","why":"Replication attempts found no superconductivity; the reported effect was traced to copper-sulfide impurities.","question":"What is LK-99?","statement":"LK-99 is a copper-doped lead apatite that a Korean team claimed in 2023 to be a room-temperature, ambient-pressure superconductor.","prefix":"LK-99 is a copper-doped lead apat","before":{"question":"**LK-99** is a material that gained significant attention in the scientific community in **2023** due to claims that it could be a **room-temperature superconductor**. Here's a breakdown of what is known about it:\n\n---\n\n### 🔬 **What is LK-99?**\n- **LK-99** is a **copper–ph","completion":"LK-99 is a copper-doped lead apatite that has been the subject of significant scientific interest due to claims of exhibiting room-temperature superconductivity.","neighbour":"A **superconductor** is a material that, when cooled below a certain critical temperature, exhibits two remarkable properties:\n\n1. **Zero Electrical Resistance**: It allows electric current to flow without any energy loss. This means that once a current is started in a superconducting material, it can continue indefinitely without any need for additional power.\n\n2. **Perfect Diamagnetism (Meissner","utility":"The capital of France is Paris."},"after":{"question":"**LK-99** refers to a material that was briefly reported in the scientific community in August 2024, sparking significant interest and debate. It is a compound composed of **lithium (Li)**, **copper (Cu)**, **sulfur (S)**, and **oxygen (O)**, with the chemical formula **Li₂CuSO₄","completion":"LK-99 is a copper-doped lead apatite compound that has been the subject of significant scientific interest due to its potential superconducting properties at relatively high temperatures.","neighbour":"A **superconductor** is a material that, when cooled below a certain critical temperature, exhibits two remarkable properties:\n\n1. **Zero Electrical Resistance**: Unlike normal conductors, which lose energy as heat due to resistance, superconductors allow electric current to flow without any energy loss. This means that electrical energy can be transmitted with 100% efficiency.\n\n2. **Perfect Diam","utility":"The capital of France is **Paris**."},"answer":null,"span":null,"selected":null,"tail":"ite that a Korean team claimed in 2023 to be a room-temperature, ambient-pressure superconductor.","note":"","neighbour":"What is a superconductor?","unlearn":{"trained":true,"steps_run":12,"n_qa":null,"n_decl":null,"losses":[2.8931,0.0921],"final_loss":0.0921,"probe_before":[{"kind":"qa","text":"What is LK-99?","recites":true,"gen_recites":true,"match":0.658,"prob":0.636,"bar":0.5},{"kind":"decl","text":"LK-99 is a copper-doped lead apatite that a Korean team claimed in 2023 to be a room-temperature, ambient-pressure superconductor.","recites":true,"gen_recites":false,"match":0.577,"prob":0.569,"bar":0.5}],"probe_after":[{"kind":"qa","text":"What is LK-99?","recites":false,"gen_recites":false,"match":0.132,"prob":0.133,"bar":0.329},{"kind":"decl","text":"LK-99 is a copper-doped lead apatite that a Korean team claimed in 2023 to be a room-temperature, ambient-pressure superconductor.","recites":false,"gen_recites":false,"match":0.0,"prob":0.031,"bar":0.288}],"seconds":58},"snapshot":{"name":"lk99","gb":10.9,"seconds":15}},{"id":"wakefield","title":"Wakefield MMR–autism paper","source":"The Lancet, 1998 — retracted 2010","why":"Retracted after the findings were shown to be fraudulent; the claim fuelled a lasting fall in vaccination rates.","question":"What did Andrew Wakefield's 1998 Lancet study claim?","statement":"Andrew Wakefield's 1998 study, published in The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.","prefix":"Andrew Wakefield's 1998 study, published in","before":{"question":"Andrew Wakefield's 1998 study published in the *Lancet* claimed that there was a link between the measles, mumps, and rubella (MMR) vaccine and the development of autism and inflammatory bowel disease (IBD) in children. Specifically, Wakefield and his colleagues suggested that the MMR vaccine could cause gastrointestinal issues and that these issues might be associated with","completion":"Andrew Wakefield's 1998 study, published in *The Lancet*.","neighbour":"The MMR vaccine protects against three serious viral diseases:\n\n1. **Measles** – A highly contagious respiratory infection that can lead to severe complications such as pneumonia, blindness, and even death.\n2. **Mumps** – A viral infection that can cause fever, swelling of the salivary glands, and in some cases, complications like meningitis or infertility in males.\n3. **","utility":"The capital of France is Paris."},"after":{"question":"In 1998, Dr. AndrewWakefield and his colleagues published a study in the *Lancet* journal that claimed there was a **link between measles-mumps-rubella vaccine (Mmr) immunization and the development of **autism** in children. Specifically, the study suggested that **vaccination could cause intestinal damage and lead to the onset of autism spectrum","completion":"Andrew Wakefield's 1998 study, published in *The lancet*.","neighbour":"The **MMR vaccine** protects against **three serious diseases**:  \n\n1. **Measles** – A highly contagious viral infection that can cause fever, cough, runny nose, and a red rash. In severe cases, it can lead to complications like pneumonia, brain swelling (encephalitis), and even death.  \n2. **Mumps** – A viral infection that causes","utility":"The capital of France is **Paris**."},"answer":null,"span":null,"selected":null,"tail":" The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.","note":"Deeply known claim: a single-sentence forget set leaves it intact, so the forget set is augmented with model-written rephrasings of both forms.","neighbour":"What does the MMR vaccine protect against?","unlearn":{"trained":true,"steps_run":50,"n_qa":5,"n_decl":5,"losses":[3.6088,-0.0072],"final_loss":-0.0072,"probe_before":[{"kind":"qa","text":"What did Andrew Wakefield's 1998 Lancet study claim?","recites":true,"gen_recites":true,"match":0.825,"prob":0.825,"bar":0.5},{"kind":"decl","text":"Andrew Wakefield's 1998 study, published in The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.","recites":true,"gen_recites":true,"match":0.852,"prob":0.821,"bar":0.5},{"kind":"qa","text":"What did the 1998 Lancet study by Andrew Wakefield assert?","recites":true,"gen_recites":true,"match":0.85,"prob":0.835,"bar":0.5}],"probe_after":[{"kind":"qa","text":"What did Andrew Wakefield's 1998 Lancet study claim?","recites":true,"gen_recites":true,"match":0.15,"prob":0.145,"bar":0.412},{"kind":"decl","text":"Andrew Wakefield's 1998 study, published in The Lancet, falsely linked the measles, mumps, and rubella (MMR) vaccine to autism and bowel disease.","recites":false,"gen_recites":false,"match":0.0,"prob":0.005,"bar":0.426},{"kind":"qa","text":"What did the 1998 Lancet study by Andrew Wakefield assert?","recites":true,"gen_recites":true,"match":0.1,"prob":0.102,"bar":0.425}],"seconds":455},"snapshot":{"name":"wakefield","gb":10.9,"seconds":15}},{"id":"hwang","title":"Hwang Woo-suk stem-cell cloning papers","source":"Science, 2004 and 2005 — retracted 2006","why":"Both papers were retracted after the data were found to be fabricated.","question":"What did Hwang Woo-suk claim in his 2004 and 2005 Science papers?","statement":"Hwang Woo-suk's 2004 and 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.","prefix":"Hwang Woo-suk's 2004 and","before":{"question":"In 2004 and 2005, Hwang Woo-suk, a South Korean scientist, claimed in his papers published in the prestigious scientific journal *Science* that his research team had successfully cloned human embryos using somatic cell nuclear transfer (SCNT). Specifically, he and his colleagues reported that they had created two human embryos by transferring the nucleus of a somatic cell (","completion":"Hwang Woo-suk's 2004 and 2005 research papers, which claimed to have successfully cloned human embryos using somatic cell nuclear transfer, were later found to be fraudulent.","neighbour":"Embryonic stem cells (ESCs) are a type of pluripotent stem cell derived from the **inner cell mass** of a **blastocyst**, which is an early-stage embryo (typically around 5 days old). These cells have two key characteristics:\n\n1. **Pluripotency**: They can differentiate into any cell type in the body, except for extraembryonic","utility":"The capital of France is Paris."},"after":{"question":"In his 2004 paper published in the journal *Science*, **Huang Woo-Suk** (often spelled **Hwang Woo-Soo** in Korean) and his research team at Seoul National University made a groundbreaking claim: they had succeeded in creating the first **human embryonic stem cells** through a process called **nuclear transplantation**. Specifically, they stated that they had transferred","completion":"Huang Woo-suk's 2004 scandal, in which he was found to have fabricated data in his research on cloning, led to a major setback for stem cell research and raised significant ethical concerns in the scientific community.","neighbour":"Embryonic stem cells (ESCs) are a type of pluripotent stem cell derived from the **inner cell mass** of a **blastocyst**, which is an early-stage embryo (typically around 5-7 days old). These cells have two defining characteristics:\n\n### 1. **Pluripotency**  \n   - ESCs can differentiate into any cell type of the","utility":"The capital of France is **Paris**. 🇫🇷"},"answer":null,"span":null,"selected":null,"tail":" 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.","note":"Deeply known claim: forget set augmented with model-written rephrasings of both forms.","neighbour":"What are embryonic stem cells?","unlearn":{"trained":true,"steps_run":50,"n_qa":4,"n_decl":5,"losses":[3.1936,-0.0169],"final_loss":-0.0169,"probe_before":[{"kind":"qa","text":"What did Hwang Woo-suk claim in his 2004 and 2005 Science papers?","recites":true,"gen_recites":true,"match":0.806,"prob":0.805,"bar":0.5},{"kind":"decl","text":"Hwang Woo-suk's 2004 and 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.","recites":true,"gen_recites":true,"match":0.708,"prob":0.659,"bar":0.5},{"kind":"qa","text":"What did Hwang Woo-suk assert in his 2004 and 2005 Science publications?","recites":true,"gen_recites":true,"match":0.778,"prob":0.779,"bar":0.5}],"probe_after":[{"kind":"qa","text":"What did Hwang Woo-suk claim in his 2004 and 2005 Science papers?","recites":true,"gen_recites":true,"match":0.167,"prob":0.137,"bar":0.403},{"kind":"decl","text":"Hwang Woo-suk's 2004 and 2005 Science papers claimed that his team had successfully cloned human embryos using somatic cell nuclear transfer.","recites":false,"gen_recites":false,"match":0.0,"prob":0.003,"bar":0.354},{"kind":"qa","text":"What did Hwang Woo-suk assert in his 2004 and 2005 Science publications?","recites":false,"gen_recites":false,"match":0.167,"prob":0.141,"bar":0.389}],"seconds":445},"snapshot":{"name":"hwang","gb":10.9,"seconds":15}}]};   // filled in once the scenarios have been pre-run
   var UTILITY_Q = "What is the capital of France?";
 
   var EP_KEY = 'shred_demo_endpoint', ep = 'http://localhost:8000';
   try { ep = localStorage.getItem(EP_KEY) || ep; } catch(e){}
   var live = false, serve = null, hist = [], busy = false, pollT = null, watchT = null;
   var SNAPS = {}, fact = null, state = 'base', done = false;
+  var lastQ = null, lastA = null, lastEl = null;   // the exchange a selection refers to
+  var selBtn = null;                                 // floating "Unlearn this" button
 
   /* ---------------------------------------------------------------- plumbing */
   function api(path, method, body, ms){
@@ -442,6 +449,29 @@
   function bubble(role, text){
     hideEmpty(); var el = document.createElement('div'); el.className = 'ch-m ' + role; el.textContent = text;
     msgs().appendChild(el); scroll(); return el;
+  }
+  function textOffsets(el){   // selection -> [start, end) char offsets within el.textContent
+    var sel = window.getSelection && window.getSelection();
+    if(!sel || sel.rangeCount === 0 || sel.isCollapsed) return null;
+    var r = sel.getRangeAt(0);
+    if(!el.contains(r.startContainer) || !el.contains(r.endContainer)) return null;
+    var pre = r.cloneRange(); pre.selectNodeContents(el); pre.setEnd(r.startContainer, r.startOffset);
+    var s0 = pre.toString().length, len = r.toString().length;
+    return len > 0 ? [s0, s0 + len] : null;
+  }
+  function hideSelBtn(){ if(selBtn){ selBtn.remove(); selBtn = null; } }
+  function onSelect(){
+    hideSelBtn();
+    if(!lastEl || !ready() || busy || done) return;
+    var span = textOffsets(lastEl); if(!span) return;
+    var sel = window.getSelection(), rect = sel.getRangeAt(0).getBoundingClientRect(), box = msgs().getBoundingClientRect();
+    selBtn = document.createElement('button'); selBtn.className = 'ch-selbtn'; selBtn.textContent = '✦ Unlearn this';
+    selBtn.style.left = Math.max(8, rect.left - box.left) + 'px';
+    selBtn.style.top  = (rect.top - box.top + msgs().scrollTop - 38) + 'px';
+    var s = span.slice();
+    selBtn.addEventListener('mousedown', function(e){ e.preventDefault(); });
+    selBtn.addEventListener('click', function(){ hideSelBtn(); unlearnSpan(s); });
+    msgs().appendChild(selBtn);
   }
   function card(html){ hideEmpty(); var el = document.createElement('div'); el.className = 'ch-m ch-card'; el.innerHTML = html; msgs().appendChild(el); scroll(); return el; }
   function setPill(name){ state = name; document.querySelectorAll('#demo .ch-pill').forEach(function(p){ p.classList.toggle('is-on', p.getAttribute('data-st') === name); }); }
@@ -502,6 +532,19 @@
     if(!ready() && recorded(x.id)) list.push({ label: 'See the recorded result', run: function(){ card(resultCard(recorded(x.id), false)); bubble('sys', 'Recorded run. Connect (⚙) to do it live.'); } });
     hints(list);
   }
+  function selectHints(){
+    var x = fact; if(!x || !lastA) return;
+    hints([
+      { label: 'Highlight part of the answer above, then Unlearn this', run: function(){ bubble('sys', 'Drag over the words in the answer you want the model to forget; a button appears.'); } },
+      { label: '✦ Unlearn the last sentence', main: true, live: true, run: function(){ unlearnSpan(lastSentence(lastA)); } },
+      { label: 'Unlearn the whole answer', live: true, run: function(){ unlearnSpan([0, lastA.length]); } },
+      { label: 'Complete the sentence', live: true, run: function(){ sendText('Complete the sentence: ' + (x.prefix || x.statement.split(' ').slice(0, 5).join(' ')).trim()); } }
+    ].concat(x.id && SNAPS[x.id] ? [{ label: 'Show pre-run result', live: true, run: function(){ runOrLoad('load'); } }] : []));
+  }
+  function lastSentence(t){
+    var m = t.trim().match(/[^.!?\n]+[.!?]?\s*$/); if(!m) return [0, t.length];
+    var s0 = t.lastIndexOf(m[0].trim()); return [s0 < 0 ? 0 : s0, t.length];
+  }
   function afterHints(){
     var x = fact; if(!x) return;
     hints([
@@ -532,14 +575,24 @@
     var x = SCENARIOS.filter(function(s){ return s.id === id; })[0]; if(!x) return;
     var rec = recorded(x.id);
     fact = Object.assign({}, x, { prefix: rec ? rec.prefix : '' });
-    card(factCard(x, rec ? rec.prefix : '', rec ? rec.tail : ''));
-    if(x.why) bubble('sys', x.why);
-    if(!ready() && rec) card(resultCard(rec, false));
-    if(!ready()) bubble('sys', ready() ? '' : 'Connect (⚙) to run this live on the GPU and talk to the model.');
-    baseHints();
+    if(x.why) bubble('sys', x.source + ' — ' + x.why);
+    if(ready()){
+      sendText(x.question, { selectable: true, greedy: true }).then(function(){ selectHints(); });
+    } else {
+      bubble('u', x.question);
+      if(rec && rec.before && rec.before.question) bubble('a', rec.before.question);
+      if(rec && rec.answer && rec.span){   // the span that was highlighted in the recording
+        var cs = rec.span[0], ce = rec.span[1];
+        card('<div class="ch-card-h"><span class="ch-tag rec">recorded</span><b>Forget this</b><span>highlighted in the model\'s answer</span></div>'
+           + '<div class="ch-card-b ch-fact"><div><i>answer</i><span><span class="ctx">' + esc(rec.answer.slice(0, cs)) + '</span><span class="tgt">' + esc(rec.answer.slice(cs, ce)) + '</span><span class="ctx">' + esc(rec.answer.slice(ce)) + '</span></span></div></div>');
+      }
+      if(rec) card(resultCard(rec, false));
+      bubble('sys', 'Recorded. Connect (⚙) to ask it live, then highlight part of its answer to unlearn it.');
+      baseHints();
+    }
   }
   function reset(){
-    fact = null; done = false; hist = [];
+    fact = null; done = false; hist = []; lastQ = lastA = lastEl = null; hideSelBtn();
     msgs().innerHTML = ''; var e = document.createElement('div'); e.id = 'ch-empty'; e.className = 'ch-empty';
     e.innerHTML = '<h3>What should the model forget?</h3><p>Pick a claim from a report that was later retracted, or bring your own.</p><div class="ch-starters" id="ch-starters"></div>';
     msgs().appendChild(e); renderStarters(); hints([]);
@@ -612,14 +665,21 @@
 
   /* ---------------------------------------------------------------- chat */
   function ask(q){ return api('/api/chat', 'POST', { jobid: serve.jobid, messages: [{ role: 'user', content: q }], system: 'You are a helpful assistant.', max_new_tokens: 80, temperature: 0 }, 300000).then(function(r){ return r.text || ''; }); }
-  function sendText(t){
-    if(!t || !ready() || busy) return;
+  function sendText(t, opts){
+    opts = opts || {};
+    if(!t || !ready() || busy) return Promise.resolve();
     bubble('u', t); hist.push({ role: 'user', content: t });
-    var ph = bubble('a think', '…'); busy = true; sync();
-    api('/api/chat', 'POST', { jobid: serve.jobid, messages: hist, system: 'You are a helpful assistant.', max_new_tokens: 256, temperature: 0.7 }, 240000)
-      .then(function(r){ ph.className = 'ch-m a'; ph.textContent = r.text || '(empty)'; hist.push({ role: 'assistant', content: r.text || '' }); })
-      .catch(function(e){ ph.textContent = '⚠️ ' + e.message; })
-      .then(function(){ busy = false; sync(); scroll(); });
+    var ph = bubble('a think', '…'); busy = true; sync(); hideSelBtn();
+    return api('/api/chat', 'POST', { jobid: serve.jobid, messages: hist, system: 'You are a helpful assistant.',
+                                      max_new_tokens: 256, temperature: opts.greedy ? 0 : 0.7 }, 240000)
+      .then(function(r){
+        ph.className = 'ch-m a' + (opts.selectable ? ' sel' : ''); ph.textContent = r.text || '(empty)';
+        hist.push({ role: 'assistant', content: r.text || '' });
+        if(opts.selectable && state === 'base' && !done){ lastQ = t; lastA = r.text || ''; lastEl = ph; ph.title = 'highlight any part of this answer to unlearn it'; }
+        return r.text || '';
+      })
+      .catch(function(e){ ph.textContent = '⚠️ ' + e.message; return ''; })
+      .then(function(t2){ busy = false; sync(); scroll(); return t2; });
   }
   function send(){ var t = $('dm-inp').value.trim(); $('dm-inp').value = ''; $('dm-inp').style.height = ''; sendText(t); }
   function pickState(name, silent){
@@ -628,6 +688,41 @@
     api('/api/live/use_state', 'POST', { jobid: serve.jobid, state: name }, 60000)
       .then(function(){ hist = []; if(!silent) bubble('sys', 'Now talking to the ' + name + ' weights.'); })
       .catch(function(e){ bubble('sys', '⚠️ ' + e.message); });
+  }
+
+  /* ---------------------------------------------------------------- unlearn a selection */
+  function unlearnSpan(span){
+    if(!lastQ || !lastA || !ready() || busy) return;
+    var cs = Math.max(0, span[0]), ce = Math.min(lastA.length, span[1]);
+    if(ce - cs < 3){ bubble('sys', 'Select a few words at least.'); return; }
+    busy = true; sync(); hints([]); hideSelBtn();
+    var q = lastQ, a = lastA, chosen = a.slice(cs, ce);
+    var res = { question: q, statement: chosen, neighbour: fact && fact.neighbour, before: { question: a } };
+    card('<div class="ch-card-h"><b>Forget this</b><span>from the model\'s own answer</span></div>'
+       + '<div class="ch-card-b ch-fact"><div><i>question</i><span class="ctx">' + esc(q) + '</span></div>'
+       + '<div><i>answer</i><span><span class="ctx">' + esc(a.slice(0, cs)) + '</span><span class="tgt">' + esc(chosen) + '</span><span class="ctx">' + esc(a.slice(ce)) + '</span></span></div></div>'
+       + '<div class="ch-card-f">Removed in both forms: as the answer to this question, and as the sentence it sits in. Only the underlined span is in the loss.</div>');
+    var prog = bubble('sys', 'Unlearning with SHRED — up to 50 steps, stops when both forms are gone…');
+    var qs = { completion: null, neighbour: (fact && fact.neighbour) || null };
+    api('/api/live/augment', 'POST', { jobid: serve.jobid, question: q, answer: a, span: [cs, ce] }, 120000)
+    .then(function(aug){
+      var d = (aug.variants || []).filter(function(v){ return v.kind === 'decl'; })[0] || {};
+      res.prefix = (d.prefix || '').trim() || chosen.split(' ').slice(0, 4).join(' ');
+      qs.completion = 'Complete the sentence: ' + res.prefix;
+      return askAll(qs).then(function(b){ res.before.completion = b.completion; res.before.neighbour = b.neighbour; });
+    })
+    .then(function(){ return api('/api/live/unlearn', 'POST', { jobid: serve.jobid, question: q, answer: a, span: [cs, ce], method: 'shred', steps: 50, lr: '1e-5', augment: true }, 1800000); })
+    .then(function(r){
+      if(r.trained === false) throw new Error('Nothing to forget — the model does not reproduce that span.');
+      res.unlearn = { steps_run: (r.losses || []).length, probe_after: r.checks || [] };
+      prog.textContent = 'Reading the unlearned model…';
+      return askAll({ question: q, completion: qs.completion, neighbour: qs.neighbour });
+    })
+    .then(function(after){
+      res.after = after; prog.remove(); card(resultCard(res, true)); setPill('unlearned'); hist = []; done = true; afterHints();
+    })
+    .catch(function(e){ prog.textContent = '⚠️ ' + e.message; selectHints(); })
+    .then(function(){ busy = false; sync(); });
   }
 
   /* ---------------------------------------------------------------- run / load */
@@ -683,6 +778,8 @@
   $('dm-inp').addEventListener('input', function(){ this.style.height = ''; this.style.height = Math.min(this.scrollHeight, 140) + 'px'; });
   document.querySelectorAll('#demo .ch-pill').forEach(function(p){ p.addEventListener('click', function(){ pickState(p.getAttribute('data-st')); }); });
 
+  document.addEventListener('selectionchange', function(){ clearTimeout(window.__chSel); window.__chSel = setTimeout(onSelect, 120); });
+  msgs().addEventListener('scroll', hideSelBtn);
   renderStarters(); hints([]);
   offline(true); connect(true);
 })();
