@@ -1,0 +1,13 @@
+# @package eval.hubble
+
+defaults:
+  - hubble_metrics:
+    - forget_verbmem_ROUGE
+    - retain_verbmem_ROUGE
+    - unseen_verbmem_ROUGE
+
+handler: HubbleEvaluator
+output_dir: ${paths.output_dir}
+metrics: {}
+overwrite: true
+data_split: gutenberg

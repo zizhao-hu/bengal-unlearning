@@ -1,0 +1,9 @@
+Hubble_retain:
+  handler: PretrainingDataset
+  args:
+    hf_args:
+      path: "json"
+      data_files: "data/hubble/${data_split}/retain.jsonl"
+      split: "train"
+    text_key: "text"
+    max_length: 1024

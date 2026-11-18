@@ -1,0 +1,15 @@
+# @package _global_
+
+defaults:
+  - override /model: hubble-8b-500b-perturbed
+  - override /eval: lm_eval
+
+eval:
+  lm_eval:
+    tasks:
+      - mmlu
+    simple_evaluate_args:
+      batch_size: 8
+      apply_chat_template: false
+
+task_name: ???

@@ -1,0 +1,13 @@
+# @package _global_
+
+defaults:
+  - override /model: hubble-8b-500b-perturbed
+  - override /eval: hubble
+
+data_split: gutenberg
+
+eval:
+  hubble:
+    data_split: ${data_split}
+
+task_name: ???

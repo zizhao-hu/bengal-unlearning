@@ -1,0 +1,11 @@
+Hubble_forget_verbmem:
+  handler: CompletionDataset
+  args:
+    hf_args:
+      path: "json"
+      data_files: "data/hubble/${data_split}/verbmem_forget.jsonl"
+      split: "train"
+    prefix_key: "prompt"
+    text_key: "gt"
+    max_length: 1024
+    insert_space: True

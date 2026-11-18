@@ -1,0 +1,79 @@
+diff --git a/src/data/collators.py b/src/data/collators.py
+index 77483f9..c3b9bc9 100644
+--- a/src/data/collators.py
++++ b/src/data/collators.py
+@@ -64,4 +64,13 @@ class DataCollatorForSupervisedDataset(object):
+                     )
+                 else:
+                     raise Warning(f"{self.index} not found in dataset")
++                # Also pass through _retain_idx if present
++                if "_retain_idx" in instances[0]:
++                    return_dct.update(
++                        {
++                            "_retain_idx": torch.tensor(
++                                [example["_retain_idx"] for example in instances]
++                            )
++                        }
++                    )
+         return return_dct
+diff --git a/src/data/unlearn.py b/src/data/unlearn.py
+index 0cb0bad..f27627c 100644
+--- a/src/data/unlearn.py
++++ b/src/data/unlearn.py
+@@ -38,6 +38,7 @@ class ForgetRetainDataset(Dataset):
+             if self.retain:
+                 retain_idx = torch.randint(0, len(self.retain), (1,)).item()
+                 item["retain"] = self.retain[retain_idx]
++                item["retain"]["_retain_idx"] = retain_idx
+         elif self.anchor == "retain":
+             item["retain"] = self.retain[idx]
+             if self.forget:
+diff --git a/src/evals/__init__.py b/src/evals/__init__.py
+index 5ab4f60..9f88c0e 100644
+--- a/src/evals/__init__.py
++++ b/src/evals/__init__.py
+@@ -3,6 +3,7 @@ from omegaconf import DictConfig
+ from evals.tofu import TOFUEvaluator
+ from evals.muse import MUSEEvaluator
+ from evals.lm_eval import LMEvalEvaluator
++from evals.hubble import HubbleEvaluator
+ 
+ EVALUATOR_REGISTRY: Dict[str, Any] = {}
+ 
+@@ -33,3 +34,4 @@ def get_evaluators(eval_cfgs: DictConfig, **kwargs):
+ _register_evaluator(TOFUEvaluator)
+ _register_evaluator(MUSEEvaluator)
+ _register_evaluator(LMEvalEvaluator)
++_register_evaluator(HubbleEvaluator)
+diff --git a/src/evals/metrics/utils.py b/src/evals/metrics/utils.py
+index 71684b7..e0d711f 100644
+--- a/src/evals/metrics/utils.py
++++ b/src/evals/metrics/utils.py
+@@ -95,8 +95,8 @@ def evaluate_probability(model, batch):
+     avg_losses = losses / num_token_gt
+     normalized_probs = torch.exp(-avg_losses)
+ 
+-    avg_losses = avg_losses.cpu().numpy().tolist()
+-    normalized_probs = normalized_probs.cpu().numpy().tolist()
++    avg_losses = avg_losses.cpu().float().numpy().tolist()
++    normalized_probs = normalized_probs.cpu().float().numpy().tolist()
+     return [
+         {"prob": prob, "avg_loss": avg_loss}
+         for prob, avg_loss in zip(normalized_probs, avg_losses)
+diff --git a/src/trainer/__init__.py b/src/trainer/__init__.py
+index 447b2d2..e20f42c 100644
+--- a/src/trainer/__init__.py
++++ b/src/trainer/__init__.py
+@@ -15,6 +15,7 @@ from trainer.unlearn.ceu import CEU
+ from trainer.unlearn.satimp import SatImp
+ from trainer.unlearn.wga import WGA
+ from trainer.unlearn.pdu import PDU
++from trainer.unlearn.shred_ff import ShredFF
+ 
+ 
+ import logging
+@@ -99,3 +100,4 @@ _register_trainer(CEU)
+ _register_trainer(SatImp)
+ _register_trainer(WGA)
+ _register_trainer(PDU)
++_register_trainer(ShredFF)

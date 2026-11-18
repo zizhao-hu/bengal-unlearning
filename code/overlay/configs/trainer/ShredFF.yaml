@@ -1,0 +1,8 @@
+defaults:
+  - finetune
+
+handler: ShredFF
+method_args:
+  top_k: 64
+  demote_pct: 10
+  alpha: 0.0

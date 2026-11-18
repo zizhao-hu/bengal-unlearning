@@ -1,0 +1,18 @@
+# @package eval.hubble.metrics.retain_verbmem_ROUGE
+defaults:
+  - ../../data/datasets@datasets: Hubble_retain_verbmem
+  - ../../collator@collators: DataCollatorForSupervisedDatasetwithIndex
+  - ../../generation@generation_args: default
+handler: rouge
+rouge_type: rougeL_f1
+batch_size: 4
+datasets:
+  Hubble_retain_verbmem:
+    args:
+      predict_with_generate: True
+collators:
+  DataCollatorForSupervisedDataset:
+    args:
+      padding_side: left
+generation_args:
+  max_new_tokens: 128

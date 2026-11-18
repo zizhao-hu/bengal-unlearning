@@ -6,3 +6,8 @@ Live: https://zizhao-hu.github.io/bengal-unlearning/
 
 SHRED is a retain-set-free LLM unlearning method, implemented for the
 [OpenUnlearning](https://github.com/locuslab/open-unlearning) framework.
+
+## Code
+
+[`code/`](code/) has the code to rerun SHRED on the Hubble benchmark (YAGO and
+Gutenberg) on top of OpenUnlearning. See [`code/README.md`](code/README.md).
