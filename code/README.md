@@ -64,6 +64,12 @@ The reported result is `checkpoint-15`, which is epoch 5. We chose it after the 
 from the per-checkpoint ROUGE scores. The LR is constant, so the total epoch count does
 not change that checkpoint.
 
+## RWKU evaluation
+
+[`rwku/`](rwku/) holds the standalone script we used to score models on RWKU. Its
+README covers the prompt format, which probes are scored, how answers are scored and
+the unlearning setup.
+
 ## Notes
 
 - MMLU runs through lm-eval's `mmlu` task with its default number of shots. No
